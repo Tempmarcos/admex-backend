@@ -1,0 +1,10 @@
+{
+    "errors": {
+        "user-management": {
+            "user": {
+                "name_too_short": "Nome muito curto",
+                "name_too_long": "Nome muito longo"
+            }
+        }
+    }
+}
