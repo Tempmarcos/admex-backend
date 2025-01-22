@@ -7,7 +7,6 @@ export class Email {
 
     }
 
-
     static create(value: string): Email {
         EmailSchema.parse(value);
         return new Email(value);

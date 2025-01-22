@@ -4,6 +4,6 @@ interface ProfileProps {
     tema: string;
 }
 
-export class Profile{
+export class Perfil{
 
 }
