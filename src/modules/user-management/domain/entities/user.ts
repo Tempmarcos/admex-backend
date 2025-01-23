@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { Email } from "../../../shared/value-objects/email/email";
-import { Permissoes } from "../value-objects/permissoes";
-import { Perfil } from "../value-objects/perfil";
-import { Senha } from "../value-objects/senha";
+import { Permissoes } from "../value-objects/permissoes/permissoes";
+import { Perfil } from "../value-objects/perfil/perfil";
+import { Senha } from "../value-objects/senha/senha";
 import { CreateUserInputDTO } from "../../dtos/user/CreateUserInputDTO";
 import { PasswordHasher } from "../services/passwordHasher";
 
@@ -28,11 +28,11 @@ export class User{
     }
 
 
-    //MOVER PARA USE CASE
+    //MOVER PARA USE CASE?
     public static async create (props: CreateUserInputDTO) {
         const { nome, email, senha, permissoes, perfil} = props
         NomeSchema.parse(nome);
-        Email.create(email);
+        Email.validate(email);
         Senha.validate(senha)
         const senhaHash = await PasswordHasher.hash(senha)
         Senha.create(senhaHash)
