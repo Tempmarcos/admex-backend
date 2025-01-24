@@ -2,9 +2,8 @@ import { z } from "zod";
 import { Email } from "../../../shared/value-objects/email/email";
 import { Permissoes } from "../value-objects/permissoes/permissoes";
 import { Perfil } from "../value-objects/perfil/perfil";
-import { Senha } from "../value-objects/senha/senha";
 import { CreateUserInputDTO } from "../../dtos/user/CreateUserInputDTO";
-import { PasswordHasher } from "../services/passwordHasher";
+import { InvalidNameError } from "../../../shared/errors/user/invalidNameError";
 
 
 const NomeSchema= z.string().min(3, "Nome muito curto").max(50, "Nome muito longo")
@@ -22,20 +21,22 @@ export class User{
         return this.email;
       }
     
-
     private constructor(props: CreateUserInputDTO){
         this.userProps = props;
     }
 
-
+    static nomeValidate(nome : string){
+        try{
+            NomeSchema.parse(nome);
+        }catch(error){
+            throw new InvalidNameError();
+        }
+            return nome;
+    }
     //MOVER PARA USE CASE?
     public static async create (props: CreateUserInputDTO) {
         const { nome, email, senha, permissoes, perfil} = props
-        NomeSchema.parse(nome);
-        Email.validate(email);
-        Senha.validate(senha)
-        const senhaHash = await PasswordHasher.hash(senha)
-        Senha.create(senhaHash)
+        new User(props);
     }
 }
 

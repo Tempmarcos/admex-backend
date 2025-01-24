@@ -1,22 +1,15 @@
 import { z } from "zod";
+import { EmailInvalidError } from "../../errors/email/emailInvalidError";
 
-const EmailSchema = z.string().email('Precisa ser um email válido');
+const EmailSchema = z.string().email();
 
 export class Email {
-    private constructor(private readonly value: string){
-
-    }
-
-    static validate(value: string): Email  {
+    static validate(value: string): String  {
         try{
             EmailSchema.parse(value);
         }catch(error){
-            throw new Error('Email inválido')
+            throw new EmailInvalidError();
         }
-        return new Email(value);
-    }
-
-    getValue(): string {
-        return this.value;
+        return value;
     }
 }
