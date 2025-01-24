@@ -33,7 +33,7 @@ export class User{
         }
             return nome;
     }
-    //MOVER PARA USE CASE?
+    
     public static async create (props: CreateUserInputDTO) {
         const { nome, email, senha, permissoes, perfil} = props
         new User(props);

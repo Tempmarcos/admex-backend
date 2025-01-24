@@ -11,5 +11,9 @@ export class CreateUserUseCase {
         Email.validate(email);
         Senha.validate(senha);
         const senhaHash = await PasswordHasher.hash(senha)
+
+
+
+        // User.create()
     }
 }
