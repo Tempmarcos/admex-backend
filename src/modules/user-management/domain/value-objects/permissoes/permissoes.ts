@@ -1,13 +1,16 @@
 import { z } from "zod"
+import { InvalidPermissoesError } from "../../../../shared/errors/permissoes/invalidPermissoesError";
 
 enum permissions  {
-    'verUsuarios',            //Permissão para ver a listagem de usuários da empresa
-    'criarUsuarios',          //Permissão para criar usuários
-    'deletarUsuarios',        //Permissão para deletar usuários
-    'editarUsuários',         //Permissão para editar usuários
+    VerUsuarios = 'verUsuarios',        //Permissão para listar usuários da empresa
+    CriarUsuarios = 'criarUsuarios',    //Permissão para criar usuários
+    DeletarUsuarios = 'deletarUsuarios',//Permissão para deletar usuários
+    EditarUsuarios ='editarUsuarios',  //Permissão para editar usuários
 }
 
-const permissionSchema = z.nativeEnum(permissions)
+const permissionEnum = z.nativeEnum(permissions)
+
+const permissionSchema= z.array(permissionEnum)
 
 export class Permissoes {
     static comparePermissions(permissions : string[], userPermissions : string[]){
@@ -18,14 +21,23 @@ export class Permissoes {
        }
     }
 
-    adicionarPermissao(permissions : string[], userPermissions : string[]){
-        Permissoes.comparePermissions(permissions, userPermissions) == true ?
-        userPermissions.concat(permissions) : console.log('Erro')
-    }
+    static validatePermissions(permissions : string[]){
+        try{
+            permissionSchema.parse(permissions);
+        }catch(error){
+            throw new InvalidPermissoesError();
+        }
+        return permissions;
+    } 
 
-    removerPermissao(permissions : string[], userPermissions : string[]){
-        // Permissoes.comparePermissions(permissions, userPermissions) == true ?
-        // userPermissions.filter(permissions) : console.log('Erro')
+    static mudarPermissoes(permissions : string[], userPermissions : string[]){
+        try{
+            Permissoes.validatePermissions(permissions);
+        }catch(error){
+            throw new InvalidPermissoesError();
+
+        }
+        return userPermissions = permissions;
     }
 }
 
