@@ -17,8 +17,6 @@ export class CreateUserUseCase {
         Permissoes.validatePermissions(permissoes);
         Perfil.validate(perfil)
 
-
-
         const user = await User.create(props);
         const repo = new PrismaUserRepository();
         repo.create(user)

@@ -5,7 +5,7 @@ const perfilSchema = z.object({
     foto: z.string(),
     nomeDeUsuario: z.string().min(3).max(50),
     tema: z.string().regex(/^[a-zA-Z]+$/),
-    fonte: z.string().max(2).regex(/[0-9]+/)
+    fonte: z.number().min(4).max(12)
 })
 
 type PerfilProps = z.infer<typeof perfilSchema>

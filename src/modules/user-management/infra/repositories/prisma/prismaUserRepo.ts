@@ -14,14 +14,29 @@ export class PrismaUserRepository implements UserRepository {
     }
     async create(data: CreateUserInputDTO): Promise<User | null> {
          try{
+            const {nome, email, senha, permissoes, perfil} = data;
              const user = await prisma.user.create({
-                 data
-                //  :{
-                //     nome: data.nome,
-                //     email: data.email,
-                //     senha: data.senha,
-                //     permissoes: data.permissoes,
-                //  } 
+                //  data: {
+                //      nome: data.nome,
+                //      email: data.email,
+                //      senha: data.senha,
+                //      permissoes: data.permissoes,
+                //      perfil:{
+                //         foto: data.perfil.foto,
+                //         nomeDeUsuario: data.perfil.nomeDeUsuario,
+                //         fonte: data.perfil.fonte,
+                //         tema: data.perfil.tema
+                //      }
+                //   } 
+                data: {
+                    nome, email, senha, permissoes,
+                    perfil: {
+                        create:
+                            {fonte: perfil.fonte, nomeDeUsuario: perfil.nomeDeUsuario, tema: perfil.tema, foto: perfil.foto}
+
+                        
+                    }
+                }
             })
             return user
         }catch (error){

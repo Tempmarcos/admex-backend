@@ -1,9 +1,7 @@
 import { z } from "zod";
-import { Email } from "../../../shared/value-objects/email/email";
-import { Permissoes } from "../value-objects/permissoes/permissoes";
-import { Perfil } from "../value-objects/perfil/perfil";
 import { CreateUserInputDTO } from "../../dtos/user/CreateUserInputDTO";
 import { InvalidNameError } from "../../../shared/errors/user/invalidNameError";
+import { CreatePerfilInputDTO } from "../../dtos/perfil/CreatePerfilInputDTO";
 
 
 const NomeSchema= z.string().min(3, "Nome muito curto").max(50, "Nome muito longo")
@@ -17,8 +15,20 @@ export class User{
         return this.nome;
     }
     
-    get email (): Email {
+    get email (): string {
         return this.email;
+      }
+
+    get senha (): string {
+        return this.senha;
+      }
+
+    get permissoes (): string[] {
+        return this.permissoes;
+      }
+
+    get perfil (): CreatePerfilInputDTO {
+        return this.perfil
       }
     
     private constructor(props: CreateUserInputDTO){
