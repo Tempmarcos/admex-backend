@@ -34,9 +34,9 @@ export class User{
             return nome;
     }
     
-    public static async create (props: CreateUserInputDTO) {
+    public static async create (props: CreateUserInputDTO) : Promise<User> {
         const { nome, email, senha, permissoes, perfil} = props
-        new User(props);
+        return new User(props);
     }
 }
 

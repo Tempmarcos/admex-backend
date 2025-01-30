@@ -22,8 +22,8 @@ model Perfil {
   id            String   @id @default(uuid())
   userId        String   @unique
   user          User     @relation(fields: [userId], references: [id])
-  foto          String
+  foto          String?
   nomeDeUsuario String
-  tema          String
-  fonte         Int
+  tema          String   @default("default")
+  fonte         Int      @default(9)
 }

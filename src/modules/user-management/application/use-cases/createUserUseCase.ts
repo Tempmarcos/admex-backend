@@ -4,6 +4,7 @@ import { Perfil } from "../../domain/value-objects/perfil/perfil";
 import { Permissoes } from "../../domain/value-objects/permissoes/permissoes";
 import { Senha } from "../../domain/value-objects/senha/senha";
 import { CreateUserInputDTO } from "../../dtos/user/CreateUserInputDTO";
+import { PrismaUserRepository } from "../../infra/repositories/prisma/prismaUserRepo";
 import { PasswordHasher } from "../../infra/services/passwordHasher";
 
 export class CreateUserUseCase {
@@ -18,6 +19,8 @@ export class CreateUserUseCase {
 
 
 
-        User.create(props)
+        const user = await User.create(props);
+        const repo = new PrismaUserRepository();
+        repo.create(user)
     }
 }

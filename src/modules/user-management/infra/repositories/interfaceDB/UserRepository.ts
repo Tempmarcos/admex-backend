@@ -1,6 +1,6 @@
 import { Prisma, User } from "@prisma/client";
-import { CreateUserInputDTO } from "../../dtos/user/CreateUserInputDTO";
-import { ListUserDTO } from "../../dtos/user/ListUserDTO";
+import { CreateUserInputDTO } from "../../../dtos/user/CreateUserInputDTO";
+import { ListUserDTO } from "../../../dtos/user/ListUserDTO";
 
 
 export interface UserRepository {
