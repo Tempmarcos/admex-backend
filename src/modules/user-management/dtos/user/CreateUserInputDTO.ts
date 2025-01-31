@@ -2,7 +2,7 @@ import { z } from "zod";
 import { CreatePerfilInputZod } from "../perfil/CreatePerfilInputDTO";
 
 
-const CreateUserInputZod = z.object({
+export const CreateUserInputZod = z.object({
     nome: z.string(),
     email: z.string(),
     senha: z.string(),
