@@ -1,4 +1,5 @@
 import { create } from "../../../interfaces/controllers/create";
+import { list } from "../../../interfaces/controllers/list";
 
 const express = require('express');
 

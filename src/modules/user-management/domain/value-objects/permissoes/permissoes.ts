@@ -10,7 +10,7 @@ enum permissions  {
 
 const permissionEnum = z.nativeEnum(permissions)
 
-const permissionSchema= z.array(permissionEnum)
+export const permissionSchema= z.array(permissionEnum)
 
 export class Permissoes {
     static comparePermissions(permissions : string[], userPermissions : string[]){

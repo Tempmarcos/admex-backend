@@ -7,7 +7,7 @@ export interface UserRepository {
     findById(id: string): Promise<User | null>
     findByEmail(email: string): Promise<User | null>
     create(data: CreateUserInputDTO): Promise<User | null>
-    list(): Promise<ListUserDTO[]>
+    list(empresaId: string): Promise<ListUserDTO[]>
     delete(id: string): Promise<User | null>
     //Criar get e update
 }

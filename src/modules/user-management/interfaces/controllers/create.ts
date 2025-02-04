@@ -6,6 +6,7 @@ export async function create(request: Request, response: Response, next: NextFun
     const newUser = request.body;
     try {
       const data = CreateUserInputZod.parse(newUser)
+
       await CreateUserUseCase.execute(data, 'empresaId')
       return response.status(201).send({ message: "Usuário cadastrado com sucesso!" })
     } catch (err) {
