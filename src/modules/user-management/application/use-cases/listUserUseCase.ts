@@ -1,9 +1,9 @@
 import { User } from "@prisma/client";
-import { PrismaUserRepository } from "../../infra/repositories/prisma/prismaUserRepo"
+import { UserRepository } from "../../infra/repositories/interfaceDB/UserRepository";
 
 
 export class ListUserUseCase {
-    constructor(private userRepository: PrismaUserRepository){}
+    constructor(private userRepository: UserRepository){}
 
     async execute(empresaId: string): Promise<User[]> {
   
