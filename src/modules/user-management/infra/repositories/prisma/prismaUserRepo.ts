@@ -1,10 +1,35 @@
 import { PrismaClient, User } from "@prisma/client";
 import { CreateUserInputDTO } from "../../../dtos/user/CreateUserInputDTO";
 import { UserRepository } from "../interfaceDB/UserRepository";
+import { UpdateUserInputDTO } from "../../../dtos/user/UpdateUserInputDTO";
 
 const prisma = new PrismaClient();
 
 export class PrismaUserRepository implements UserRepository {
+    async update(data: UpdateUserInputDTO, id: string): Promise<User | null> {
+        const {nome, email, senha, permissoes, perfil} = data;
+        try {
+            const user = prisma.user.update({
+                where: {
+                    id,
+                },
+                data: {
+                    nome, email, senha, permissoes,
+                    perfil: {
+                        update:
+                            {fonte: perfil.fonte, 
+                            nomeDeUsuario: perfil.nomeDeUsuario, 
+                            tema: perfil.tema, foto: perfil.foto}
+                    }
+                },
+            })
+
+            return user
+        } catch (err){
+            console.log(err)
+            return null
+        }     
+    }
 
     async findById(id: string): Promise<User | null> {
         return prisma.user.findUnique({ where: { id } });

@@ -1,4 +1,5 @@
 import { create } from "../../../interfaces/controllers/create";
+import { deleteUser } from "../../../interfaces/controllers/deleteUser";
 import { list } from "../../../interfaces/controllers/list";
 
 const express = require('express');
@@ -15,9 +16,9 @@ usersRoutes.post("/", create)
 
 usersRoutes.get("/", list)
 
-usersRoutes.get("/:id", getUser)
+// usersRoutes.get("/:id", getUser)
 
-usersRoutes.put("/", update)
+// usersRoutes.put("/", update)
 
 usersRoutes.delete("/:id", deleteUser)
 
