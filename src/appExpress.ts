@@ -2,7 +2,7 @@ import express from 'express'
 import { Request, Response } from 'express';
  import cors from 'cors'
 import {router} from './modules/shared/routes/index'
-// import { errorHandling } from './http/middlewares/errorHandling'
+// import { errorHandling } from './infra/middlewares/errorHandling'
 import path from 'path'
 
 export const appExpress = express()

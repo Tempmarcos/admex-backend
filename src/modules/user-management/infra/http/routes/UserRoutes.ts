@@ -1,14 +1,9 @@
 import { create } from "../../../interfaces/controllers/create";
 import { deleteUser } from "../../../interfaces/controllers/deleteUser";
 import { list } from "../../../interfaces/controllers/list";
+import { update } from "../../../interfaces/controllers/update";
 
 const express = require('express');
-
-
-// import { list } from "../controllers/user/list";
-// import { getUser } from "../controllers/user/getUser";
-// import { update } from "../controllers/user/update";
-// import { deleteUser } from "../controllers/user/deleteUser";
 
 const usersRoutes = express.Router();
 
@@ -18,7 +13,7 @@ usersRoutes.get("/", list)
 
 // usersRoutes.get("/:id", getUser)
 
-// usersRoutes.put("/", update)
+usersRoutes.put("/", update)
 
 usersRoutes.delete("/:id", deleteUser)
 

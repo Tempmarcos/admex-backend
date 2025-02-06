@@ -2,25 +2,20 @@ import { PrismaClient, User } from "@prisma/client";
 import { CreateUserInputDTO } from "../../../dtos/user/CreateUserInputDTO";
 import { UserRepository } from "../interfaceDB/UserRepository";
 import { UpdateUserInputDTO } from "../../../dtos/user/UpdateUserInputDTO";
+import { EmailAlreadyExistsError } from "../../../../shared/errors/email/emailAlreadyExistsError";
 
 const prisma = new PrismaClient();
 
 export class PrismaUserRepository implements UserRepository {
     async update(data: UpdateUserInputDTO, id: string): Promise<User | null> {
-        const {nome, email, senha, permissoes, perfil} = data;
+        const {nome, permissoes} = data;
         try {
             const user = prisma.user.update({
                 where: {
                     id,
                 },
                 data: {
-                    nome, email, senha, permissoes,
-                    perfil: {
-                        update:
-                            {fonte: perfil.fonte, 
-                            nomeDeUsuario: perfil.nomeDeUsuario, 
-                            tema: perfil.tema, foto: perfil.foto}
-                    }
+                    nome, permissoes,
                 },
             })
 
@@ -42,6 +37,8 @@ export class PrismaUserRepository implements UserRepository {
     async create(data: CreateUserInputDTO): Promise<User | null> {
          try{
             const {nome, email, senha, permissoes, perfil} = data;
+            const emailExists = await prisma.user.findUnique({ where: { email } });
+            if (emailExists) throw new EmailAlreadyExistsError;
              const user = await prisma.user.create({
                 data: {
                     nome, email, senha, permissoes,

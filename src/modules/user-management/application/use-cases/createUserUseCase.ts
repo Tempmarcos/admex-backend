@@ -11,6 +11,9 @@ export class CreateUserUseCase {
         let { nome, email, senha, permissoes, perfil} = props
         senha = await PasswordHasher.hash(senha);
         Permissoes.validatePermissions(permissoes);
+        User.nomeValidate(nome)
+
+
 
         const user = await User.create(props);
         await this.userRepository.create(user, empresaId)
