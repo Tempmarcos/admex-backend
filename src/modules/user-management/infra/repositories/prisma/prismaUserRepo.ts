@@ -3,6 +3,7 @@ import { CreateUserInputDTO } from "../../../dtos/user/CreateUserInputDTO";
 import { UserRepository } from "../interfaceDB/UserRepository";
 import { UpdateUserInputDTO } from "../../../dtos/user/UpdateUserInputDTO";
 import { EmailAlreadyExistsError } from "../../../../shared/errors/email/emailAlreadyExistsError";
+import { ListUserDTO } from "../../../dtos/user/ListUserDTO";
 
 const prisma = new PrismaClient();
 
@@ -57,9 +58,13 @@ export class PrismaUserRepository implements UserRepository {
         }
     }
 
-    async list(empresaId: string): Promise<User[]> {
-        return prisma.user.findMany({
+    async list(empresaId: string): Promise<ListUserDTO[]> {
+        return await prisma.user.findMany({
             // where: empresaId 
+            select: {
+                id: true,
+                nome: true,
+            }
         });
     }
     

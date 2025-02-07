@@ -12,23 +12,23 @@ export class User{
     private userProps: CreateUserInputDTO;
 
     get nome (): string{
-        return this.nome;
+        return this.userProps.nome;
     }
     
     get email (): string {
-        return this.email;
+        return this.userProps.email;
       }
 
     get senha (): string {
-        return this.senha;
+        return this.userProps.senha;
       }
 
     get permissoes (): string[] {
-        return this.permissoes;
+        return this.userProps.permissoes;
       }
 
     get perfil (): CreatePerfilInputDTO {
-        return this.perfil
+        return this.userProps.perfil
       }
     
     private constructor(props: CreateUserInputDTO){

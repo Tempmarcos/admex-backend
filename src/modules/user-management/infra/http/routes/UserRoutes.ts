@@ -15,6 +15,10 @@ usersRoutes.get("/", list)
 
 usersRoutes.put("/", update)
 
+// usersRoutes.put("/", updateEmail)
+
+// usersRoutes.put("/", updateSenha)
+
 usersRoutes.delete("/:id", deleteUser)
 
 export { usersRoutes }
