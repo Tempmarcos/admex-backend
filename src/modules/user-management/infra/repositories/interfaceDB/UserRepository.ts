@@ -1,4 +1,4 @@
-import { Prisma, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import { CreateUserInputDTO } from "../../../dtos/user/CreateUserInputDTO";
 import { ListUserDTO } from "../../../dtos/user/ListUserDTO";
 import { UpdateUserInputDTO } from "../../../dtos/user/UpdateUserInputDTO";
