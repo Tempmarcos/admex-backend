@@ -1,3 +1,4 @@
+import { EmailAlreadyExistsError } from "../../../shared/errors/email/emailAlreadyExistsError";
 import { User } from "../../domain/entities/user";
 import { Permissoes } from "../../domain/value-objects/permissoes/permissoes";
 import { CreateUserInputDTO } from "../../dtos/user/CreateUserInputDTO";
@@ -12,7 +13,8 @@ export class CreateUserUseCase {
         senha = await PasswordHasher.hash(senha);
         Permissoes.validatePermissions(permissoes);
         User.nomeValidate(nome)
-
+        const emailExists = await this.userRepository.findByEmail(email);
+        if (emailExists) throw new EmailAlreadyExistsError;
 
 
         const user = await User.create(props);

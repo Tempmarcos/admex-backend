@@ -6,6 +6,7 @@ import { PrismaUserRepository } from '../../infra/repositories/prisma/prismaUser
 
 export async function deleteUser(request: Request, response: Response, next: NextFunction) {
     const id = request.params.id;
+    console.log(id)
     try{
         const deleteUserUseCase = new DeleteUserUseCase(new PrismaUserRepository)
         await deleteUserUseCase.execute(id)

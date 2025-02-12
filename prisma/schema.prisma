@@ -8,22 +8,22 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(uuid())
-  nome        String
-  email       String   @unique
-  senha       String
-  created_at  DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  permissoes  String[]
-  perfil      Perfil?
+  id         String   @id @default(uuid())
+  nome       String
+  email      String   @unique
+  senha      String
+  created_at DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  permissoes String[]
+  perfil     Perfil?
 }
 
 model Perfil {
-  id            String   @id @default(uuid())
-  userId        String   @unique
-  user          User     @relation(fields: [userId], references: [id])
+  id            String  @id @default(uuid())
+  userId        String  @unique
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   foto          String?
   nomeDeUsuario String
-  tema          String   @default("default")
-  fonte         Int      @default(9)
+  tema          String  @default("default")
+  fonte         Int     @default(9)
 }

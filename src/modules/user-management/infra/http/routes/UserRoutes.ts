@@ -7,7 +7,7 @@ const express = require('express');
 
 const usersRoutes = express.Router();
 
-usersRoutes.post("/", create)
+usersRoutes.post("/", create) //esse create vai ser pro convite com token
 
 usersRoutes.get("/", list)
 
