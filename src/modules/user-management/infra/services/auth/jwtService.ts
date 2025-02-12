@@ -1,18 +1,25 @@
 import jwt from 'jsonwebtoken';
 import { env } from '../../../../../env';
+import { AuthInterface } from './authInterface';
 
-export class JWTService {
+export class JWTService implements AuthInterface{
+    // sign(payload: object): Promise<string | null> {
+    //     throw new Error('Method not implemented.');
+    // }
+    // verify(token: string): Promise<string | null> {
+    //     throw new Error('Method not implemented.');
+    // }
 
-    static sign(payload: object): string {
+     async sign(payload: object): Promise<string> {
         const secret : string= env.JWT_SECRET;
         const expiration : any= env.EXPIRES;
         
-        return jwt.sign(payload, secret, {expiresIn: expiration})
+        return await jwt.sign(payload, secret, {expiresIn: expiration})
     }
 
-    static verify(token: string): jwt.JwtPayload | null {
+    async verify(token: string): Promise<jwt.JwtPayload | null> {
         try{
-            return jwt.verify(token, env.JWT_SECRET) as jwt.JwtPayload;
+            return await jwt.verify(token, env.JWT_SECRET) as jwt.JwtPayload;
         }catch (error) {
             return null;
           }

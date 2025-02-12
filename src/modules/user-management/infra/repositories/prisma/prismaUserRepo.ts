@@ -8,6 +8,7 @@ import { ListUserDTO } from "../../../dtos/user/ListUserDTO";
 const prisma = new PrismaClient();
 
 export class PrismaUserRepository implements UserRepository {
+    static findById: any;
     async update(data: UpdateUserInputDTO, id: string): Promise<User | null> {
         const {nome, permissoes} = data;
         try {

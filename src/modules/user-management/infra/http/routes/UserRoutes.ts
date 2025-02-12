@@ -13,11 +13,13 @@ usersRoutes.get("/", list)
 
 // usersRoutes.get("/:id", getUser)
 
-usersRoutes.put("/", update)
+usersRoutes.patch("/", update)
 
-// usersRoutes.put("/", updateEmail)
+// usersRoutes.patch("/email", updateEmail)
 
-// usersRoutes.put("/", updateSenha)
+// usersRoutes.patch("/senha", updateSenha)
+
+// usersRoutes.patch("/perfil", updatePerfil)
 
 usersRoutes.delete("/:id", deleteUser)
 

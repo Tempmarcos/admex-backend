@@ -17,7 +17,8 @@ export async function authMiddleware(
     const token = authHeader.split(' ')[1];
   
     // 2. Verificar o token
-    const decoded = JWTService.verify(token);
+    const jwt = new JWTService;
+    const decoded : any = jwt.verify(token);
   
     if (!decoded) {
       return res.status(401).json({ error: 'Token inválido ou expirado' });
@@ -26,7 +27,7 @@ export async function authMiddleware(
     // 3. Buscar o usuário no banco (opcional, mas recomendado)
     try {
       const user = await  PrismaUserRepository.findById({
-        where: { id: decoded.id },
+        where: { id: decoded.userID },
       });
   
       if (!user) {

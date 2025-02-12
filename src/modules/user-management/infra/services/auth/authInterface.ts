@@ -1,6 +1,7 @@
+import { JwtPayload } from "jsonwebtoken"
 
 
 export interface AuthInterface {
-    sign(payload: object): Promise<string | null>
-    verify(token: string): Promise<string | null>
+    sign(payload: object | object | Buffer): Promise<string>
+    verify(token: string): Promise<object | JwtPayload | null>
 }

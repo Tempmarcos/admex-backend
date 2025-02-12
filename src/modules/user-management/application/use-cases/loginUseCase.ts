@@ -6,7 +6,7 @@ import { compare } from 'bcrypt';
 import { AuthInterface } from '../../infra/services/auth/authInterface';
 
 
-export class AuthUseCase {
+export class LoginUseCase {
     constructor(private userRepository: UserRepository, private authInterface: AuthInterface) { }
 
 
@@ -28,12 +28,7 @@ export class AuthUseCase {
         empresaID: 'empresaID'});
   
       return {
-        user: {
-          nome: userExist.nome,
-          email: userExist.email,
-          permissoes: userExist.permissoes,
-          empresaID: 'empresaID',
-        },
+        user: userExist,
         token,
       }
     }
