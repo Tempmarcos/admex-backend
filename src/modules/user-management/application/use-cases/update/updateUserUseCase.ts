@@ -1,8 +1,8 @@
-import { User } from "../../domain/entities/user";
-import { Permissoes } from "../../domain/value-objects/permissoes/permissoes";
+import { User } from "../../../domain/entities/user";
+import { Permissoes } from "../../../domain/value-objects/permissoes/permissoes";
 
-import { UpdateUserInputDTO } from "../../dtos/user/UpdateUserInputDTO";
-import { UserRepository } from "../../infra/repositories/interfaceDB/UserRepository";
+import { UpdateUserInputDTO } from "../../../dtos/user/UpdateUserInputDTO";
+import { UserRepository } from "../../../infra/repositories/interfaceDB/UserRepository";
 
 
 export class UpdateUserUseCase {

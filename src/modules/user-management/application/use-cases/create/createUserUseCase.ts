@@ -1,9 +1,9 @@
-import { EmailAlreadyExistsError } from "../../../shared/errors/email/emailAlreadyExistsError";
-import { User } from "../../domain/entities/user";
-import { Permissoes } from "../../domain/value-objects/permissoes/permissoes";
-import { CreateUserInputDTO } from "../../dtos/user/CreateUserInputDTO";
-import { UserRepository } from "../../infra/repositories/interfaceDB/UserRepository";
-import { PasswordHasher } from "../../infra/services/passwordHasher";
+import { EmailAlreadyExistsError } from "../../../../shared/errors/email/emailAlreadyExistsError";
+import { User } from "../../../domain/entities/user";
+import { Permissoes } from "../../../domain/value-objects/permissoes/permissoes";
+import { CreateUserInputDTO } from "../../../dtos/user/CreateUserInputDTO";
+import { UserRepository } from "../../../infra/repositories/interfaceDB/UserRepository";
+import { PasswordHasher } from "../../../infra/services/passwordHasher";
 
 export class CreateUserUseCase {
     constructor(private userRepository: UserRepository){}

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateUserUseCase } from '../../application/use-cases/createUserUseCase';
+import { CreateUserUseCase } from '../../application/use-cases/create/createUserUseCase';
 import { CreateUserInputZod } from '../../dtos/user/CreateUserInputDTO';
 import { PrismaUserRepository } from '../../infra/repositories/prisma/prismaUserRepo';
 

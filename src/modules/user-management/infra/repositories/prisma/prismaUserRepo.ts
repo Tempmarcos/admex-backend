@@ -3,6 +3,8 @@ import { CreateUserInputDTO } from "../../../dtos/user/CreateUserInputDTO";
 import { UserRepository } from "../interfaceDB/UserRepository";
 import { UpdateUserInputDTO } from "../../../dtos/user/UpdateUserInputDTO";
 import { ListUserDTO } from "../../../dtos/user/ListUserDTO";
+import { UserNotExistsError } from "../../../../shared/errors/user/userNotExistsError";
+import { GetUserDTO } from "../../../dtos/user/GetUserDTO";
 
 const prisma = new PrismaClient();
 
@@ -54,6 +56,32 @@ export class PrismaUserRepository implements UserRepository {
             console.log(error)
             return null
         }
+    }
+
+    async get(id: string): Promise<GetUserDTO | null>{
+        try {
+            const user = await prisma.user.findUnique({
+              where: {
+                id,
+              },
+              select: {
+                id: true,
+                nome: true,
+                email: true,
+                permissoes: true,
+                created_at: true,
+                updatedAt: true,
+                perfil: true
+              },
+            })
+      
+            if (!user) throw new UserNotExistsError
+      
+            return user
+      
+          } catch (error) {
+            throw new Error()
+          }
     }
 
     async list(empresaId: string): Promise<ListUserDTO[]> {

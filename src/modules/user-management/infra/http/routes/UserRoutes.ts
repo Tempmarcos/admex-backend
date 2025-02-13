@@ -1,5 +1,6 @@
 import { create } from "../../../interfaces/controllers/create";
 import { deleteUser } from "../../../interfaces/controllers/deleteUser";
+import { getUser } from "../../../interfaces/controllers/getUser";
 import { list } from "../../../interfaces/controllers/list";
 import { update } from "../../../interfaces/controllers/update";
 
@@ -11,9 +12,9 @@ usersRoutes.post("/", create) //esse create vai ser pro convite com token
 
 usersRoutes.get("/", list)
 
-// usersRoutes.get("/:id", getUser)
+usersRoutes.get("/:id", getUser)
 
-usersRoutes.patch("/", update)
+usersRoutes.patch("/:id", update)
 
 // usersRoutes.patch("/email", updateEmail)
 

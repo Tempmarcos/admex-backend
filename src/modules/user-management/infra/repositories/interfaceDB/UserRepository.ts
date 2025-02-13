@@ -2,6 +2,7 @@ import { User } from "@prisma/client";
 import { CreateUserInputDTO } from "../../../dtos/user/CreateUserInputDTO";
 import { ListUserDTO } from "../../../dtos/user/ListUserDTO";
 import { UpdateUserInputDTO } from "../../../dtos/user/UpdateUserInputDTO";
+import { GetUserDTO } from "../../../dtos/user/GetUserDTO";
 
 
 export interface UserRepository {
@@ -10,7 +11,7 @@ export interface UserRepository {
     create(data: CreateUserInputDTO, empresaId: string): Promise<User | null>
     list(empresaId: string): Promise<ListUserDTO[]>
     delete(id: string): Promise<User | null>
-    //Criar get e update
+    get(id: string): Promise<GetUserDTO | null>
     update(data: UpdateUserInputDTO, id: string): Promise<User | null>
 
 }

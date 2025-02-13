@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { PrismaUserRepository } from '../../infra/repositories/prisma/prismaUserRepo';
-import { UpdateUserUseCase } from '../../application/use-cases/updateUserUseCase';
+import { UpdateUserUseCase } from '../../application/use-cases/update/updateUserUseCase';
 import { UpdateUserInputZod } from '../../dtos/user/UpdateUserInputDTO';
 
 
