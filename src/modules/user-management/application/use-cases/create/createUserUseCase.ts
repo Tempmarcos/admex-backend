@@ -17,7 +17,7 @@ export class CreateUserUseCase {
         if (emailExists) throw new EmailAlreadyExistsError;
 
 
-        const user = await User.create(props);
+        const user = await User.create({nome, email, senha, permissoes, perfil});
         await this.userRepository.create(user, empresaId)
     }
 }

@@ -5,24 +5,24 @@ import { InvalidPerfilError } from '../../../../shared/errors/perfil/invalidPerf
 
 test('Criar perfil válido', () => {
     const profile = {foto: '010101101110101101', nomeDeUsuario: 'Tempmarcos',
-        tema: 'floral', fonte: '14'}
+        tema: 'floral', fonte: 10}
     expect(Perfil.validate(profile)).toReturn
 })
 
 test('Criar perfil com tema inválido', () => {
     const profile = {foto: '010101101110101101', nomeDeUsuario: 'Tempmarcos',
-        tema: 'floral2', fonte: '14'};
+        tema: 'floral2', fonte: 10};
     expect(() => Perfil.validate(profile)).toThrow(InvalidPerfilError)
 })
 
 test('Criar perfil com fonte inválida', () => {
     const profile = {foto: '010101101110101101', nomeDeUsuario: 'Tempmarcos',
-        tema: 'floral', fonte: '14c'};
+        tema: 'floral', fonte: 0};
     expect(() => Perfil.validate(profile)).toThrow(InvalidPerfilError)
 })
 
 test('Criar perfil com nome inválido', () => {
     const profile = {foto: '010101101110101101', nomeDeUsuario: 'oi',
-        tema: 'floral', fonte: '14'};
+        tema: 'floral', fonte: 10};
     expect(() => Perfil.validate(profile)).toThrow(InvalidPerfilError)
 })
