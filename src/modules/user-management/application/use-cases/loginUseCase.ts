@@ -4,6 +4,7 @@ import { LoginDTO } from '../../dtos/user/loginDTO';
 import { UserNotExistsError } from '../../../shared/errors/user/userNotExistsError';
 import { compare } from 'bcrypt';
 import { AuthInterface } from '../../infra/services/auth/authInterface';
+import { InvalidSenhaError } from '../../../shared/errors/senha/invalidSenhaError';
 
 
 export class LoginUseCase {
@@ -21,7 +22,7 @@ export class LoginUseCase {
       const passwordMatch = await compare(senha, userExist.senha)
   
       if (!passwordMatch) {
-        throw new UserNotExistsError()
+        throw new InvalidSenhaError()
       }
   
       const token = await this.authInterface.sign({userID: userExist.id, 

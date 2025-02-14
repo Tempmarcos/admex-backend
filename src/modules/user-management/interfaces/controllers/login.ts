@@ -7,8 +7,8 @@ import { LoginSchema } from '../../dtos/user/loginDTO';
 
 
 export async function login(request: Request, response: Response, next: NextFunction) {
-    const email = request.params.email;
-    const senha = request.params.senha;
+    const email = request.body.email;
+    const senha = request.body.senha;
 
     try{
         const loginUseCase = new LoginUseCase(new PrismaUserRepository, new JWTService)
