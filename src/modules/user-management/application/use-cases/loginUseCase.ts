@@ -5,6 +5,7 @@ import { UserNotExistsError } from '../../../shared/errors/user/userNotExistsErr
 import { AuthInterface } from '../../infra/services/auth/authInterface';
 import { InvalidSenhaError } from '../../../shared/errors/senha/invalidSenhaError';
 import { PasswordHasher } from '../../infra/services/passwordHasher';
+import { LoginResponseDTO } from '../../dtos/login/LoginResponseDTO';
 
 
 export class LoginUseCase {
@@ -33,9 +34,21 @@ export class LoginUseCase {
         empresaID: 'empresaID'});
   
         // console.log(token)
+
+
+        const loginResponse : LoginResponseDTO = {
+          id: userExist.id,
+          nome: userExist.nome,
+          email: userExist.email,
+          permissoes: userExist.permissoes,
+          created_at: userExist.created_at,
+          updatedAt: userExist.updatedAt,
+          // perfil: userExist.perfil,
+          token: token
+        }
       return {
-        user: userExist,
-        token,
+        loginResponse
+        
       }
     }
   };
