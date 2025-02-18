@@ -1,5 +1,7 @@
-export class UserNotExistsError extends Error {
-    constructor() {
-      super('Usuário não existe')
+import { BaseError } from "../baseError/BaseError";
+
+export class UserNotExistsError extends BaseError {
+    constructor(message: string = "Usuário não existe", details?: any) {
+      super(400, message, details)
     }
   }

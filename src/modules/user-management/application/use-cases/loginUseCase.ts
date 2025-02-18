@@ -36,7 +36,7 @@ export class LoginUseCase {
         // console.log(token)
 
 
-        const loginResponse : LoginResponseDTO = {
+        const loginResponse : Omit<LoginResponseDTO, 'perfil'> = {
           id: userExist.id,
           nome: userExist.nome,
           email: userExist.email,

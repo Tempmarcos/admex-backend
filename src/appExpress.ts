@@ -2,8 +2,8 @@ import express from 'express'
 import { Request, Response } from 'express';
  import cors from 'cors'
 import {router} from './modules/shared/routes/index'
-import { errorHandler } from '../src/modules/shared/middlewares/errorHandling/errorHandling'
-import path from 'path'
+import { errorHandler } from './modules/shared/middlewares/errorHandling/errorHandler'
+
 
 export const appExpress = express()
 

@@ -27,3 +27,11 @@ model Perfil {
   tema          String  @default("default")
   fonte         Int     @default(9)
 }
+
+model ErrorLog {
+  id        String   @id @default(uuid())
+  message   String
+  stack     String?
+  timestamp DateTime @default(now())
+  metadata  Json?
+}

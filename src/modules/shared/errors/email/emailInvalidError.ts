@@ -1,5 +1,7 @@
-export class EmailInvalidError extends Error {
-    constructor() {
-      super('Precisa ser um email válido')
+import { BaseError } from "../baseError/BaseError";
+
+export class EmailInvalidError extends BaseError {
+    constructor(message: string = "E-mail inválido", details?: any) {
+      super(400, message, details)
     }
   }

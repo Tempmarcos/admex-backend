@@ -4,5 +4,5 @@ import { User } from "@prisma/client";
 
 
 export type GetUserDTO = Omit<User, "senha"> & {
-    perfil?: CreatePerfilInputDTO
+    perfil: any
 }
