@@ -3,6 +3,8 @@ import { deleteUser } from "../../../interfaces/controllers/deleteUser";
 import { getUser } from "../../../interfaces/controllers/getUser";
 import { list } from "../../../interfaces/controllers/list";
 import { update } from "../../../interfaces/controllers/update";
+import { updatePerfil } from "../../../interfaces/controllers/updatePerfil";
+import { updateSenha } from "../../../interfaces/controllers/updateSenha";
 
 const express = require('express');
 
@@ -18,9 +20,9 @@ usersRoutes.patch("/:id", update)
 
 // usersRoutes.patch("/email", updateEmail)
 
-// usersRoutes.patch("/senha", updateSenha)
+usersRoutes.patch("/senha/:id", updateSenha)
 
-// usersRoutes.patch("/perfil", updatePerfil)
+usersRoutes.patch("/perfil/:id", updatePerfil)
 
 usersRoutes.delete("/:id", deleteUser)
 

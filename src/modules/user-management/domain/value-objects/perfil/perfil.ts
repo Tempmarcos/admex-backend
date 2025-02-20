@@ -2,10 +2,10 @@ import { z } from "zod";
 import { InvalidPerfilError } from "../../../../shared/errors/perfil/invalidPerfilError";
 
 const perfilSchema = z.object({
-    foto: z.string(),
+    foto: z.string().optional(),
     nomeDeUsuario: z.string().min(3).max(50),
-    tema: z.string().regex(/^[a-zA-Z]+$/),
-    fonte: z.number().min(4).max(12)
+    tema: z.string().regex(/^[a-zA-Z]+$/).optional(),
+    fonte: z.number().min(4).max(12).optional()
 })
 
 type PerfilProps = z.infer<typeof perfilSchema>

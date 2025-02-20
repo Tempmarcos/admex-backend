@@ -52,7 +52,7 @@ export async function errorHandler (
           },
         });
       } else {
-        sendErrorEmail(err, metadata).catch(console.error);
+        // sendErrorEmail(err, metadata).catch(console.error);
         console.error("Erro não tratado:", err);
         res.status(500).json({
             error: {

@@ -5,11 +5,66 @@ import { UpdateUserInputDTO } from "../../../dtos/user/UpdateUserInputDTO";
 import { ListUserDTO } from "../../../dtos/user/ListUserDTO";
 import { UserNotExistsError } from "../../../../shared/errors/user/userNotExistsError";
 import { GetUserDTO } from "../../../dtos/user/GetUserDTO";
+import { UpdatePerfilInputDTO } from "../../../dtos/perfil/UpdatePerfilInputDTO";
+import { UpdateEmailDTO } from "../../../dtos/user/UpdateEmailDTO";
+import { UpdateSenhaDTO } from "../../../dtos/user/UpdateSenhaDTO";
 
 const prisma = new PrismaClient();
 
 export class PrismaUserRepository implements UserRepository {
-    static findById: any;
+    async updatePerfil(data: UpdatePerfilInputDTO, id: string): Promise<User | null> {
+        const {foto, nomeDeUsuario, tema, fonte} = data;
+        try {
+            const user = prisma.user.update({
+                where: {
+                    id,
+                },
+                data: { 
+                    perfil: {
+                        update: {
+                            foto, nomeDeUsuario, tema, fonte
+                        }
+                    }
+                },
+            })
+            return user
+        }catch(err){
+            console.log(err)
+            return null
+        }
+    }
+    async updateSenha(senha: string, id: string): Promise<User | null> {
+        try {
+            const user = prisma.user.update({
+                where: {
+                    id,
+                },
+                data: {
+                    senha
+                },
+            })
+            return user
+        } catch (err){
+            console.log(err)
+            return null
+        }     
+    }
+    async updateEmail(email: string, id: string): Promise<User | null> {
+        try {
+            const user = prisma.user.update({
+                where: {
+                    id,
+                },
+                data: {
+                    email
+                },
+            })
+            return user
+        } catch (err){
+            console.log(err)
+            return null
+        }     
+    }
     async update(data: UpdateUserInputDTO, id: string): Promise<User | null> {
         const {nome, permissoes} = data;
         try {

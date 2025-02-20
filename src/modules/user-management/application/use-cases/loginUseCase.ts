@@ -6,6 +6,7 @@ import { AuthInterface } from '../../infra/services/auth/authInterface';
 import { InvalidSenhaError } from '../../../shared/errors/senha/invalidSenhaError';
 import { PasswordHasher } from '../../infra/services/passwordHasher';
 import { LoginResponseDTO } from '../../dtos/login/LoginResponseDTO';
+import { SenhaErradaError } from '../../../shared/errors/senha/senhaErradaError';
 
 
 export class LoginUseCase {
@@ -27,7 +28,7 @@ export class LoginUseCase {
       // console.log(passwordMatch)
       
       if (!passwordMatch) {
-        throw new InvalidSenhaError()
+        throw new SenhaErradaError()
       }
   
       const token = await this.authInterface.sign({userID: userExist.id, 

@@ -27,3 +27,29 @@ const transporter = nodemailer.createTransport({
       console.error('Falha ao enviar e-mail de erro:', emailError);
     }
   }
+
+
+  export async function sendPasswordChangeNotification
+  (email: string, nome: string, data: Date){
+    const dia = data.getDate();
+    const mes = data.getMonth() + 1;
+    const ano = data.getFullYear();
+
+    const hora = data.getHours();
+    const minuto = String(data.getMinutes()).padStart(2, '0');
+    try {
+      await transporter.sendMail({
+        from: `Sistema de Monitoramento <${env.EMAIL_USER}>`,
+        to: email,
+        subject: `[TROCA DE SENHA]`,
+        html: `
+          <h1>Sua senha na Admex foi alterada.</h1>
+          <p>Olá ${nome}, sua senha foi alterada no dia 
+          ${dia}/${mes}/${ano} às 
+          ${hora}:${minuto}</p>
+        `
+      });
+    } catch (emailError) {
+      console.error('Falha ao enviar e-mail de troca de senha:', emailError);
+    }
+  }
