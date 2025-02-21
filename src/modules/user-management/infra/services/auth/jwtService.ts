@@ -3,9 +3,12 @@ import { env } from '../../../../../env';
 import { AuthInterface } from './authInterface';
 
 export class JWTService implements AuthInterface{
-     async sign(payload: object): Promise<string> {
+     async sign(payload: object, expiration: any): Promise<string> {
         const secret : string= env.JWT_SECRET;
-        const expiration : any= env.EXPIRES;
+        // const expiration : any= env.EXPIRES;
+        if(!expiration || typeof(expiration) != 'string'){
+            expiration = '6h'
+        }
         
         // console.log(secret + ' ' + expiration)
 
@@ -15,9 +18,9 @@ export class JWTService implements AuthInterface{
         return token
     }
 
-    async verify(token: string): Promise<jwt.JwtPayload | null> {
+    async verify(token: any): Promise<any | null> {
         try{
-            return await jwt.verify(token, env.JWT_SECRET) as jwt.JwtPayload;
+            return await jwt.verify(token, env.JWT_SECRET);
         }catch (error) {
             return null;
           }

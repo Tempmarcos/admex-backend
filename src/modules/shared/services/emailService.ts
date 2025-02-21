@@ -53,3 +53,20 @@ const transporter = nodemailer.createTransport({
       console.error('Falha ao enviar e-mail de troca de senha:', emailError);
     }
   }
+
+  export async function sendEmailUpdateConfirmation(email: string, link: string, nome: string){
+    try {
+      await transporter.sendMail({
+        from: `Sistema de Monitoramento <${env.EMAIL_USER}>`,
+        to: email,
+        subject: `[CONFIRMAR TROCA DE E-MAIL]`,
+        html: `
+          <h1>Confirmar a troca de e-mail.</h1>
+          <p>Olá ${nome}, clique nesse link para confirmar sua troca de e-mail:</p>
+          <a href='${link}'>${link}</a>
+        `
+      });
+    } catch (emailError) {
+      console.error('Falha ao enviar e-mail de troca de senha:', emailError);
+    }
+  }

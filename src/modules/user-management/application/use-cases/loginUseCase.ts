@@ -32,7 +32,7 @@ export class LoginUseCase {
       }
   
       const token = await this.authInterface.sign({userID: userExist.id, 
-        empresaID: 'empresaID'});
+        empresaID: 'empresaID'}, '6h');
   
         // console.log(token)
 

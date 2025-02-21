@@ -49,7 +49,7 @@ export class PrismaUserRepository implements UserRepository {
             return null
         }     
     }
-    async updateEmail(email: string, id: string): Promise<User | null> {
+    async updateEmail(id: string, email: string): Promise<User | null> {
         try {
             const user = prisma.user.update({
                 where: {
