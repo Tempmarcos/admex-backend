@@ -10,7 +10,7 @@ export async function deleteUser(request: Request, response: Response, next: Nex
     try{
         const deleteUserUseCase = new DeleteUserUseCase(new PrismaUserRepository)
         await deleteUserUseCase.execute(id)
-        return response.status(204).send({message: "Usuário deletado com sucesso!"});
+        return response.status(201).send({message: "Usuário deletado com sucesso!"});
     }catch (err){
         next(err)
     }

@@ -13,7 +13,7 @@ export class GetUserUseCase {
         // console.log(id)
         const userExist = this.userRepository.findById(id);
         if(!userExist){
-            throw new UserNotExistsError
+            throw new UserNotExistsError();
         }
         return this.userRepository.get(id)
         }

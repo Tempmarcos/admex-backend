@@ -16,6 +16,8 @@ model User {
   updatedAt  DateTime @updatedAt
   permissoes String[]
   perfil     Perfil?
+  empresaId  String
+  empresa    Empresa  @relation(fields: [empresaId], references: [id])
 }
 
 model Perfil {
@@ -26,6 +28,70 @@ model Perfil {
   nomeDeUsuario String
   tema          String  @default("default")
   fonte         Int     @default(9)
+}
+
+model Empresa {
+  id           String       @id @default(uuid())
+  dadosGerais  DadosGerais?
+  cnpj         String       @unique
+  email        String
+  endereco     String
+  dataCadastro DateTime     @default(now())
+  usuarios     User[]
+  clientes     Cliente[]
+  produtos     Produto[]
+  servicos     Servico[]
+  propostas    Proposta[]
+}
+
+model DadosGerais {
+  id             String   @id @default(uuid())
+  nome           String
+  telefone       String?
+  dataDeFundacao DateTime
+  logo           String?
+  empresaId      String   @unique
+  empresa        Empresa  @relation(fields: [empresaId], references: [id])
+}
+
+model Cliente {
+  id        String     @id @default(uuid())
+  nome      String
+  cpf       String     @unique
+  telefone  String
+  email     String
+  empresaId String
+  empresa   Empresa    @relation(fields: [empresaId], references: [id])
+  propostas Proposta[]
+}
+
+model Produto {
+  id        String  @id @default(uuid())
+  nome      String
+  descricao String
+  preco     Float
+  empresaId String
+  empresa   Empresa @relation(fields: [empresaId], references: [id])
+}
+
+model Servico {
+  id        String  @id @default(uuid())
+  nome      String
+  descricao String
+  preco     Float
+  empresaId String
+  empresa   Empresa @relation(fields: [empresaId], references: [id])
+}
+
+model Proposta {
+  id           String   @id @default(uuid())
+  clienteId    String
+  cliente      Cliente  @relation(fields: [clienteId], references: [id])
+  dataProposta DateTime @default(now())
+  valorTotal   Float
+  status       String
+  empresaId    String
+  empresa      Empresa  @relation(fields: [empresaId], references: [id])
 }
 
 model ErrorLog {
