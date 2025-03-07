@@ -31,27 +31,37 @@ model Perfil {
 }
 
 model Empresa {
-  id           String       @id @default(uuid())
+  id           String        @id @default(uuid())
+  ativa        Boolean
   dadosGerais  DadosGerais?
-  cnpj         String       @unique
-  email        String
-  endereco     String
-  dataCadastro DateTime     @default(now())
+  dataCadastro DateTime      @default(now())
   usuarios     User[]
   clientes     Cliente[]
   produtos     Produto[]
   servicos     Servico[]
   propostas    Proposta[]
+  DadosFiscais DadosFiscais?
 }
 
 model DadosGerais {
   id             String   @id @default(uuid())
   nome           String
-  telefone       String?
   dataDeFundacao DateTime
   logo           String?
   empresaId      String   @unique
   empresa        Empresa  @relation(fields: [empresaId], references: [id])
+}
+
+model Endereco {
+}
+
+model DadosFiscais {
+  id                String  @id @default(uuid())
+  registro          String
+  classificacao     String
+  camposEspecificos Json?
+  empresaId         String  @unique
+  empresa           Empresa @relation(fields: [empresaId], references: [id])
 }
 
 model Cliente {
@@ -92,6 +102,10 @@ model Proposta {
   status       String
   empresaId    String
   empresa      Empresa  @relation(fields: [empresaId], references: [id])
+}
+
+model Endereco {
+  id String @id @default(uuid())
 }
 
 model ErrorLog {

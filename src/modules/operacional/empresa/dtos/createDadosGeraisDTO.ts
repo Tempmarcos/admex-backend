@@ -1,0 +1,12 @@
+import { z } from "zod";
+
+
+const dadosGeraisSchema = z.object({
+    nome: z.string().min(3, "Nome muito curto").max(50, "Nome muito longo")
+.regex(/^[a-zA-ZÀ-ÿ]+(?: [a-zA-ZÀ-ÿ]+)*$/, "Nome não pode conter caracteres especiais"),
+    dataDeFundacao: z.date().max(new Date(), "Data deve ser menor que a data atual"),
+    logo: z.string().optional(),
+})
+
+
+export type DadosGeraisDTO = z.infer<typeof dadosGeraisSchema>;
