@@ -9,6 +9,7 @@ datasource db {
 
 model User {
   id         String   @id @default(uuid())
+  admin      Boolean
   nome       String
   email      String   @unique
   senha      String
@@ -37,6 +38,7 @@ model Empresa {
   dataCadastro DateTime      @default(now())
   usuarios     User[]
   clientes     Cliente[]
+  fornecedores Fornecedor[]
   produtos     Produto[]
   servicos     Servico[]
   propostas    Proposta[]
@@ -44,15 +46,32 @@ model Empresa {
 }
 
 model DadosGerais {
-  id             String   @id @default(uuid())
+  id             String    @id @default(uuid())
   nome           String
   dataDeFundacao DateTime
   logo           String?
-  empresaId      String   @unique
-  empresa        Empresa  @relation(fields: [empresaId], references: [id])
+  endereco       Endereco?
+  empresaId      String    @unique
+  empresa        Empresa   @relation(fields: [empresaId], references: [id])
+  enderecoId     String
 }
 
 model Endereco {
+  id            String      @id @default(uuid())
+  DadosGeraisId String      @unique
+  DadosGerais   DadosGerais @relation(fields: [DadosGeraisId], references: [id])
+}
+
+model Contato {
+  id           String      @id @default(uuid())
+  nome         String
+  funcao       String
+  email        String?
+  fone         String?
+  ClienteId    String?     @unique
+  Cliente      Cliente?    @relation(fields: [ClienteId], references: [id])
+  FornecedorId String?     @unique
+  Fornecedor   Fornecedor? @relation(fields: [FornecedorId], references: [id])
 }
 
 model DadosFiscais {
@@ -67,12 +86,18 @@ model DadosFiscais {
 model Cliente {
   id        String     @id @default(uuid())
   nome      String
-  cpf       String     @unique
-  telefone  String
-  email     String
   empresaId String
+  Contato   Contato?
   empresa   Empresa    @relation(fields: [empresaId], references: [id])
   propostas Proposta[]
+}
+
+model Fornecedor {
+  id        String   @id @default(uuid())
+  nome      String
+  empresaId String
+  empresa   Empresa  @relation(fields: [empresaId], references: [id])
+  Contato   Contato?
 }
 
 model Produto {
@@ -102,10 +127,6 @@ model Proposta {
   status       String
   empresaId    String
   empresa      Empresa  @relation(fields: [empresaId], references: [id])
-}
-
-model Endereco {
-  id String @id @default(uuid())
 }
 
 model ErrorLog {

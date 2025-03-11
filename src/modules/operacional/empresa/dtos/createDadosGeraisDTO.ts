@@ -6,7 +6,9 @@ export const dadosGeraisSchema = z.object({
 .regex(/^[a-zA-ZÀ-ÿ]+(?: [a-zA-ZÀ-ÿ]+)*$/, "Nome não pode conter caracteres especiais"),
     dataDeFundacao: z.date().max(new Date(), "Data deve ser menor que a data atual"),
     logo: z.string().optional(),
+    endereco: z.any()
+
 })
 
 
-export type DadosGeraisDTO = z.infer<typeof dadosGeraisSchema>;
+export type CreateDadosGeraisDTO = z.infer<typeof dadosGeraisSchema>;
