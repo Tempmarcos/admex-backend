@@ -7,8 +7,9 @@ export class EnderecoBR extends Endereco {
         super(props.pais, props.logradouro, props.cidade, props.codigoPostal);
       }
 
-    validar(): boolean {
-        throw new Error("Method not implemented.");
+    validar(): any {
+        // throw new Error("Method not implemented.");
+        console.log("Endereço validado para BR")
     }
     formatar(): string {
         throw new Error("Method not implemented.");

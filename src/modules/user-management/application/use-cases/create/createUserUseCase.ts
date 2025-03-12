@@ -9,7 +9,7 @@ export class CreateUserUseCase {
     constructor(private userRepository: UserRepository){}
 
      async execute(props: CreateUserInputDTO, empresaId : string): Promise<void>{
-        let { nome, email, senha, permissoes, perfil} = props
+        let { nome, email, senha, permissoes, perfil, admin} = props
         senha = await PasswordHasher.hash(senha);
         Permissoes.validatePermissions(permissoes);
         User.nomeValidate(nome)
@@ -17,7 +17,7 @@ export class CreateUserUseCase {
         if (emailExists) throw new EmailAlreadyExistsError;
 
 
-        const user = await User.create({nome, email, senha, permissoes, perfil});
+        const user = await User.create({nome, email, senha, permissoes, perfil, admin});
         await this.userRepository.create(user, empresaId)
     }
 }

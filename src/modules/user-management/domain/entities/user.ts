@@ -14,6 +14,10 @@ export class User{
     get nome (): string{
         return this.userProps.nome;
     }
+
+    get admin () : boolean{
+        return this.userProps.admin;
+    }
     
     get email (): string {
         return this.userProps.email;
@@ -45,7 +49,7 @@ export class User{
     }
     
     public static async create (props: CreateUserInputDTO) : Promise<User> {
-        const { nome, email, senha, permissoes, perfil} = props
+        const { nome, email, senha, permissoes, perfil, admin} = props
         return new User(props);
     }
 }

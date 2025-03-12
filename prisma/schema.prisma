@@ -18,7 +18,7 @@ model User {
   permissoes String[]
   perfil     Perfil?
   empresaId  String
-  empresa    Empresa  @relation(fields: [empresaId], references: [id])
+  empresa    Empresa? @relation(fields: [empresaId], references: [id])
 }
 
 model Perfil {
@@ -32,17 +32,17 @@ model Perfil {
 }
 
 model Empresa {
-  id           String        @id @default(uuid())
-  ativa        Boolean
-  dadosGerais  DadosGerais?
-  dataCadastro DateTime      @default(now())
-  usuarios     User[]
-  clientes     Cliente[]
-  fornecedores Fornecedor[]
-  produtos     Produto[]
-  servicos     Servico[]
-  propostas    Proposta[]
-  DadosFiscais DadosFiscais?
+  id               String            @id @default(uuid())
+  ativa            Boolean
+  dataCadastro     DateTime          @default(now())
+  usuarios         User[]
+  clientes         Cliente[]
+  fornecedores     Fornecedor[]
+  itens            ItemDeVenda[]
+  propostas        Proposta[]
+  DadosGerais      DadosGerais?
+  DadosFiscais     DadosFiscais?
+  DadosFinanceiros DadosFinanceiros?
 }
 
 model DadosGerais {
@@ -53,13 +53,14 @@ model DadosGerais {
   endereco       Endereco?
   empresaId      String    @unique
   empresa        Empresa   @relation(fields: [empresaId], references: [id])
-  enderecoId     String
 }
 
 model Endereco {
   id            String      @id @default(uuid())
   DadosGeraisId String      @unique
   DadosGerais   DadosGerais @relation(fields: [DadosGeraisId], references: [id])
+  pais          String // BR, US, JP
+  dados         Json // Campos específicos do país
 }
 
 model Contato {
@@ -76,11 +77,18 @@ model Contato {
 
 model DadosFiscais {
   id                String  @id @default(uuid())
-  registro          String
+  registro          String  @unique
   classificacao     String
   camposEspecificos Json?
   empresaId         String  @unique
   empresa           Empresa @relation(fields: [empresaId], references: [id])
+}
+
+model DadosFinanceiros {
+  id            String  @id @default(uuid())
+  contaBancaria String
+  empresaId     String  @unique
+  empresa       Empresa @relation(fields: [empresaId], references: [id])
 }
 
 model Cliente {
@@ -100,17 +108,9 @@ model Fornecedor {
   Contato   Contato?
 }
 
-model Produto {
+model ItemDeVenda {
   id        String  @id @default(uuid())
-  nome      String
-  descricao String
-  preco     Float
-  empresaId String
-  empresa   Empresa @relation(fields: [empresaId], references: [id])
-}
-
-model Servico {
-  id        String  @id @default(uuid())
+  tipo      String
   nome      String
   descricao String
   preco     Float

@@ -8,8 +8,9 @@ export class DadosFiscaisBR extends DadosFiscais {
         super(props.registro, props.classificacao);
     }
 
-    validarRegistro(registro: string): boolean {
-        throw new Error("Method not implemented.");
+    validarRegistro(registro: string): any {
+        // throw new Error("Method not implemented.");
+        console.log("Validar cpnj " + registro)
         //função para validar o cnpj
     }
 }

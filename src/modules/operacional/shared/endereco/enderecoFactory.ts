@@ -1,7 +1,7 @@
 import { Endereco } from "./endereco";
 import { EnderecoBR } from "./enderecoBR";
 
-class EnderecoFactory {
+export class EnderecoFactory {
     static criar(dados: any): Endereco {
       switch (dados.pais.toUpperCase()) {
         case 'BR':

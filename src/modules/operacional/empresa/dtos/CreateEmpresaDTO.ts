@@ -5,10 +5,10 @@ import { dadosFinanceirosSchema } from "./createDadosFinanceirosDTO";
 
 
 
-const empresaSchema = z.object({
+export const empresaSchema = z.object({
     DadosGerais: dadosGeraisSchema,
     DadosFiscais: dadosFiscaisSchema,
-    DadosFinanceiros: dadosFinanceirosSchema.optional()
+    DadosFinanceiros: dadosFinanceirosSchema
 })
 
 

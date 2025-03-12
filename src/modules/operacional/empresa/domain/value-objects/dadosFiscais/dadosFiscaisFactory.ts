@@ -1,7 +1,7 @@
 import { DadosFiscais } from "./dadosFiscais";
 import { DadosFiscaisBR } from "./dadosFiscaisBR";
 
-class DadosFiscaisFactory {
+export class DadosFiscaisFactory {
     static criar(pais: string, dados: any): DadosFiscais {
       switch (pais) {
         case 'BR':
