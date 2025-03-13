@@ -2,13 +2,15 @@ import { z } from "zod";
 import { dadosGeraisSchema } from "./createDadosGeraisDTO";
 import { dadosFiscaisSchema } from "./DadosFiscais/createDadosFiscaisDTO";
 import { dadosFinanceirosSchema } from "./createDadosFinanceirosDTO";
+import { CreateUserInputZod } from "../../../user-management/dtos/user/CreateUserInputDTO";
 
 
 
 export const empresaSchema = z.object({
     DadosGerais: dadosGeraisSchema,
     DadosFiscais: dadosFiscaisSchema,
-    DadosFinanceiros: dadosFinanceirosSchema
+    DadosFinanceiros: dadosFinanceirosSchema,
+    User: CreateUserInputZod
 })
 
 

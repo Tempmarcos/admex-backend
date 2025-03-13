@@ -9,12 +9,11 @@ export async function create(request: Request, response: Response, next: NextFun
     const { DadosGerais, DadosFinanceiros, DadosFiscais, User } = request.body;
 
     try{
-        const empresaData = empresaSchema.parse({DadosGerais, DadosFinanceiros, DadosFiscais})
-        const userData = CreateUserInputZod.parse(User)
+        const empresaData = empresaSchema.parse({DadosGerais, DadosFinanceiros, DadosFiscais, User})
 
         const createEmpresaUseCase = 
         new CreateEmpresaUseCase(new PrismaEmpresaRepository, new PrismaUserRepository);
-        await createEmpresaUseCase.execute(empresaData, userData)
+        await createEmpresaUseCase.execute(empresaData)
         return response.status(201).send({ message: "Empresa cadastrada com sucesso!" })
     }catch(err){
         next(err)

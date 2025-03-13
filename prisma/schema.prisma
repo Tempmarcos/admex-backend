@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id         String   @id @default(uuid())
-  admin      Boolean
+  admin      Boolean  @default(false)
   nome       String
   email      String   @unique
   senha      String
@@ -17,7 +17,7 @@ model User {
   updatedAt  DateTime @updatedAt
   permissoes String[]
   perfil     Perfil?
-  empresaId  String
+  empresaId  String   @unique
   empresa    Empresa? @relation(fields: [empresaId], references: [id])
 }
 

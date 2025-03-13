@@ -33,7 +33,7 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
 
     async create(data: CreateEmpresaDTO): Promise<Empresa | null> {
          try{
-            const {DadosFiscais, DadosGerais, DadosFinanceiros} = data;
+            const {DadosFiscais, DadosGerais, DadosFinanceiros, User} = data;
              const empresa = await prisma.empresa.create({
                 data: {
                     ativa: true,
@@ -51,13 +51,35 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
                             nome: DadosGerais.nome,
                             dataDeFundacao: DadosGerais.dataDeFundacao,
                             logo: DadosGerais.logo,
-                            endereco: DadosGerais.endereco
+                            endereco: {
+                                create:{
+                                    pais: DadosGerais.endereco.pais,
+                                    dados: DadosGerais.endereco
+                                }
+                            }
                         }
                     },
                     DadosFinanceiros: {
                         create:
                         {
                             contaBancaria: DadosFinanceiros.contaBancaria
+                        }
+                    },
+                    usuarios:{
+                        create:{
+                            nome: User.nome,
+                            email: User.email,
+                            senha: User.senha,
+                            admin: User.admin,
+                            permissoes: User.permissoes,
+                            perfil:{
+                                create:{
+                                    nomeDeUsuario: User.perfil.nomeDeUsuario,
+                                    fonte: User.perfil.fonte,
+                                    foto: User.perfil.foto,
+                                    tema: User.perfil.tema
+                                }
+                            }
                         }
                     }
                 }
