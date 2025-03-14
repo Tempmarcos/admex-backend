@@ -1,4 +1,6 @@
 import { create } from "../../../interfaces/controllers/create";
+import { getEmpresa } from "../../../interfaces/controllers/getEmpresa";
+import { list } from "../../../interfaces/controllers/list";
 // import { deleteEmpresa } from "../../../interfaces/controllers/deleteUser";
 // import { getEmpresa } from "../../../interfaces/controllers/getEmpresa";
 // import { updateDadosGerais } from "../../../interfaces/controllers/updateDadosGerais";
@@ -12,7 +14,9 @@ const empresaRoutes = express.Router();
 
 empresaRoutes.post("/", create) 
 
-// empresaRoutes.get("/:id", getEmpresa)
+empresaRoutes.get("/", list) //Desativar em produção
+
+empresaRoutes.get("/:id", getEmpresa)
 
 // empresaRoutes.patch("/dados-gerais/:id", updateDadosGerais)
 

@@ -1,4 +1,3 @@
-import { User } from "@prisma/client";
 import { UserRepository } from "../../infra/repositories/interfaceDB/UserRepository";
 import { ListUserDTO } from "../../dtos/user/ListUserDTO";
 

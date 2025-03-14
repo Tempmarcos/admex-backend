@@ -1,14 +1,16 @@
 // import { Empresa } from "../../../domain/entities/empresa"
 import { Empresa } from "@prisma/client"
 import { CreateEmpresaDTO } from "../../../dtos/CreateEmpresaDTO"
+import { ListEmpresaDTO } from "../../../dtos/listEmpresaDTO"
+import { GetEmpresaDTO } from "../../../dtos/getEmpresaDTO"
 
 export interface EmpresaRepository {
     findById(id: string): Promise<Empresa | null>
     create(data: CreateEmpresaDTO): Promise<Empresa | null>
     findByRegistro(registro: string): Promise<Empresa | null>
-    // list(empresaId: string): Promise<ListEmpresaDTO[]>
+    list(): Promise<ListEmpresaDTO[]>
     delete(id: string): Promise<Empresa | null>
-    // get(id: string): Promise<GetEmpresaDTO | null>
+    get(id: string): Promise<GetEmpresaDTO | null>
     // update(data: UpdateEmpresaDTO, id: string): Promise<User | null>
     // updatePerfil(data: UpdatePerfilInputDTO, id: string): Promise<User | null>
     // updateSenha(senha: string, id: string): Promise<User | null>

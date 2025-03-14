@@ -1,6 +1,10 @@
 import { Empresa, PrismaClient } from "@prisma/client";
 import { EmpresaRepository } from "../interfaceDB/EmpresaRepository";
 import { CreateEmpresaDTO } from "../../../dtos/CreateEmpresaDTO";
+import { ListEmpresaDTO } from "../../../dtos/listEmpresaDTO";
+import { DadosGerais } from "../../../domain/value-objects/dadosGerais/dadosGerais";
+import { GetEmpresaDTO } from "../../../dtos/getEmpresaDTO";
+import { EmpresaNotExistsError } from "../../../../../shared/errors/empresa/empresaNotExistsError";
 
 const prisma = new PrismaClient();
 
@@ -91,43 +95,71 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
         }
     }
 
-    // async get(id: string): Promise<GetUserDTO | null>{
-    //     try {
-    //         const user = await prisma.user.findUnique({
-    //           where: {
-    //             id,
-    //           },
-    //           select: {
-    //             id: true,
-    //             empresaId: true,
-    //             nome: true,
-    //             admin: true,
-    //             email: true,
-    //             permissoes: true,
-    //             created_at: true,
-    //             updatedAt: true,
-    //             perfil: true
-    //           },
-    //         })
+    async get(id: string): Promise<GetEmpresaDTO | null>{
+         try {
+             const empresa = await prisma.empresa.findUnique({
+                where: {
+                    id,
+                },
+              select: {
+                 id: true,
+                 ativa: true,
+                 dataCadastro: true,
+                 usuarios:{
+                    select:{
+                        id: true,
+                        nome: true
+                    }
+                 },
+                 DadosGerais:{
+                    select:{
+                        nome: true,
+                        dataDeFundacao: true,
+                        logo: true,
+                        endereco:{
+                            select:{
+                                pais: true,
+                                dados: true,
+                            }
+                        }
+                    }
+                 },
+                 DadosFiscais:{
+                    select:{
+                        registro: true,
+                        classificacao: true,
+                        camposEspecificos: true
+                    }
+                 },
+                 DadosFinanceiros:{
+                    select:{
+                        contaBancaria: true
+                    }
+                 }
+               },
+             })
       
-    //         if (!user) throw new UserNotExistsError
+             if (!empresa) throw new EmpresaNotExistsError
       
-    //         return user
+             return empresa
       
-    //       } catch (error) {
-    //         throw new Error()
-    //       }
-    // }
+           } catch (error) {
+             throw new Error()
+           }
+     }
 
-    // async list(empresaId: string): Promise<ListUserDTO[]> {
-    //     return await prisma.user.findMany({
-    //         // where: empresaId 
-    //         select: {
-    //             id: true,
-    //             nome: true,
-    //         }
-    //     });
-    // }
+    async list(): Promise<ListEmpresaDTO[]> {
+        return await prisma.empresa.findMany({
+            select: {
+                id: true,
+                DadosGerais: {
+                    select:{
+                        nome: true
+                    }
+                }
+             }
+         });
+    }
     
     async delete(id: string): Promise<Empresa | null> {
         return prisma.empresa.delete({ where: { id } });
