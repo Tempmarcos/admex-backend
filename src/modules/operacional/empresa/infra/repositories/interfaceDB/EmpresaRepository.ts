@@ -3,6 +3,9 @@ import { Empresa } from "@prisma/client"
 import { CreateEmpresaDTO } from "../../../dtos/CreateEmpresaDTO"
 import { ListEmpresaDTO } from "../../../dtos/listEmpresaDTO"
 import { GetEmpresaDTO } from "../../../dtos/getEmpresaDTO"
+import { CreateDadosGeraisDTO } from "../../../dtos/createDadosGeraisDTO"
+import { CreateDadosFinanceirosDTO } from "../../../dtos/createDadosFinanceirosDTO"
+import { DadosFiscaisDTO } from "../../../dtos/DadosFiscais/DadosFiscaisDTO"
 
 export interface EmpresaRepository {
     findById(id: string): Promise<Empresa | null>
@@ -11,8 +14,7 @@ export interface EmpresaRepository {
     list(): Promise<ListEmpresaDTO[]>
     delete(id: string): Promise<Empresa | null>
     get(id: string): Promise<GetEmpresaDTO | null>
-    // update(data: UpdateEmpresaDTO, id: string): Promise<User | null>
-    // updatePerfil(data: UpdatePerfilInputDTO, id: string): Promise<User | null>
-    // updateSenha(senha: string, id: string): Promise<User | null>
-    // updateEmail(email: string, id: string) : Promise<User | null>
+    updateDadosGerais(data: CreateDadosGeraisDTO, id: string): Promise<Empresa | null>
+    updateDadosFiscais(data: DadosFiscaisDTO, id: string): Promise<Empresa | null>
+    updateDadosFinanceiros(data: CreateDadosFinanceirosDTO, id: string): Promise<Empresa | null>
 }

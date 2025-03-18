@@ -5,27 +5,89 @@ import { ListEmpresaDTO } from "../../../dtos/listEmpresaDTO";
 import { DadosGerais } from "../../../domain/value-objects/dadosGerais/dadosGerais";
 import { GetEmpresaDTO } from "../../../dtos/getEmpresaDTO";
 import { EmpresaNotExistsError } from "../../../../../shared/errors/empresa/empresaNotExistsError";
+import { CreateDadosGeraisDTO } from "../../../dtos/createDadosGeraisDTO";
+import { CreateDadosFinanceirosDTO } from "../../../dtos/createDadosFinanceirosDTO";
+import { DadosFiscaisDTO } from "../../../dtos/DadosFiscais/DadosFiscaisDTO";
 
 const prisma = new PrismaClient();
 
 export class PrismaEmpresaRepository implements EmpresaRepository {
-    // async update(data: UpdateEmpresaDTO, id: string): Promise<Empresa | null> {
-    //     const {nome, permissoes} = data;
-    //     try {
-    //         const user = prisma.user.update({
-    //             where: {
-    //                 id,
-    //             },
-    //             data: {
-    //                 nome, permissoes,
-    //             },
-    //         })
-    //         return user
-    //     } catch (err){
-    //         console.log(err)
-    //         return null
-    //     }     
-    // }
+    async updateDadosGerais(data: CreateDadosGeraisDTO, id: string): Promise<Empresa | null> {
+         const {nome, dataDeFundacao, logo, endereco} = data;
+         try {
+             const user = prisma.empresa.update({
+                where: {
+                     id,
+                 },
+                 data: {
+                     DadosGerais:{
+                        update:{
+                            nome, dataDeFundacao, logo,
+                            endereco:{
+                                update:{
+                                    pais: endereco.pais,
+                                    dados: endereco
+                                }
+                            }
+                        }
+                     }
+                 },
+             })
+             return user
+         } catch (err){
+             console.log(err)
+             return null
+         }     
+     }
+
+     async updateDadosFiscais(data: DadosFiscaisDTO, id: string): Promise<Empresa | null> {
+        const {registro, classificacao, camposEspecificos} = data;
+        try {
+            const user = prisma.empresa.update({
+               where: {
+                    id,
+                },
+                data: {
+                    DadosFiscais:{
+                       update:{
+                           registro, classificacao,
+                           camposEspecificos:{
+                            update:{
+                                camposEspecificos
+                            }
+                           }
+                       }
+                    }
+                },
+            })
+            return user
+        } catch (err){
+            console.log(err)
+            return null
+        }     
+    }
+
+     async updateDadosFinanceiros(data: CreateDadosFinanceirosDTO, id: string): Promise<Empresa | null> {
+        const {contaBancaria} = data;
+        try {
+            const user = prisma.empresa.update({
+               where: {
+                    id,
+                },
+                data: {
+                    DadosFinanceiros:{
+                       update:{
+                           contaBancaria
+                       }
+                    }
+                },
+            })
+            return user
+        } catch (err){
+            console.log(err)
+            return null
+        }     
+    }
 
     async findById(id: string): Promise<Empresa | null> {
             return prisma.empresa.findUnique({ where: { id } });
