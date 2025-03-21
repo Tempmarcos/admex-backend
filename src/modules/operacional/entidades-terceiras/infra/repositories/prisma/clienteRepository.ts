@@ -28,6 +28,7 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
                         },
                       select: {
                          id: true,
+                         nome: true,
                          empresaId: true,
                          contato:{
                             select:{
@@ -71,7 +72,7 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
     }
     async update(data: entidadeTerceiraDTO, id: string): Promise<any | null> {
         try{
-            const{nome, contato, dadosFiscais, endereco} = data;
+            const{nome, contato, endereco} = data;
             const cliente = await prisma.cliente.update({
                 where: {
                     id,

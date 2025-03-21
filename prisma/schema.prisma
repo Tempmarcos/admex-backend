@@ -114,10 +114,10 @@ model Fornecedor {
   id           String        @id @default(uuid())
   nome         String
   empresaId    String
-  Contato      Contato?
-  Endereco     Endereco?
+  contato      Contato?
+  endereco     Endereco?
   empresa      Empresa       @relation(fields: [empresaId], references: [id])
-  DadosFiscais DadosFiscais?
+  dadosFiscais DadosFiscais?
 }
 
 model ItemDeVenda {

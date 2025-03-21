@@ -1,0 +1,19 @@
+import { NextFunction, Request, Response } from 'express';
+import { CreateEntidadeUseCase } from '../../application/use-cases/createEntityUseCase';
+import { EntidadeTerceiraFactory } from '../../domain/entities/entidadeTerceiraFactory';
+
+export async function create(request: Request, response: Response, next: NextFunction){
+    const { entidade, tipo, empresaId } = request.body
+
+    try {
+      const createEntidadeTerceiraUseCase = new CreateEntidadeUseCase(
+        EntidadeTerceiraFactory.criarRepositorio(tipo)
+      );
+  
+      await createEntidadeTerceiraUseCase.execute(entidade, empresaId);
+  
+      return response.status(201).json({ message: `${tipo} criado com sucesso!` });
+    } catch (err) {
+      next(err);
+    }
+}

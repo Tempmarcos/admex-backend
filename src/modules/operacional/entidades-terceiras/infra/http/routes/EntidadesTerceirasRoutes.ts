@@ -1,10 +1,11 @@
+import { create } from "../../../interfaces/controllers/create";
 
 
 const express = require('express');
 
 const entidadesTerceirasRoutes = express.Router();
 
-// entidadesTerceirasRoutes.post("/", create) 
+entidadesTerceirasRoutes.post("/", create) 
 
 // entidadesTerceirasRoutes.get("/", list) 
 
