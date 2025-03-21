@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { EntidadeTerceiraRepository } from "../interfaceDB/EntidadeTerceiraRepository";
 import { entidadeTerceiraDTO } from "../../../dtos/entidadeTerceiraDTO";
-import { ClienteNotExistsError } from "../../../../../shared/errors/cliente/clienteNotExistsError";
-import { FornecedorNotExistsError } from "../../../../../shared/errors/fornecedor/fornecedorNotExistsError";
+import { FornecedorNotExistsError } from "../../../../../shared/errors/entidades/fornecedor/fornecedorNotExistsError";
+
 
 
 const prisma = new PrismaClient();
@@ -55,7 +55,7 @@ export class FornecedorRepository implements EntidadeTerceiraRepository {
                        },
                      })
               
-                     if (!fornecedor) throw new FornecedorNotExistsError
+                     if (!fornecedor) throw new FornecedorNotExistsError()
               
                      return fornecedor
               

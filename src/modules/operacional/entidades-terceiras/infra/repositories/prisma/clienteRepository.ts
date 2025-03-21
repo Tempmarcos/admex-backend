@@ -1,7 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { EntidadeTerceiraRepository } from "../interfaceDB/EntidadeTerceiraRepository";
 import { entidadeTerceiraDTO } from "../../../dtos/entidadeTerceiraDTO";
-import { ClienteNotExistsError } from "../../../../../shared/errors/cliente/clienteNotExistsError";
+import { ClienteNotExistsError } from "../../../../../shared/errors/entidades/cliente/clienteNotExistsError";
+
 
 
 const prisma = new PrismaClient();

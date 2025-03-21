@@ -3,14 +3,15 @@ import { DeleteEntidadeUseCase } from "../../application/use-cases/deleteEntidad
 import { EntidadeTerceiraFactory } from "../../domain/entities/entidadeTerceiraFactory";
 
 export async function deleteEntity(request: Request, response: Response, next: NextFunction){
-    const { tipo, id } = request.body
+    const id = request.params.id;
+    const { tipo} = request.body
 
     try {
-      const createEntidadeTerceiraUseCase = new DeleteEntidadeUseCase(
+      const deleteEntidadeTerceiraUseCase = new DeleteEntidadeUseCase(
         EntidadeTerceiraFactory.criarRepositorio(tipo)
       );
   
-      await createEntidadeTerceiraUseCase.execute(id);
+      await deleteEntidadeTerceiraUseCase.execute(id);
   
       return response.status(201).json({ message: `${tipo} deletado com sucesso!` });
     } catch (err) {

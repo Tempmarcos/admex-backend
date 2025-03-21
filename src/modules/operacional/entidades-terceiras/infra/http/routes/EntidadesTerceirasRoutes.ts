@@ -1,4 +1,6 @@
 import { create } from "../../../interfaces/controllers/create";
+import { deleteEntity } from "../../../interfaces/controllers/deleteEntity";
+import { list } from "../../../interfaces/controllers/list";
 
 
 const express = require('express');
@@ -7,7 +9,7 @@ const entidadesTerceirasRoutes = express.Router();
 
 entidadesTerceirasRoutes.post("/", create) 
 
-// entidadesTerceirasRoutes.get("/", list) 
+entidadesTerceirasRoutes.get("/", list) 
 
 // entidadesTerceirasRoutes.get("/:id", getEmpresa)
 
@@ -17,6 +19,6 @@ entidadesTerceirasRoutes.post("/", create)
 
 // entidadesTerceirasRoutes.patch("/dados-financeiros/:id", updateDadosFinanceiros)
 
-// entidadesTerceirasRoutes.delete("/:id", deleteEmpresa)
+entidadesTerceirasRoutes.delete("/:id", deleteEntity)
 
 export { entidadesTerceirasRoutes }
