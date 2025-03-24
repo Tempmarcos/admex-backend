@@ -1,5 +1,6 @@
 import { create } from "../../../interfaces/controllers/create";
 import { deleteEntity } from "../../../interfaces/controllers/deleteEntity";
+import { getEntity } from "../../../interfaces/controllers/getEntity";
 import { list } from "../../../interfaces/controllers/list";
 
 
@@ -11,7 +12,7 @@ entidadesTerceirasRoutes.post("/", create)
 
 entidadesTerceirasRoutes.get("/", list) 
 
-// entidadesTerceirasRoutes.get("/:id", getEmpresa)
+entidadesTerceirasRoutes.get("/:id", getEntity)
 
 // entidadesTerceirasRoutes.patch("/dados-gerais/:id", updateDadosGerais)
 

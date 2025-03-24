@@ -18,7 +18,7 @@ model User {
   permissoes String[]
   perfil     Perfil?
   empresaId  String   @unique
-  empresa    Empresa? @relation(fields: [empresaId], references: [id])
+  empresa    Empresa? @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }
 
 model Perfil {
@@ -52,17 +52,17 @@ model DadosGerais {
   logo           String?
   endereco       Endereco?
   empresaId      String    @unique
-  empresa        Empresa   @relation(fields: [empresaId], references: [id])
+  empresa        Empresa   @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }
 
 model Endereco {
   id            String       @id @default(uuid())
   DadosGeraisId String?      @unique
-  DadosGerais   DadosGerais? @relation(fields: [DadosGeraisId], references: [id])
+  DadosGerais   DadosGerais? @relation(fields: [DadosGeraisId], references: [id], onDelete: Cascade)
   clienteId     String?      @unique
-  cliente       Cliente?     @relation(fields: [clienteId], references: [id])
+  cliente       Cliente?     @relation(fields: [clienteId], references: [id], onDelete: Cascade)
   fornecedorId  String?      @unique
-  fornecedor    Fornecedor?  @relation(fields: [fornecedorId], references: [id])
+  fornecedor    Fornecedor?  @relation(fields: [fornecedorId], references: [id], onDelete: Cascade)
   pais          String // BR, US, JP
   dados         Json // Campos específicos do país
 }
@@ -74,9 +74,9 @@ model Contato {
   email        String?
   telefone     String?
   ClienteId    String?     @unique
-  Cliente      Cliente?    @relation(fields: [ClienteId], references: [id])
+  Cliente      Cliente?    @relation(fields: [ClienteId], references: [id], onDelete: Cascade)
   FornecedorId String?     @unique
-  Fornecedor   Fornecedor? @relation(fields: [FornecedorId], references: [id])
+  Fornecedor   Fornecedor? @relation(fields: [FornecedorId], references: [id], onDelete: Cascade)
 }
 
 model DadosFiscais {
@@ -85,18 +85,18 @@ model DadosFiscais {
   classificacao     String
   camposEspecificos Json?
   empresaId         String?     @unique
-  empresa           Empresa?    @relation(fields: [empresaId], references: [id])
+  empresa           Empresa?    @relation(fields: [empresaId], references: [id], onDelete: Cascade)
   clienteId         String?     @unique
-  cliente           Cliente?    @relation(fields: [clienteId], references: [id])
+  cliente           Cliente?    @relation(fields: [clienteId], references: [id], onDelete: Cascade)
   fornecedorId      String?     @unique
-  fornecedor        Fornecedor? @relation(fields: [fornecedorId], references: [id])
+  fornecedor        Fornecedor? @relation(fields: [fornecedorId], references: [id], onDelete: Cascade)
 }
 
 model DadosFinanceiros {
   id            String  @id @default(uuid())
   contaBancaria String
   empresaId     String  @unique
-  empresa       Empresa @relation(fields: [empresaId], references: [id])
+  empresa       Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }
 
 model Cliente {
@@ -105,7 +105,7 @@ model Cliente {
   empresaId    String
   contato      Contato?
   endereco     Endereco?
-  empresa      Empresa       @relation(fields: [empresaId], references: [id])
+  empresa      Empresa       @relation(fields: [empresaId], references: [id], onDelete: Cascade)
   propostas    Proposta[]
   dadosFiscais DadosFiscais?
 }
@@ -116,7 +116,7 @@ model Fornecedor {
   empresaId    String
   contato      Contato?
   endereco     Endereco?
-  empresa      Empresa       @relation(fields: [empresaId], references: [id])
+  empresa      Empresa       @relation(fields: [empresaId], references: [id], onDelete: Cascade)
   dadosFiscais DadosFiscais?
 }
 
@@ -127,18 +127,18 @@ model ItemDeVenda {
   descricao String
   preco     Float
   empresaId String
-  empresa   Empresa @relation(fields: [empresaId], references: [id])
+  empresa   Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }
 
 model Proposta {
   id           String   @id @default(uuid())
   clienteId    String
-  cliente      Cliente  @relation(fields: [clienteId], references: [id])
+  cliente      Cliente  @relation(fields: [clienteId], references: [id], onDelete: Cascade)
   dataProposta DateTime @default(now())
   valorTotal   Float
   status       String
   empresaId    String
-  empresa      Empresa  @relation(fields: [empresaId], references: [id])
+  empresa      Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }
 
 model ErrorLog {
