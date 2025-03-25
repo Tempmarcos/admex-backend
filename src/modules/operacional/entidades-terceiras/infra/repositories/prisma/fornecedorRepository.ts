@@ -12,7 +12,7 @@ export class FornecedorRepository implements EntidadeTerceiraRepository {
         return prisma.fornecedor.findUnique({ where: { id } });
     }
     findByRegistro(registro: string): Promise<any | null> {
-        return prisma.fornecedor.findFirst({ where: {dadosFiscais: { is: {registro} } } });
+        return prisma.fornecedor.findFirst({ where: { registro }});
     }
     async list(): Promise<any | null> {
          return await prisma.fornecedor.findMany({
@@ -45,13 +45,7 @@ export class FornecedorRepository implements EntidadeTerceiraRepository {
                                 dados: true
                             }
                          },
-                         dadosFiscais:{
-                            select:{
-                                registro: true,
-                                classificacao: true,
-                                camposEspecificos: true
-                            }
-                         },
+                         registro: true,
                        },
                      })
               
@@ -65,7 +59,7 @@ export class FornecedorRepository implements EntidadeTerceiraRepository {
     }
     async update(data: entidadeTerceiraDTO, id: string): Promise<any | null> {
         try{
-            const{nome, contato, dadosFiscais, endereco} = data;
+            const{nome, contato, registro, endereco} = data;
             const fornecedor = await prisma.fornecedor.update({
                 where: {
                     id,
@@ -95,7 +89,7 @@ export class FornecedorRepository implements EntidadeTerceiraRepository {
     }
     async create(data: entidadeTerceiraDTO, empresaId: string): Promise<any | null> {
         try{
-            const{nome, contato, dadosFiscais, endereco} = data;
+            const{nome, contato, registro, endereco} = data;
             const fornecedor = await prisma.fornecedor.create({
                 data:{
                     nome, contato:{
@@ -106,14 +100,7 @@ export class FornecedorRepository implements EntidadeTerceiraRepository {
                             email: contato.email
                         }
                     },
-                    dadosFiscais:{
-                        create:{
-                            registro: dadosFiscais.registro,
-                            classificacao: dadosFiscais.classificacao,
-                            camposEspecificos: dadosFiscais.camposEspecificos,
-                            
-                            }
-                        },
+                    registro,
                     endereco: {
                         create:{
                             pais: endereco.pais,

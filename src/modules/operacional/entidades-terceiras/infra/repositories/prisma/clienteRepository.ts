@@ -12,7 +12,7 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
         return prisma.cliente.findUnique({ where: { id } });
     }
     findByRegistro(registro: string): Promise<any | null> {
-        return prisma.cliente.findFirst({ where: {dadosFiscais: { is: {registro} } } });
+        return prisma.cliente.findFirst({ where: { registro }});
     }
     async list(): Promise<any | null> {
          return await prisma.cliente.findMany({
@@ -53,13 +53,7 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
                                 status: true
                             }
                          },
-                         dadosFiscais:{
-                            select:{
-                                registro: true,
-                                classificacao: true,
-                                camposEspecificos: true
-                            }
-                         },
+                         registro: true,
                        },
                      })
               
@@ -103,7 +97,7 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
     }
     async create(data: entidadeTerceiraDTO, empresaId: string): Promise<any | null> {
         try{
-            const{nome, contato, dadosFiscais, endereco} = data;
+            const{nome, contato, registro, endereco} = data;
             const cliente = await prisma.cliente.create({
                 data:{
                     nome, contato:{
@@ -114,14 +108,7 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
                             email: contato.email
                         }
                     },
-                    dadosFiscais:{
-                        create:{
-                            registro: dadosFiscais.registro,
-                            classificacao: dadosFiscais.classificacao,
-                            camposEspecificos: dadosFiscais.camposEspecificos,
-                            
-                            }
-                        },
+                    registro,
                     endereco: {
                         create:{
                             pais: endereco.pais,

@@ -9,18 +9,18 @@ export class CreateEntidadeUseCase {
   constructor(private repository: EntidadeTerceiraRepository) {}
 
   async execute(entidade: entidadeTerceiraDTO, empresaId: string): Promise<void> {
-    const registroExists = await this.repository.findByRegistro(entidade.dadosFiscais.registro)
+    const registroExists = await this.repository.findByRegistro(entidade.registro)
     if(registroExists) throw new RegistroAlreadyExistsError;
 
     const enderecoFormatado = EnderecoFactory.criar(entidade.endereco)
     enderecoFormatado.validar()
     entidade.endereco = enderecoFormatado //Criar endereço com base no país
     
-    const pais = enderecoFormatado.pais
-    const dadosFiscaisData= DadosFiscaisFactory.criar(pais, entidade.dadosFiscais)
-    dadosFiscaisData.validarRegistro(dadosFiscaisData.registro)
+    // const pais = enderecoFormatado.pais
+    // const dadosFiscaisData= DadosFiscaisFactory.criar(pais, entidade.dadosFiscais)
+    // dadosFiscaisData.validarRegistro(dadosFiscaisData.registro)
 
-    entidade.dadosFiscais = dadosFiscaisData
+    // entidade.dadosFiscais = dadosFiscaisData
 
     await this.repository.create(entidade, empresaId);
   }

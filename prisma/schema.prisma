@@ -38,7 +38,8 @@ model Empresa {
   usuarios         User[]
   clientes         Cliente[]
   fornecedores     Fornecedor[]
-  itens            ItemDeVenda[]
+  produtos         Produto[]
+  servicos         Servico[]
   propostas        Proposta[]
   DadosGerais      DadosGerais?
   DadosFiscais     DadosFiscais?
@@ -80,16 +81,12 @@ model Contato {
 }
 
 model DadosFiscais {
-  id                String      @id @default(uuid())
-  registro          String      @unique
+  id                String  @id @default(uuid())
+  registro          String  @unique
   classificacao     String
   camposEspecificos Json?
-  empresaId         String?     @unique
-  empresa           Empresa?    @relation(fields: [empresaId], references: [id], onDelete: Cascade)
-  clienteId         String?     @unique
-  cliente           Cliente?    @relation(fields: [clienteId], references: [id], onDelete: Cascade)
-  fornecedorId      String?     @unique
-  fornecedor        Fornecedor? @relation(fields: [fornecedorId], references: [id], onDelete: Cascade)
+  empresaId         String  @unique
+  empresa           Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }
 
 model DadosFinanceiros {
@@ -100,27 +97,37 @@ model DadosFinanceiros {
 }
 
 model Cliente {
-  id           String        @id @default(uuid())
-  nome         String
-  empresaId    String
-  contato      Contato?
-  endereco     Endereco?
-  empresa      Empresa       @relation(fields: [empresaId], references: [id], onDelete: Cascade)
-  propostas    Proposta[]
-  dadosFiscais DadosFiscais?
+  id        String     @id @default(uuid())
+  nome      String
+  empresaId String
+  registro  String
+  contato   Contato?
+  endereco  Endereco?
+  empresa   Empresa    @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  propostas Proposta[]
 }
 
 model Fornecedor {
-  id           String        @id @default(uuid())
-  nome         String
-  empresaId    String
-  contato      Contato?
-  endereco     Endereco?
-  empresa      Empresa       @relation(fields: [empresaId], references: [id], onDelete: Cascade)
-  dadosFiscais DadosFiscais?
+  id        String    @id @default(uuid())
+  nome      String
+  empresaId String
+  registro  String
+  contato   Contato?
+  endereco  Endereco?
+  empresa   Empresa   @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }
 
-model ItemDeVenda {
+model Produto {
+  id        String  @id @default(uuid())
+  tipo      String
+  nome      String
+  descricao String
+  preco     Float
+  empresaId String
+  empresa   Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+}
+
+model Servico {
   id        String  @id @default(uuid())
   tipo      String
   nome      String

@@ -7,7 +7,7 @@ export const entidadeSchema = z.object({
     nome: z.string(),
     contato: contatoSchema,
     endereco: z.any(),
-    dadosFiscais: dadosFiscaisSchema,
+    registro: z.string(),
     dadosFinanceiros: dadosFinanceirosSchema.optional()
 })
 
