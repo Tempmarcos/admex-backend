@@ -118,13 +118,15 @@ model Fornecedor {
 }
 
 model Produto {
-  id        String  @id @default(uuid())
-  tipo      String
-  nome      String
-  descricao String
-  preco     Float
-  empresaId String
-  empresa   Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  id            String  @id @default(uuid())
+  tipo          String
+  nome          String
+  descricao     String
+  preco         Float
+  estoque       Int?
+  unidadeMedida String?
+  empresaId     String
+  empresa       Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }
 
 model Servico {
@@ -133,6 +135,7 @@ model Servico {
   nome      String
   descricao String
   preco     Float
+  duracao   Int?
   empresaId String
   empresa   Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }

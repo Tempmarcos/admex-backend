@@ -1,6 +1,4 @@
-import { EntidadeTerceira } from "../../../domain/entities/entidadeTerceira"
 import { entidadeTerceiraDTO } from "../../../dtos/entidadeTerceiraDTO"
-import { getEntidadeDTO } from "../../../dtos/GetEntidadeDTO"
 
 export interface EntidadeTerceiraRepository {
         findById(id: string): Promise<any | null>
