@@ -14,8 +14,9 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
     findByRegistro(registro: string): Promise<any | null> {
         return prisma.cliente.findFirst({ where: { registro }});
     }
-    async list(): Promise<any | null> {
+    async list(empresaId : string): Promise<any | null> {
          return await prisma.cliente.findMany({
+                    where: { empresaId },
                     select: {
                         id: true, nome: true
                      }

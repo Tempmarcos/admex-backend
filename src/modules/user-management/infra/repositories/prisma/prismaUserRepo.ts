@@ -143,11 +143,11 @@ export class PrismaUserRepository implements UserRepository {
 
     async list(empresaId: string): Promise<ListUserDTO[]> {
         return await prisma.user.findMany({
-            // where: empresaId 
+            where: { empresaId },
             select: {
                 id: true,
                 nome: true,
-            }
+            } 
         });
     }
     

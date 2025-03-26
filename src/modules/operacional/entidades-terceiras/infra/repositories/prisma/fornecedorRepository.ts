@@ -14,8 +14,9 @@ export class FornecedorRepository implements EntidadeTerceiraRepository {
     findByRegistro(registro: string): Promise<any | null> {
         return prisma.fornecedor.findFirst({ where: { registro }});
     }
-    async list(): Promise<any | null> {
+    async list(empresaId: string): Promise<any | null> {
          return await prisma.fornecedor.findMany({
+                where: { empresaId },
                     select: {
                         id: true, nome: true
                      }

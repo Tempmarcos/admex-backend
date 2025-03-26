@@ -90,10 +90,12 @@ model DadosFiscais {
 }
 
 model DadosFinanceiros {
-  id            String  @id @default(uuid())
+  id            String      @id @default(uuid())
   contaBancaria String
-  empresaId     String  @unique
-  empresa       Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  empresaId     String?     @unique
+  empresa       Empresa?    @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  fornecedorId  String?     @unique
+  fornecedor    Fornecedor? @relation(fields: [fornecedorId], references: [id], onDelete: Cascade)
 }
 
 model Cliente {
@@ -108,13 +110,14 @@ model Cliente {
 }
 
 model Fornecedor {
-  id        String    @id @default(uuid())
-  nome      String
-  empresaId String
-  registro  String
-  contato   Contato?
-  endereco  Endereco?
-  empresa   Empresa   @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  id               String            @id @default(uuid())
+  nome             String
+  empresaId        String
+  registro         String
+  contato          Contato?
+  endereco         Endereco?
+  dadosFinanceiros DadosFinanceiros?
+  empresa          Empresa           @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }
 
 model Produto {
