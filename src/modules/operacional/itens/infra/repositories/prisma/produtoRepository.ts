@@ -5,7 +5,7 @@ import { ProdutoNotExistsError } from "../../../../../shared/errors/item/produto
 
 const prisma = new PrismaClient();
 
-export class ServicoRepository implements ItemRepository {
+export class ProdutoRepository implements ItemRepository {
     async update(data: itemDTO, id: string): Promise<any | null> {
         try{
             const{nome, tipo, descricao, preco, estoque, unidadeMedida} = data;
