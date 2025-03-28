@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { dadosFiscaisSchema } from "../../empresa/dtos/DadosFiscais/DadosFiscaisDTO";
 import { contatoSchema } from "../domain/value-objects/contato";
 import { dadosFinanceirosSchema } from "../../empresa/dtos/createDadosFinanceirosDTO";
 

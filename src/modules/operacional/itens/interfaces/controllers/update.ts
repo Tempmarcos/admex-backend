@@ -10,6 +10,10 @@ export async function update(request: Request, response: Response, next: NextFun
         ItemFactory.criarRepositorio(tipo)
       );
   
+      const DTO = ItemFactory.criarDTO(tipo)
+
+      DTO.parse(item)
+
       await createItemUseCase.execute(item, id);
   
       return response.status(201).json({ message: `${tipo} criado com sucesso!` });

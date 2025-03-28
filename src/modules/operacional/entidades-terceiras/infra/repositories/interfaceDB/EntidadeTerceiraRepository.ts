@@ -7,5 +7,5 @@ export interface EntidadeTerceiraRepository {
         list(empresaId: string): Promise<any | null>
         delete(id: string): Promise<any | null>
         get(id: string): Promise<any | null>
-        update(data: entidadeTerceiraDTO, id: string): Promise<any | null>
+        update(data: any, id: string): Promise<any | null>
 }

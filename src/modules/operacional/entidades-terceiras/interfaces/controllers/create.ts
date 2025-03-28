@@ -9,6 +9,10 @@ export async function create(request: Request, response: Response, next: NextFun
       const createEntidadeTerceiraUseCase = new CreateEntidadeUseCase(
         EntidadeTerceiraFactory.criarRepositorio(tipo)
       );
+
+      const DTO = EntidadeTerceiraFactory.criarDTO(tipo)
+      
+      DTO.parse(entidade)
   
       await createEntidadeTerceiraUseCase.execute(entidade, empresaId);
   
