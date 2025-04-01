@@ -8,17 +8,19 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  admin      Boolean  @default(false)
-  nome       String
-  email      String   @unique
-  senha      String
-  created_at DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  permissoes String[]
-  perfil     Perfil?
-  empresaId  String   @unique
-  empresa    Empresa? @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  id           String   @id @default(uuid())
+  admin        Boolean  @default(false)
+  nome         String
+  email        String   @unique
+  senha        String
+  created_at   DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  permissoes   String[]
+  perfil       Perfil?
+  empresaId    String   @unique
+  empresa      Empresa? @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  tarefa       Tarefa[] @relation(name: "responsavel")
+  tarefaCriada Tarefa[] @relation(name: "criador")
 }
 
 model Perfil {
@@ -41,6 +43,7 @@ model Empresa {
   produtos         Produto[]
   servicos         Servico[]
   propostas        Proposta[]
+  tarefas          Tarefa[]
   DadosGerais      DadosGerais?
   DadosFiscais     DadosFiscais?
   DadosFinanceiros DadosFinanceiros?
@@ -141,6 +144,21 @@ model Servico {
   duracao   Int?
   empresaId String
   empresa   Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+}
+
+model Tarefa {
+  id                String    @id @default(uuid())
+  nome              String
+  userResponsavelId String
+  userCriadorId     String
+  responsavel       User      @relation("responsavel", fields: [userResponsavelId], references: [id], onDelete: Cascade)
+  criador           User      @relation("criador", fields: [userCriadorId], references: [id], onDelete: Cascade)
+  tipo              String
+  status            String
+  dataAgendada      DateTime?
+  dataExecutada     DateTime?
+  empresaId         String
+  empresa           Empresa   @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }
 
 model Proposta {
