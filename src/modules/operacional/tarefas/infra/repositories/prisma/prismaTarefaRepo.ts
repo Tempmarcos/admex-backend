@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { TarefaCreateDTO } from "../../../dtos/tarefaCreateDTO";
 import { TarefaUpdateDTO } from "../../../dtos/tarefaUpdateDTO";
 import { TarefaRepository } from "../interfaceDB/tarefaRepository";
+import { TarefaNotExistsError } from "../../../../../shared/errors/tarefa/TarefaNotExistsError";
 
 const prisma = new PrismaClient();
 
@@ -28,17 +29,78 @@ export class PrismaTarefaRepository implements TarefaRepository {
             return null
         }
     }
-    list(empresaId: string): Promise<any | null> {
-        throw new Error("Method not implemented.");
+    async list(empresaId: string): Promise<any | null> {
+        return await prisma.tarefa.findMany({
+            where: { empresaId },
+            select: {
+                id: true, nome: true, status: true,
+                responsavel: {
+                    select: {
+                        id: true,
+                        nome: true
+                    }
+                }
+             }
+         });
     }
     delete(id: string): Promise<any | null> {
-        throw new Error("Method not implemented.");
+        return prisma.tarefa.delete({ where: { id } });
     }
-    get(id: string): Promise<any | null> {
-        throw new Error("Method not implemented.");
+    async get(id: string): Promise<any | null> {
+        try{
+            const tarefa = await prisma.tarefa.findUnique({
+                where: {
+                    id,
+                },
+                select: {
+                    id: true,
+                    nome: true,
+                    empresaId: true,
+                    tipo: true,
+                    status: true,
+                    dataAgendada: true,
+                    dataExecutada: true,
+                    responsavel: {
+                        select: {
+                            id: true,
+                            nome: true
+                        }
+                    },
+                    criador: {
+                        select: {
+                            id: true,
+                            nome: true
+                        }
+                    }
+                },
+            })
+                
+            if (!tarefa) throw new TarefaNotExistsError
+                
+            return tarefa
+              
+        } catch (error) {
+            throw new Error()
+        }         
     }
-    update(data: TarefaUpdateDTO, id: string): Promise<any | null> {
-        throw new Error("Method not implemented.");
+    async update(data: TarefaUpdateDTO, id: string): Promise<any | null> {
+        try{
+            const{nome, tipo, status, responsavelId, dataAgendada, dataExecutada} = data;
+            const tarefa = await prisma.tarefa.update({
+                where: {
+                    id,
+                },
+                data: {
+                    nome, tipo, status, 
+                    userResponsavelId: responsavelId,
+                    dataAgendada,
+                    dataExecutada,
+                }
+            })
+            return tarefa
+        }catch (error){
+            throw new Error()
+        }
     }
     
 }

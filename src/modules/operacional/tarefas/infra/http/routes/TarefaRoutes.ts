@@ -1,15 +1,21 @@
+import { create } from "../../../interfaces/controllers/create";
+import { deleteTarefa } from "../../../interfaces/controllers/deleteTarefa";
+import { getTarefa } from "../../../interfaces/controllers/getTarefa";
+import { list } from "../../../interfaces/controllers/list";
+import { update } from "../../../interfaces/controllers/update";
+
 const express = require('express');
 
-const entidadesTerceirasRoutes = express.Router();
+const tarefaRoutes = express.Router();
 
-// entidadesTerceirasRoutes.post("/", create) 
+tarefaRoutes.post("/", create) 
 
-// entidadesTerceirasRoutes.get("/", list) 
+tarefaRoutes.get("/", list) 
 
-// entidadesTerceirasRoutes.get("/:id", getItem)
+tarefaRoutes.get("/:id", getTarefa)
 
-// entidadesTerceirasRoutes.patch("/:id", update)
+tarefaRoutes.patch("/:id", update)
 
-// entidadesTerceirasRoutes.delete("/:id", deleteItem)
+tarefaRoutes.delete("/:id", deleteTarefa)
 
-export { entidadesTerceirasRoutes }
+export { tarefaRoutes }
