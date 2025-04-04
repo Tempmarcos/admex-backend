@@ -7,6 +7,57 @@ import { TarefaNotExistsError } from "../../../../../shared/errors/tarefa/Tarefa
 const prisma = new PrismaClient();
 
 export class PrismaTarefaRepository implements TarefaRepository {
+    async atualizarTarefasAtrasadas(): Promise<any | null> {
+        const agora = new Date();
+        try {
+            // 1. Atualiza todas as tarefas atrasadas de uma vez
+            const { count } = await prisma.tarefa.updateMany({
+            where: {
+                AND: [
+                { status: { notIn: ['executada', 'cancelada'] } }, // Não concluídas nem canceladas
+                { dataAgendada: { lt: agora } },                   // Data passou do prazo
+                { status: { not: 'atrasada' } }                    // Que ainda não estão marcadas como atrasadas
+                ]
+            },
+            data: {
+                status: 'atrasada',
+            }
+            });
+
+            console.log(`✅ ${count} tarefas marcadas como atrasadas`);
+            return count;
+        } catch (error) {
+            console.error('Erro ao atualizar tarefas atrasadas:', error);
+            throw error;
+        }
+    }
+    async checarTarefasAtrasadas(): Promise<any | null> {
+        const agora = new Date();
+        const limite24h = new Date(agora.getTime() + 24 * 60 * 60 * 1000);
+
+        // Tarefas a vencer em 24h (ativas)
+        const tarefasProximoPrazo = await prisma.tarefa.findMany({
+            where: {
+            AND: [
+                { status: { notIn: ['executada', 'cancelada'] } },
+                { dataAgendada: { gt: agora, lte: limite24h } }
+            ]
+            }
+        });
+
+        // Tarefas vencidas (ativas)
+        const tarefasAtrasadas = await prisma.tarefa.findMany({
+            where: {
+                status: 'atrasada'
+            }
+        });
+
+        return {
+            proximoPrazo: tarefasProximoPrazo,
+            atrasadas: tarefasAtrasadas,
+            total: tarefasProximoPrazo.length + tarefasAtrasadas.length
+        };
+    }
     findById(id: string): Promise<any | null> {
         return prisma.tarefa.findUnique({ where: { id } })
     }

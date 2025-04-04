@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 enum status {
-    Agendada = 'agendada',
+    Pendente = 'pendente',
     Atrasada = 'atrasada',
     Executada = 'executada',
     Cancelada = 'cancelada'

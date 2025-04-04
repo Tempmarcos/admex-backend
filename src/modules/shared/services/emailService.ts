@@ -70,3 +70,37 @@ const transporter = nodemailer.createTransport({
       console.error('Falha ao enviar e-mail de troca de senha:', emailError);
     }
   }
+
+  export async function sendTarefaAtrasada(email: string, nome: string, nomeTarefa: string){
+    try {
+      await transporter.sendMail({
+        from: `Sistema de Monitoramento Admex`,
+        to: email,
+        subject: `[TAREFA ATRASADA]`,
+        html: `
+          <h1>Tarefa Atrasada.</h1>
+          <p>Olá ${nome}, a tarefa ${nomeTarefa} passou do prazo agendado. Você pode 
+          editar a tarefa para executada ou cancelada para não receber mais e-mails.</p>
+        `
+      });
+    } catch (emailError) {
+      console.error('Falha ao enviar e-mail de troca de senha:', emailError);
+    }
+  }
+
+  export async function sendTarefaQuaseAtrasada(email: string, nome: string, nomeTarefa: string){
+    try {
+      await transporter.sendMail({
+        from: `Sistema de Monitoramento Admex`,
+        to: email,
+        subject: `[TAREFA PRÓXIMA DE ENCERRAR]`,
+        html: `
+          <h1>Tarefa próxima de encerrar.</h1>
+          <p>Olá ${nome}, a tarefa ${nomeTarefa} está há menos de um dia de encerrar. Você pode 
+          editar a tarefa para executada ou cancelada para não receber mais e-mails.</p>
+        `
+      });
+    } catch (emailError) {
+      console.error('Falha ao enviar e-mail de troca de senha:', emailError);
+    }
+  }

@@ -8,9 +8,9 @@ const express = require('express');
 
 const tarefaRoutes = express.Router();
 
-tarefaRoutes.post("/", create) 
+tarefaRoutes.post("/", create)
 
-tarefaRoutes.get("/", list) 
+tarefaRoutes.get("/", list)
 
 tarefaRoutes.get("/:id", getTarefa)
 

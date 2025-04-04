@@ -6,16 +6,16 @@ import { update } from "../../../interfaces/controllers/update";
 
 const express = require('express');
 
-const entidadesTerceirasRoutes = express.Router();
+const itemRoutes = express.Router();
 
-entidadesTerceirasRoutes.post("/", create) 
+itemRoutes.post("/", create) 
 
-entidadesTerceirasRoutes.get("/", list) 
+itemRoutes.get("/", list) 
 
-entidadesTerceirasRoutes.get("/:id", getItem)
+itemRoutes.get("/:id", getItem)
 
-entidadesTerceirasRoutes.patch("/:id", update)
+itemRoutes.patch("/:id", update)
 
-entidadesTerceirasRoutes.delete("/:id", deleteItem)
+itemRoutes.delete("/:id", deleteItem)
 
-export { entidadesTerceirasRoutes }
+export { itemRoutes }
