@@ -6,14 +6,14 @@ import { UpdateTarefaUseCase } from '../../application/use-cases/updateTarefaUse
 
 
 export async function update(request: Request, response: Response, next: NextFunction) {
-    const user = request.body;
+    const tarefa = request.body;
     const id = request.params.id;
     try {
       const updateTarefaUseCase = new UpdateTarefaUseCase(new PrismaTarefaRepository)
-      const data = tarefaUpdateSchema.parse(user)
+      const data = tarefaUpdateSchema.parse(tarefa)
 
       await updateTarefaUseCase.execute(data, id)
-      return response.status(201).send({ message: "Usuário alterado com sucesso!" })
+      return response.status(201).send({ message: "Tarefa alterada com sucesso!" })
     } catch (err) {
       next(err)
     }

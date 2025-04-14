@@ -9,7 +9,7 @@ export async function deleteTarefa(request: Request, response: Response, next: N
     try{
         const deleteTarefaUseCase = new DeleteTarefaUseCase(new PrismaTarefaRepository)
         await deleteTarefaUseCase.execute(id)
-        return response.status(201).send({message: "Usuário deletado com sucesso!"});
+        return response.status(201).send({message: "Tarefa deletada com sucesso!"});
     }catch (err){
         next(err)
     }
