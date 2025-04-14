@@ -1,6 +1,6 @@
+import { CreateVersaoPropostaDTO } from "../../../dtos/CreateVersaoPropostaDTO"
 import { PropostaDTO } from "../../../dtos/PropostaDTO"
 import { PropostaUpdateDTO } from "../../../dtos/PropostaUpdateDTO"
-import { VersaoPropostaDTO } from "../../../dtos/VersaoPropostaDTO"
 import { VersaoPropostaUpdateDTO } from "../../../dtos/VersaoPropostaUpdateDTO"
 
 export interface PropostaRepository {
@@ -10,7 +10,7 @@ export interface PropostaRepository {
         delete(id: string): Promise<any | null>
         get(id: string): Promise<any | null>
         update(data: PropostaUpdateDTO, id: string): Promise<any | null>
-        createVersao(data: VersaoPropostaDTO, propostaId: string): Promise<any | null>
+        createVersao(data: CreateVersaoPropostaDTO, propostaId: string): Promise<any | null>
         updateVersao(data: VersaoPropostaUpdateDTO, versaoId: string): Promise<any | null>
         deleteVersao(versaoId: string): Promise<any | null>
 }

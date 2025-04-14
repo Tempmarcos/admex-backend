@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import { PropostaRepository } from "../interfaceDB/propostaRepository";
-import { VersaoPropostaDTO } from "../../../dtos/VersaoPropostaDTO";
 import { PropostaDTO } from "../../../dtos/PropostaDTO";
 import { PropostaUpdateDTO } from "../../../dtos/PropostaUpdateDTO";
 import { PropostaNotExistsError } from "../../../../../shared/errors/proposta/propostaNotExistsError";
 import { VersaoPropostaUpdateDTO } from "../../../dtos/VersaoPropostaUpdateDTO";
+import { CreateVersaoPropostaDTO } from "../../../dtos/CreateVersaoPropostaDTO";
 
 
 
@@ -145,13 +145,21 @@ export class PrismaPropostaRepository implements PropostaRepository {
         }
     }
 
-    async createVersao(data: VersaoPropostaDTO, propostaId: string): Promise<any | null> {
+    async createVersao(data: CreateVersaoPropostaDTO, propostaId: string): Promise<any | null> {
+        const ultimaVersao = await prisma.versaoProposta.findFirst({
+            where: { propostaId },
+            orderBy: { numeroVersao: 'desc' },
+            select: { numeroVersao: true }
+          });
+        
+        const novoNumeroVersao = (ultimaVersao?.numeroVersao || 0) + 1;
+
         try {
-            const { dataProposta, valorTotal, numeroVersao, produto, servico } = data;
+            const { dataProposta, valorTotal, produto, servico } = data;
             const versao = await prisma.versaoProposta.create({
                 data: {
                     dataProposta,
-                    numeroVersao,
+                    numeroVersao: novoNumeroVersao,
                     valorTotal,
                     produtos: {
                         create: produto.map(prod => ({
