@@ -1,10 +1,13 @@
+import { create } from "../../../interfaces/controllers/create";
+import { list } from "../../../interfaces/controllers/list";
+
 const express = require('express');
 
 const propostaRoutes = express.Router();
 
-// propostaRoutes.post("/", create)
+propostaRoutes.post("/", create)
 
-// propostaRoutes.get("/", list)
+propostaRoutes.get("/", list)
 
 // propostaRoutes.get("/:id", getProposta)
 
@@ -16,7 +19,7 @@ const propostaRoutes = express.Router();
 
 // propostaRoutes.delete("/:id", deleteProposta)
 
-// propostaRoutes.delete("/versao/:id", deleteProposta)
+// propostaRoutes.delete("/versao/:id", deleteVersao)
 
 
 export { propostaRoutes }
