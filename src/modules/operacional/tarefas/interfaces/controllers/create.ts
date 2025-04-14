@@ -7,11 +7,11 @@ export async function create(request: Request, response: Response, next: NextFun
     const { tarefa, empresaId } = request.body
 
     try {
-      const createItemUseCase = new CreateTarefaUseCase(new PrismaTarefaRepository);
+      const createTarefaUseCase = new CreateTarefaUseCase(new PrismaTarefaRepository);
   
       const data = tarefaCreateSchema.parse(tarefa)
 
-      await createItemUseCase.execute(data, empresaId);
+      await createTarefaUseCase.execute(data, empresaId);
   
       return response.status(201).json({ message: `Tarefa criada com sucesso!` });
     } catch (err) {
