@@ -2,9 +2,11 @@ import { z } from "zod";
 
 
 
-export const versaoSchema = z.object({
+export const versaoUpdateSchema = z.object({
     dataProposta: z.date().min(new Date),
     valorTotal: z.string(),
+    aprovado: z.boolean(),
+    executado: z.boolean(),
     produto: z.object({
         nome: z.string(),
         preco: z.string(),
@@ -17,4 +19,4 @@ export const versaoSchema = z.object({
     }).array()
 })
 
-export type VersaoPropostaUpdateDTO = z.infer<typeof versaoSchema>
+export type VersaoPropostaUpdateDTO = z.infer<typeof versaoUpdateSchema>

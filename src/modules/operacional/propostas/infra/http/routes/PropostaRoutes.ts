@@ -3,6 +3,7 @@ import { deleteProposta } from "../../../interfaces/controllers/deleteProposta";
 import { getProposta } from "../../../interfaces/controllers/getProposta";
 import { list } from "../../../interfaces/controllers/list";
 import { update } from "../../../interfaces/controllers/update";
+import { updateVersao } from "../../../interfaces/controllers/versao/updateVersao";
 
 const express = require('express');
 
@@ -18,7 +19,7 @@ propostaRoutes.patch("/:id", update)
 
 propostaRoutes.delete("/:id", deleteProposta)
 
-// propostaRoutes.patch("/versao/:id", updateVersao)
+propostaRoutes.patch("/versao/:id", updateVersao)
 
 // propostaRoutes.post("/versao/", createVersao)
 
