@@ -1,4 +1,5 @@
 import { create } from "../../../interfaces/controllers/create";
+import { getProposta } from "../../../interfaces/controllers/getProposta";
 import { list } from "../../../interfaces/controllers/list";
 
 const express = require('express');
@@ -9,7 +10,7 @@ propostaRoutes.post("/", create)
 
 propostaRoutes.get("/", list)
 
-// propostaRoutes.get("/:id", getProposta)
+propostaRoutes.get("/:id", getProposta)
 
 // propostaRoutes.patch("/:id", update)
 
