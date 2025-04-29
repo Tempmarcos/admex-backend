@@ -12,21 +12,16 @@ import { SenhaErradaError } from '../../../shared/errors/senha/senhaErradaError'
 export class LoginUseCase {
     constructor(private userRepository: UserRepository, private authInterface: AuthInterface) { }
 
-
     async execute({email, senha}: LoginDTO) : Promise<object>{
-  
       const userExist = await this.userRepository.findByEmail(email)
-  
       if (!userExist) {
         throw new UserNotExistsError()
       }
-  
+
+
       // console.log(userExist)
-
       const passwordMatch = await PasswordHasher.compare(senha, userExist.senha)
-
       // console.log(passwordMatch)
-      
       if (!passwordMatch) {
         throw new SenhaErradaError()
       }
@@ -37,14 +32,20 @@ export class LoginUseCase {
         // console.log(token)
 
 
-        const loginResponse : Omit<LoginResponseDTO, 'perfil'> = {
+        const loginResponse : Omit<LoginResponseDTO,  'admin'> = {
           id: userExist.id,
           nome: userExist.nome,
           email: userExist.email,
           permissoes: userExist.permissoes,
           created_at: userExist.created_at,
           updatedAt: userExist.updatedAt,
-          // perfil: userExist.perfil,
+          empresaId: userExist.empresaId,
+          perfil: {
+            foto: userExist.perfil.foto,
+            nomeDeUsuario: userExist.perfil.nomeDeUsuario,
+            fonte: userExist.perfil.fonte,
+            tema: userExist.perfil.tema
+          },
           token: token
         }
       return {

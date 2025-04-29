@@ -10,7 +10,7 @@ export class GetPropostaUseCase {
         if(!propostaExists) {
             throw new PropostaNotExistsError();
         }
-        
-        await this.repository.get(id)
+
+        return await this.repository.get(id)
      }
 }

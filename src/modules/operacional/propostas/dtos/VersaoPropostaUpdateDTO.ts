@@ -3,7 +3,7 @@ import { z } from "zod";
 
 
 export const versaoUpdateSchema = z.object({
-    dataProposta: z.date().min(new Date),
+    dataProposta: z.string(),
     valorTotal: z.string(),
     aprovado: z.boolean(),
     executado: z.boolean(),

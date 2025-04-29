@@ -8,7 +8,7 @@ export const clienteSchema = z.object({
     .regex(/^[a-zA-ZÀ-ÿ]+(?: [a-zA-ZÀ-ÿ]+)*$/, "Nome não pode conter caracteres especiais"),
     contato: contatoSchema,
     endereco: z.any(),
-    dadosFiscais: dadosFiscaisSchema,
+    registro: z.string()
 })
 
 export type createClienteDTO = z.infer<typeof clienteSchema>

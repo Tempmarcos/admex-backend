@@ -4,7 +4,7 @@ import { z } from "zod";
 
 export const versaoSchema = z.object({
     propostaId: z.string().optional(),
-    dataProposta: z.date().min(new Date),
+    dataProposta: z.string(),
     valorTotal: z.string(),
     numeroVersao: z.number(),
     produto: z.object({

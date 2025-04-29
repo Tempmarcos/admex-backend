@@ -49,9 +49,8 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
                          propostas:{
                             select:{
                                 id: true,
-                                dataProposta: true,
-                                valorTotal: true,
-                                status: true
+                                status: true,
+                                titulo: true
                             }
                          },
                          registro: true,

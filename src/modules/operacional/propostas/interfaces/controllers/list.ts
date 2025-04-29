@@ -5,7 +5,7 @@ import { ListPropostaUseCase } from '../../application/use-cases/listPropostaUse
 
 
 export async function list(request: Request, response: Response, next: NextFunction){
-    const empresaId = request.params.empresaId;
+    const empresaId = request.body.empresaId;
     try {
         const listPropostaUseCase = new ListPropostaUseCase(new PrismaPropostaRepository)
         const propostas = await listPropostaUseCase.execute(empresaId)
