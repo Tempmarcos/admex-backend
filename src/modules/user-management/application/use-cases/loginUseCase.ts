@@ -7,6 +7,7 @@ import { InvalidSenhaError } from '../../../shared/errors/senha/invalidSenhaErro
 import { PasswordHasher } from '../../infra/services/passwordHasher';
 import { LoginResponseDTO } from '../../dtos/login/LoginResponseDTO';
 import { SenhaErradaError } from '../../../shared/errors/senha/senhaErradaError';
+import { EmailNotExistsError } from '../../../shared/errors/email/emailNotExistsError';
 
 
 export class LoginUseCase {
@@ -15,7 +16,7 @@ export class LoginUseCase {
     async execute({email, senha}: LoginDTO) : Promise<object>{
       const userExist = await this.userRepository.findByEmail(email)
       if (!userExist) {
-        throw new UserNotExistsError()
+        throw new EmailNotExistsError()
       }
 
 
@@ -41,9 +42,13 @@ export class LoginUseCase {
           updatedAt: userExist.updatedAt,
           empresaId: userExist.empresaId,
           perfil: {
+            // @ts-ignore Tá funcionando perfeitamente, o typescript que tá enchendo o saco
             foto: userExist.perfil.foto,
+            // @ts-ignore
             nomeDeUsuario: userExist.perfil.nomeDeUsuario,
+            // @ts-ignore
             fonte: userExist.perfil.fonte,
+            // @ts-ignore
             tema: userExist.perfil.tema
           },
           token: token

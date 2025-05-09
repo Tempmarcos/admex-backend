@@ -100,6 +100,7 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
     async create(data: CreateEmpresaDTO): Promise<Empresa | null> {
          try{
             const {DadosFiscais, DadosGerais, DadosFinanceiros, User} = data;
+            const { pais, ...dadosSemPais } = DadosGerais.endereco;
              const empresa = await prisma.empresa.create({
                 data: {
                     ativa: true,
@@ -119,8 +120,8 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
                             logo: DadosGerais.logo,
                             endereco: {
                                 create:{
-                                    pais: DadosGerais.endereco.pais,
-                                    dados: DadosGerais.endereco
+                                    pais: pais,
+                                    dados: dadosSemPais
                                 }
                             }
                         }
