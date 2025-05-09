@@ -45,7 +45,7 @@ export class CreateEmpresaUseCase {
         Permissoes.validatePermissions(empresa.User.permissoes);
         User.nomeValidate(empresa.User.nome)
         //verificando que o user é admin
-        if(empresa.User.admin === false) empresa.User.admin = true 
+        if(empresa.User.admin != true) empresa.User.admin = true 
 
         const empresaCriada = await this.empresaRepository.create({ 
             DadosGerais: dadosGeraisData, 

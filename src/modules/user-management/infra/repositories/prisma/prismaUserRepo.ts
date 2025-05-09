@@ -22,7 +22,7 @@ export class PrismaUserRepository implements UserRepository {
                 data: { 
                     perfil: {
                         update: {
-                            foto, nomeDeUsuario, tema, fonte
+                            foto, nomeDeUsuario, tema
                         }
                     }
                 },
@@ -96,7 +96,6 @@ export class PrismaUserRepository implements UserRepository {
             senha: true,
             perfil: {
                 select: {
-                    fonte: true,
                     nomeDeUsuario: true,
                     foto: true,
                     tema: true
@@ -110,7 +109,7 @@ export class PrismaUserRepository implements UserRepository {
     });
     }
 
-    async create(data: CreateUserInputDTO): Promise<User | null> {
+    async create(data: CreateUserInputDTO, empresaId: string): Promise<User | null> {
          try{
             const {nome, email, senha, permissoes, perfil, admin} = data;
              const user = await prisma.user.create({
@@ -118,10 +117,10 @@ export class PrismaUserRepository implements UserRepository {
                     nome, email, senha, permissoes, admin,
                     perfil: {
                         create:
-                            {fonte: perfil.fonte, 
-                            nomeDeUsuario: perfil.nomeDeUsuario, 
+                            {nomeDeUsuario: perfil.nomeDeUsuario, 
                             tema: perfil.tema, foto: perfil.foto}
-                    }
+                    },
+                    empresaId: empresaId
                 }
             })
             return user

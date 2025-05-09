@@ -30,7 +30,6 @@ model Perfil {
   foto          String?
   nomeDeUsuario String
   tema          String  @default("default")
-  fonte         Int     @default(9)
 }
 
 model Empresa {
