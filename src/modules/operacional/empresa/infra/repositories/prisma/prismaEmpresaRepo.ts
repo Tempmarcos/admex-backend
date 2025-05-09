@@ -116,6 +116,7 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
                         create:
                         {
                             nome: DadosGerais.nome,
+                            nomeFantasia: DadosGerais.nomeFantasia,
                             dataDeFundacao: DadosGerais.dataDeFundacao,
                             logo: DadosGerais.logo,
                             endereco: {
@@ -142,7 +143,6 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
                             perfil:{
                                 create:{
                                     nomeDeUsuario: User.perfil.nomeDeUsuario,
-                                    fonte: User.perfil.fonte,
                                     foto: User.perfil.foto,
                                     tema: User.perfil.tema
                                 }
@@ -177,6 +177,7 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
                  DadosGerais:{
                     select:{
                         nome: true,
+                        nomeFantasia: true,
                         dataDeFundacao: true,
                         logo: true,
                         endereco:{

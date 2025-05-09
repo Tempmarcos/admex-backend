@@ -11,6 +11,7 @@ const getEmpresaSchema = z.object({
     }).array(),
     DadosGerais: z.object({
         nome: z.string(),
+        nomeFantasia: z.string(),
         dataDeFundacao: z.date(),
         logo: z.string().nullish(),
         endereco: z.object({

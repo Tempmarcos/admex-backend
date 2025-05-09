@@ -8,6 +8,10 @@ export class DadosGerais {
         return this.dadosGeraisProps.nome;
     }
 
+    get nomeFantasia(): string{
+        return this.dadosGeraisProps.nome;
+    }
+
     get dataDeFundacao(): string{
         return this.dadosGeraisProps.dataDeFundacao
     }
