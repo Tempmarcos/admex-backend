@@ -11,6 +11,7 @@ import { UpdateEmailDTO } from "../../../dtos/user/UpdateEmailDTO";
 export interface UserRepository {
     findById(id: string): Promise<User | null>
     findByEmail(email: string): Promise<User | null>
+    verifyEmail(email: string): Promise<boolean>
     create(data: CreateUserInputDTO, empresaId: string): Promise<User | null>
     list(empresaId: string): Promise<ListUserDTO[]>
     delete(id: string): Promise<User | null>

@@ -12,6 +12,15 @@ import { UpdateSenhaDTO } from "../../../dtos/user/UpdateSenhaDTO";
 const prisma = new PrismaClient();
 
 export class PrismaUserRepository implements UserRepository {
+    async verifyEmail(email: string): Promise<boolean> {
+        const resposta = await prisma.user.findUnique({ where: { email } });
+        if (resposta != null){
+            // console.log(resposta)
+            return false
+        } else {
+            return true
+        }
+    }
     async updatePerfil(data: UpdatePerfilInputDTO, id: string): Promise<User | null> {
         const {foto, nomeDeUsuario, tema, fonte} = data;
         try {

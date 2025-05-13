@@ -3,6 +3,7 @@ import { create } from "../../../interfaces/controllers/create";
 import { deleteUser } from "../../../interfaces/controllers/deleteUser";
 import { getUser } from "../../../interfaces/controllers/getUser";
 import { list } from "../../../interfaces/controllers/list";
+import { testarEmail } from "../../../interfaces/controllers/testarEmail";
 import { update } from "../../../interfaces/controllers/update";
 import { updateEmail } from "../../../interfaces/controllers/updateEmail";
 import { updatePerfil } from "../../../interfaces/controllers/updatePerfil";
@@ -25,6 +26,8 @@ usersRoutes.patch("/:id", update)
 usersRoutes.patch("/email/:id", updateEmail)
 
 usersRoutes.get("/confirmar-email-update/:token", confirmarUpdateEmail)
+
+usersRoutes.post("/testar-email", testarEmail)
 
 usersRoutes.patch("/senha/:id", updateSenha)
 
