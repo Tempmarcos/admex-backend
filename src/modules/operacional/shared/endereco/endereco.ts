@@ -3,9 +3,11 @@ export abstract class Endereco {
       public pais: string,
       public logradouro: string,
       public cidade: string,
-      public codigoPostal: string
+      public codigoPostal: string,
+      public numero: string,
+      public complemento?:string
     ) {}
   
-    abstract validar(): boolean;
+    abstract validar(data: any): boolean;
     abstract formatar(): string;
   }

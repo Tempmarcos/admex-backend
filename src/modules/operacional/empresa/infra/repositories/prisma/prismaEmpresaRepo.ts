@@ -12,6 +12,15 @@ import { DadosFiscaisDTO } from "../../../dtos/DadosFiscais/DadosFiscaisDTO";
 const prisma = new PrismaClient();
 
 export class PrismaEmpresaRepository implements EmpresaRepository {
+    async verifyRegistro(registro: string): Promise<boolean> {
+        const resposta = await prisma.empresa.findFirst({ where: {DadosFiscais: { is: {registro} } } });
+        if (resposta != null){
+            // console.log(resposta)
+            return false
+        } else {
+            return true
+        }
+    }
     async updateDadosGerais(data: CreateDadosGeraisDTO, id: string): Promise<Empresa | null> {
          const {nome, dataDeFundacao, logo, endereco} = data;
          try {

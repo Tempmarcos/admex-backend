@@ -1,9 +1,7 @@
 import { EmailAlreadyExistsError } from "../../../../shared/errors/email/emailAlreadyExistsError";
 import { RegistroAlreadyExistsError } from "../../../../shared/errors/empresa/registroAlreadyExistsError";
-import { CreateUserUseCase } from "../../../../user-management/application/use-cases/create/createUserUseCase";
 import { User } from "../../../../user-management/domain/entities/user";
 import { Permissoes } from "../../../../user-management/domain/value-objects/permissoes/permissoes";
-import { CreateUserInputDTO } from "../../../../user-management/dtos/user/CreateUserInputDTO";
 import { UserRepository } from "../../../../user-management/infra/repositories/interfaceDB/UserRepository";
 import { PasswordHasher } from "../../../../user-management/infra/services/passwordHasher";
 import { EnderecoFactory } from "../../../shared/endereco/enderecoFactory";
@@ -28,7 +26,7 @@ export class CreateEmpresaUseCase {
 
 
         const enderecoFormatado = EnderecoFactory.criar(empresa.DadosGerais.endereco)
-        enderecoFormatado.validar()
+        enderecoFormatado.validar(enderecoFormatado)
         empresa.DadosGerais.endereco = enderecoFormatado //Criar endereço com base no país
         const dadosGeraisData = await DadosGerais.create(empresa.DadosGerais)
 

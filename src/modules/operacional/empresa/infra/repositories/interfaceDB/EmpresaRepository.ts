@@ -11,6 +11,7 @@ export interface EmpresaRepository {
     findById(id: string): Promise<Empresa | null>
     create(data: CreateEmpresaDTO): Promise<Empresa | null>
     findByRegistro(registro: string): Promise<Empresa | null>
+    verifyRegistro(registro: string): Promise<boolean>
     list(): Promise<ListEmpresaDTO[]>
     delete(id: string): Promise<Empresa | null>
     get(id: string): Promise<GetEmpresaDTO | null>
