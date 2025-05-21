@@ -6,7 +6,6 @@ export class ListUserUseCase {
     constructor(private userRepository: UserRepository){}
 
     async execute(empresaId: string): Promise<ListUserDTO[]> {
-  
         return this.userRepository.list(empresaId)
         }
     }

@@ -29,6 +29,8 @@ usersRoutes.get("/confirmar-email-update/:token", confirmarUpdateEmail)
 
 usersRoutes.post("/testar-email", testarEmail)
 
+// usersRoutes.post("/confirmar-emaiil", confirmarEmail)
+
 usersRoutes.patch("/senha/:id", updateSenha)
 
 usersRoutes.patch("/perfil/:id", updatePerfil)

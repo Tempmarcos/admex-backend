@@ -86,7 +86,7 @@ model Contato {
 model DadosFiscais {
   id                String  @id @default(uuid())
   registro          String  @unique
-  classificacao     String
+  classificacao     String  @default("")
   camposEspecificos Json?
   empresaId         String  @unique
   empresa           Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)

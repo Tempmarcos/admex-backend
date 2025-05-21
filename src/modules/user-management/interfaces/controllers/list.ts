@@ -5,10 +5,10 @@ import { ListUserDTO } from '../../dtos/user/ListUserDTO';
 
 
 export async function list(request: Request, response: Response, next: NextFunction){
-    // const empresaId = request.params.empresaId;
+    const empresaId = request.body.empresaId;
     try {
         const listUserUseCase = new ListUserUseCase(new PrismaUserRepository)
-        const users = await listUserUseCase.execute('empresaId')
+        const users = await listUserUseCase.execute(empresaId)
 
         const usersDTO: ListUserDTO[] = users.map(user => ({
           id: user.id,
