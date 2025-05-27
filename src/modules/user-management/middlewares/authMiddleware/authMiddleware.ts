@@ -16,6 +16,7 @@ export async function authMiddleware(
   
     const token = authHeader.split(' ')[1];
   
+    // console.log(token)
     // 2. Verificar o token
     const jwt = new JWTService;
     const decoded : any = await jwt.verify(token);

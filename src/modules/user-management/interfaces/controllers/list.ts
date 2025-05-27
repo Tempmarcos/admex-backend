@@ -5,7 +5,7 @@ import { ListUserDTO } from '../../dtos/user/ListUserDTO';
 
 
 export async function list(request: Request, response: Response, next: NextFunction){
-    const empresaId = request.body.empresaId;
+    const empresaId = response.locals.user.empresaId
     try {
         const listUserUseCase = new ListUserUseCase(new PrismaUserRepository)
         const users = await listUserUseCase.execute(empresaId)

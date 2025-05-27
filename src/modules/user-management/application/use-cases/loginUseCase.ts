@@ -3,11 +3,9 @@ import { UserRepository } from '../../infra/repositories/interfaceDB/UserReposit
 import { LoginDTO } from '../../dtos/login/LoginDTO';
 import { UserNotExistsError } from '../../../shared/errors/user/userNotExistsError';
 import { AuthInterface } from '../../infra/services/auth/authInterface';
-import { InvalidSenhaError } from '../../../shared/errors/senha/invalidSenhaError';
 import { PasswordHasher } from '../../infra/services/passwordHasher';
 import { LoginResponseDTO } from '../../dtos/login/LoginResponseDTO';
 import { SenhaErradaError } from '../../../shared/errors/senha/senhaErradaError';
-import { EmailNotExistsError } from '../../../shared/errors/email/emailNotExistsError';
 
 
 export class LoginUseCase {
@@ -16,10 +14,8 @@ export class LoginUseCase {
     async execute({email, senha}: LoginDTO) : Promise<object>{
       const userExist = await this.userRepository.findByEmail(email)
       if (!userExist) {
-        throw new EmailNotExistsError()
+        throw new UserNotExistsError
       }
-
-
       // console.log(userExist)
       const passwordMatch = await PasswordHasher.compare(senha, userExist.senha)
       // console.log(passwordMatch)
@@ -27,8 +23,7 @@ export class LoginUseCase {
         throw new SenhaErradaError()
       }
   
-      const token = await this.authInterface.sign({userID: userExist.id, 
-        empresaID: 'empresaID'}, '6h');
+      const token = await this.authInterface.sign({userID: userExist.id}, '6h');
   
         // console.log(token)
 
@@ -40,7 +35,7 @@ export class LoginUseCase {
           permissoes: userExist.permissoes,
           created_at: userExist.created_at,
           updatedAt: userExist.updatedAt,
-          empresaId: userExist.empresaId,
+          empresaId: '',
           perfil: {
             // @ts-ignore Tá funcionando perfeitamente, o typescript que tá enchendo o saco
             foto: userExist.perfil.foto,
