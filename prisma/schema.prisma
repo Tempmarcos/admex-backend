@@ -46,6 +46,7 @@ model Empresa {
   DadosGerais      DadosGerais?
   DadosFiscais     DadosFiscais?
   DadosFinanceiros DadosFinanceiros?
+  convites         Convite[]
 }
 
 model DadosGerais {
@@ -216,4 +217,13 @@ model ErrorLog {
   stack     String?
   timestamp DateTime @default(now())
   metadata  Json?
+}
+
+model Convite {
+  id         String   @id @default(uuid())
+  token      String
+  usado      Boolean  @default(false)
+  created_at DateTime @default(now())
+  empresaId  String   @unique
+  empresa    Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }
