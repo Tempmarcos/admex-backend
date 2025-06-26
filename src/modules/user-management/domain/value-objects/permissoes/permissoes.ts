@@ -6,6 +6,23 @@ enum permissions  {
     CriarUsuarios = 'criarUsuarios',    //Permissão para criar usuários
     DeletarUsuarios = 'deletarUsuarios',//Permissão para deletar usuários
     EditarUsuarios ='editarUsuarios',  //Permissão para editar usuários
+    VerInfoUsuario = 'verInfoUsuario',  //Permissão para dar get em um usuário
+
+    //EMPRESA
+    VerDados = 'verDados', //Permissão para ver os dados da empresa
+
+
+    //ITENS
+    VerItens = 'verItens',               //Permissão para ver os itens da empresa
+    AdicionarItens = 'adicionarItens',   //Permissão para adicionar itens na empresa
+    EditarItens = 'editarItens',         //Permissão para editar os itens da empresa
+    DeletarItens = 'deletarItens'  ,      //Permissão para deletar os itens da empresa
+
+    //ENTIDADES
+    VerEntidades = 'verEntidades',             //Permissão para ver os itens da empresa
+    AdicionarEntidades = 'adicionarEntidades', //Permissão para adicionar itens na empresa
+    EditarEntidades = 'editarEntidades',       //Permissão para editar os itens da empresa
+    DeletarEntidades = 'deletarEntidades'      //Permissão para deletar os itens da empresa
 }
 
 const permissionEnum = z.nativeEnum(permissions)
@@ -13,6 +30,15 @@ const permissionEnum = z.nativeEnum(permissions)
 export const permissionSchema= z.array(permissionEnum)
 
 export class Permissoes {
+    static giveAllPermissoes(userPermissions : string[]){
+        userPermissions.length = 0; 
+        userPermissions.push(
+            'verUsuarios', 'criarUsuarios', 'deletarUsuarios', 'editarUsuarios', 
+            'verInfoUsuario', 'verDados', 'verItens', 'adicionarItens', 'editarItens',
+            'deletarItens', 'verEntidades', 'adicionarEntidades', 'editarEntidades',
+            'deletarEntidades');
+    }
+
     static comparePermissions(permissions : string[], userPermissions : string[]){
        if(permissions.every(permissao => userPermissions.includes(permissao))){
         return true
@@ -39,7 +65,11 @@ export class Permissoes {
         }
         return userPermissions = permissions;
     }
+
+    
 }
+
+
 
 // Usuários:
 // -Ver usuários

@@ -19,7 +19,7 @@ usersRoutes.post("/", create) //esse create vai ser pro convite com token
 
 usersRoutes.get("/", authMiddleware, permissionMiddleware(['verUsuarios'] , 'ALL'), list)
 
-usersRoutes.get("/:id", getUser)
+usersRoutes.get("/:id", authMiddleware, permissionMiddleware(['verInfoUsuario'], 'ALL',), getUser)
 
 usersRoutes.patch("/:id", update)
 

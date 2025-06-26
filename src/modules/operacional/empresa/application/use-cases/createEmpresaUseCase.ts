@@ -40,6 +40,7 @@ export class CreateEmpresaUseCase {
         const emailExists = await this.userRepository.findByEmail(empresa.User.email);
         if (emailExists) throw new EmailAlreadyExistsError;
         empresa.User.senha = await PasswordHasher.hash(empresa.User.senha);
+        Permissoes.giveAllPermissoes(empresa.User.permissoes);
         Permissoes.validatePermissions(empresa.User.permissoes);
         User.nomeValidate(empresa.User.nome)
         //verificando que o user é admin

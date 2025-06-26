@@ -5,11 +5,12 @@ import { PrismaUserRepository } from '../../infra/repositories/prisma/prismaUser
 
 export async function create(request: Request, response: Response, next: NextFunction) {
     const newUser = request.body;
+    const token = request.params.token
     try {
       const createUserUseCase = new CreateUserUseCase(new PrismaUserRepository)
       const data = CreateUserInputZod.parse(newUser)
 
-      await createUserUseCase.execute(data, 'empresaId')
+      await createUserUseCase.execute(data, token)
       return response.status(201).send({ message: "Usuário cadastrado com sucesso!" })
     } catch (err) {
       next(err)

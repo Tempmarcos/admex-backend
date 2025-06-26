@@ -26,10 +26,13 @@ export function permissionMiddleware(requiredPermissions: Permission,
 
       const userPermissions = res.locals.user.permissoes || [];
 
-      let hasPermission = false;
+      const userAdmin = res.locals.user.admin;
 
-      if (checkType === 'ALL') {
-        hasPermission = required.every(perm => 
+      let hasPermission = false;
+      if(userAdmin){
+        hasPermission = true; //ADM tem todas as permissões
+      } else if (checkType === 'ALL') {
+          hasPermission = required.every(perm => 
           userPermissions.includes(perm)
         );
       } else {
