@@ -8,13 +8,14 @@ import { GetUserDTO } from "../../../dtos/user/GetUserDTO";
 import { UpdatePerfilInputDTO } from "../../../dtos/perfil/UpdatePerfilInputDTO";
 import { UpdateEmailDTO } from "../../../dtos/user/UpdateEmailDTO";
 import { UpdateSenhaDTO } from "../../../dtos/user/UpdateSenhaDTO";
+import { CreateUserConviteDTO } from "../../../dtos/user/CreateUserConviteDTO";
 
 const prisma = new PrismaClient();
 
 export class PrismaUserRepository implements UserRepository {
     async verifyEmail(email: string): Promise<boolean> {
         const resposta = await prisma.user.findUnique({ where: { email } });
-        if (resposta != null){
+        if (resposta != null) {
             // console.log(resposta)
             return false
         } else {
@@ -22,13 +23,13 @@ export class PrismaUserRepository implements UserRepository {
         }
     }
     async updatePerfil(data: UpdatePerfilInputDTO, id: string): Promise<User | null> {
-        const {foto, nomeDeUsuario, tema, fonte} = data;
+        const { foto, nomeDeUsuario, tema, fonte } = data;
         try {
             const user = prisma.user.update({
                 where: {
                     id,
                 },
-                data: { 
+                data: {
                     perfil: {
                         update: {
                             foto, nomeDeUsuario, tema
@@ -37,7 +38,7 @@ export class PrismaUserRepository implements UserRepository {
                 },
             })
             return user
-        }catch(err){
+        } catch (err) {
             console.log(err)
             return null
         }
@@ -53,10 +54,10 @@ export class PrismaUserRepository implements UserRepository {
                 },
             })
             return user
-        } catch (err){
+        } catch (err) {
             console.log(err)
             return null
-        }     
+        }
     }
     async updateEmail(id: string, email: string): Promise<User | null> {
         try {
@@ -69,13 +70,13 @@ export class PrismaUserRepository implements UserRepository {
                 },
             })
             return user
-        } catch (err){
+        } catch (err) {
             console.log(err)
             return null
-        }     
+        }
     }
     async update(data: UpdateUserInputDTO, id: string): Promise<User | null> {
-        const {nome, permissoes} = data;
+        const { nome, permissoes } = data;
         try {
             const user = prisma.user.update({
                 where: {
@@ -87,10 +88,10 @@ export class PrismaUserRepository implements UserRepository {
             })
 
             return user
-        } catch (err){
+        } catch (err) {
             console.log(err)
             return null
-        }     
+        }
     }
 
     async findById(id: string): Promise<User | null> {
@@ -98,73 +99,76 @@ export class PrismaUserRepository implements UserRepository {
     }
 
     async findByEmail(email: string): Promise<User | any> {
-        return prisma.user.findUnique({ where: { email }, 
-            select:{
-            id: true,
-            nome: true,
-            senha: true,
-            perfil: {
-                select: {
-                    nomeDeUsuario: true,
-                    foto: true,
-                    tema: true
-                }
-            },
-            permissoes: true,
-            email: true,
-            created_at: true,
-            updatedAt: true,
-        } 
-    });
+        return prisma.user.findUnique({
+            where: { email },
+            select: {
+                id: true,
+                nome: true,
+                senha: true,
+                perfil: {
+                    select: {
+                        nomeDeUsuario: true,
+                        foto: true,
+                        tema: true
+                    }
+                },
+                permissoes: true,
+                email: true,
+                created_at: true,
+                updatedAt: true,
+            }
+        });
     }
 
     async create(data: CreateUserInputDTO, empresaId: string): Promise<User | null> {
-         try{
-            const {nome, email, senha, permissoes, perfil, admin} = data;
-             const user = await prisma.user.create({
+        try {
+            const { nome, email, senha, perfil, permissoes, admin } = data;
+            const user = await prisma.user.create({
                 data: {
                     nome, email, senha, permissoes, admin,
                     perfil: {
                         create:
-                            {nomeDeUsuario: perfil.nomeDeUsuario, 
-                            tema: perfil.tema, foto: perfil.foto}
+                        {
+                            nomeDeUsuario: perfil.nomeDeUsuario,
+                            tema: perfil.tema, foto: perfil.foto
+                        }
                     },
                     empresaId: empresaId
                 }
             })
             return user
-        }catch (error){
+        } catch (error) {
             console.log(error)
             return null
         }
     }
 
-    async get(id: string): Promise<GetUserDTO | null>{
+    async get(id: string): Promise<GetUserDTO | null> {
         try {
             const user = await prisma.user.findUnique({
-              where: {
-                id,
-              },
-              select: {
-                id: true,
-                empresaId: true,
-                nome: true,
-                admin: true,
-                email: true,
-                permissoes: true,
-                created_at: true,
-                updatedAt: true,
-                perfil: true
-              },
+                where: {
+                    id,
+                },
+                select: {
+                    id: true,
+                    empresaId: true,
+                    nome: true,
+                    admin: true,
+                    email: true,
+                    permissoes: true,
+                    created_at: true,
+                    updatedAt: true,
+                    perfil: true
+                },
             })
-      
+
             if (!user) throw new UserNotExistsError
-      
+
             return user
-      
-          } catch (error) {
+
+        } catch (error) {
             throw new Error()
-          }
+        }
     }
 
     async list(empresaId: string): Promise<ListUserDTO[]> {
@@ -173,12 +177,12 @@ export class PrismaUserRepository implements UserRepository {
             select: {
                 id: true,
                 nome: true,
-            } 
+            }
         });
     }
-    
+
     async delete(id: string): Promise<User | null> {
         return prisma.user.delete({ where: { id } });
     }
-    
+
 }
