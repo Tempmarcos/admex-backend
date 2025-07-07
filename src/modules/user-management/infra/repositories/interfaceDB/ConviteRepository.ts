@@ -1,6 +1,10 @@
-// export interface UserRepository {
-//     findByToken(token: string): Promise<Empresa | null>
-//     create(empresaId: string): Promise<User | null>
-//     list(empresaId: string): Promise<ListUserDTO[]>
-//     delete(id: string): Promise<User | null>
-// }
+import { Convite } from "@prisma/client"
+import { ListConviteDTO } from "../../../dtos/convite/ListConviteDTO"
+
+
+export interface ConviteRepository {
+    findByToken(token: string, empresaId: string): Promise<Convite | null>
+    create(token: string, empresaId: string): Promise<Convite | null>
+    list(empresaId: string): Promise<ListConviteDTO[]>
+    delete(id: string): Promise<Convite | null>
+}

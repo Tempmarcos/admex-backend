@@ -17,7 +17,7 @@ model User {
   updatedAt    DateTime @updatedAt
   permissoes   String[]
   perfil       Perfil?
-  empresaId    String   @unique
+  empresaId    String
   empresa      Empresa? @relation(fields: [empresaId], references: [id], onDelete: Cascade)
   tarefa       Tarefa[] @relation(name: "responsavel")
   tarefaCriada Tarefa[] @relation(name: "criador")
@@ -221,9 +221,11 @@ model ErrorLog {
 
 model Convite {
   id         String   @id @default(uuid())
-  token      String
+  token      String   @unique
   usado      Boolean  @default(false)
+  cancelado  Boolean  @default(false)
   created_at DateTime @default(now())
-  empresaId  String   @unique
+  expires_at DateTime
+  empresaId  String
   empresa    Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }

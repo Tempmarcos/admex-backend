@@ -6,9 +6,6 @@ import { ListUserDTO } from "../../../dtos/user/ListUserDTO";
 import { UserNotExistsError } from "../../../../shared/errors/user/userNotExistsError";
 import { GetUserDTO } from "../../../dtos/user/GetUserDTO";
 import { UpdatePerfilInputDTO } from "../../../dtos/perfil/UpdatePerfilInputDTO";
-import { UpdateEmailDTO } from "../../../dtos/user/UpdateEmailDTO";
-import { UpdateSenhaDTO } from "../../../dtos/user/UpdateSenhaDTO";
-import { CreateUserConviteDTO } from "../../../dtos/user/CreateUserConviteDTO";
 
 const prisma = new PrismaClient();
 
