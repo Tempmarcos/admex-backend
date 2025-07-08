@@ -1,6 +1,7 @@
 import { Convite, PrismaClient } from "@prisma/client";
 import { ConviteRepository } from "../interfaceDB/ConviteRepository";
 import { ListConviteDTO } from "../../../dtos/convite/ListConviteDTO";
+import { CreateConviteDTO } from "../../../dtos/convite/CreateConviteDTO";
 
 const prisma = new PrismaClient();
 
@@ -9,11 +10,12 @@ export class PrismaConviteRepository implements ConviteRepository {
         return prisma.convite.findFirst({ where: { empresaId, token } })
     }
 
-    async create(token: string, empresaId: string): Promise<Convite | null> {
+    async create(data: CreateConviteDTO, empresaId: string): Promise<Convite | null> {
+        const { token, created_by, expires_at } = data;
         try {
             const convite = await prisma.convite.create({
                 data: {
-                    token, empresaId
+                    token, created_by, expires_at, empresaId
                 }
             })
             return convite
@@ -29,7 +31,9 @@ export class PrismaConviteRepository implements ConviteRepository {
                 id: true,
                 token: true,
                 usado: true,
-                created_at: true
+                cancelado: true,
+                created_at: true,
+                created_by: true
             }
         });
     }

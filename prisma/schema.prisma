@@ -226,6 +226,8 @@ model Convite {
   cancelado  Boolean  @default(false)
   created_at DateTime @default(now())
   expires_at DateTime
+  created_by String
+  used_by    String?
   empresaId  String
   empresa    Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }

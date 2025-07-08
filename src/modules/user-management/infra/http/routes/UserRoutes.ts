@@ -1,7 +1,6 @@
 import { confirmarUpdateEmail } from "../../../interfaces/controllers/confirmarUpdateEmail";
 import { create } from "../../../interfaces/controllers/create";
 import { deleteUser } from "../../../interfaces/controllers/deleteUser";
-import { gerarConvite } from "../../../interfaces/controllers/gerarConvite";
 import { getUser } from "../../../interfaces/controllers/getUser";
 import { list } from "../../../interfaces/controllers/list";
 import { testarEmail } from "../../../interfaces/controllers/testarEmail";
@@ -16,11 +15,7 @@ const express = require('express');
 
 const usersRoutes = express.Router();
 
-usersRoutes.get("/gerar-convite", authMiddleware, permissionMiddleware(['criarUsuarios']), gerarConvite)
-
 usersRoutes.post("/", create) //esse create vai ser pro convite com token
-
-usersRoutes.get("/verificar-convite",)
 
 usersRoutes.get("/", authMiddleware, permissionMiddleware(['verUsuarios'], 'ALL'), list)
 
