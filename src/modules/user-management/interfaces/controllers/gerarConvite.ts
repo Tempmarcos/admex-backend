@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { GerarConviteUseCase } from '../../application/use-cases/create/gerarConviteUseCase';
+import { GerarConviteUseCase } from '../../application/use-cases/convite/gerarConviteUseCase';
 import { JWTService } from '../../infra/services/auth/jwtService';
 import { PrismaConviteRepository } from '../../infra/repositories/prisma/prismaConviteRepo';
 

@@ -6,8 +6,35 @@ import { CreateConviteDTO } from "../../../dtos/convite/CreateConviteDTO";
 const prisma = new PrismaClient();
 
 export class PrismaConviteRepository implements ConviteRepository {
-    async findByToken(token: string, empresaId: string): Promise<Convite | null> {
-        return prisma.convite.findFirst({ where: { empresaId, token } })
+    async cancelarConvite(id: string): Promise<Convite | null> {
+        return prisma.convite.update({
+            where: {
+                id
+            },
+            data: {
+                cancelado: true
+            }
+        })
+    }
+    async utilizarConvite(id: string, used_by: string): Promise<Convite | null> {
+        return prisma.convite.update({
+            where: {
+                id
+            },
+            data: {
+                usado: true,
+                used_by
+            }
+        })
+    }
+    async findByToken(token: string, empresaId: string): Promise<any | null> {
+        return prisma.convite.findFirst({
+            where: { empresaId, token },
+            select: {
+                usado: true,
+                cancelado: true
+            }
+        })
     }
 
     async create(data: CreateConviteDTO, empresaId: string): Promise<Convite | null> {

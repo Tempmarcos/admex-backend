@@ -22,5 +22,7 @@ export class CreateUserUseCase {
         //DESCRIPTOGRAFAR O TOKEN
         const empresaId = 'oii'
         await this.userRepository.create(user, empresaId)
+
+        //ALTERAR O USADO DO CONVITE PARA TRUE
     }
 }
