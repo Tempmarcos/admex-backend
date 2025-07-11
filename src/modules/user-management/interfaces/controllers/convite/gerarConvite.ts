@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { GerarConviteUseCase } from '../../application/use-cases/convite/gerarConviteUseCase';
-import { JWTService } from '../../infra/services/auth/jwtService';
-import { PrismaConviteRepository } from '../../infra/repositories/prisma/prismaConviteRepo';
+import { JWTService } from '../../../infra/services/auth/jwtService';
+import { GerarConviteUseCase } from '../../../application/use-cases/convite/gerarConviteUseCase';
+import { PrismaConviteRepository } from '../../../infra/repositories/prisma/prismaConviteRepo';
 
 
 export async function gerarConvite(request: Request, response: Response, next: NextFunction) {

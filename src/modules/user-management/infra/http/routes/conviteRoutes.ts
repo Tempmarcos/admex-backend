@@ -1,7 +1,8 @@
 import { cancelarConvite } from "../../../interfaces/controllers/convite/cancelarConvite";
+import { gerarConvite } from "../../../interfaces/controllers/convite/gerarConvite";
 import { list } from "../../../interfaces/controllers/convite/list";
-import { gerarConvite } from "../../../interfaces/controllers/gerarConvite";
-import { verificarConvite } from "../../../interfaces/controllers/verificarConvite";
+import { verificarConvite } from "../../../interfaces/controllers/convite/verificarConvite";
+
 import { authMiddleware } from "../../../middlewares/authMiddleware/authMiddleware";
 import { permissionMiddleware } from "../../../middlewares/permissionMiddleware/permissionMiddleware";
 

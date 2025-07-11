@@ -1,4 +1,5 @@
 import { ConviteNotExistsError } from "../../../../shared/errors/user/convite/conviteNotExistsError";
+import { ConviteUsadoError } from "../../../../shared/errors/user/convite/conviteUsadoError";
 import { InvalidConviteError } from "../../../../shared/errors/user/convite/invalidConviteError";
 import { ConviteRepository } from "../../../infra/repositories/interfaceDB/ConviteRepository";
 import { AuthInterface } from "../../../infra/services/auth/authInterface";
@@ -6,7 +7,7 @@ import { AuthInterface } from "../../../infra/services/auth/authInterface";
 export class VerifyConviteUseCase {
     constructor(private conviteRepository: ConviteRepository, private authInterface: AuthInterface) { }
 
-    async execute(conviteToken: string): Promise<boolean> {
+    async execute(conviteToken: string): Promise<string> {
         const decodedToken = await this.authInterface.verify(conviteToken)
         if (!decodedToken) {
             throw new InvalidConviteError;
@@ -18,8 +19,8 @@ export class VerifyConviteUseCase {
             throw new ConviteNotExistsError
         }
         if (conviteExist.cancelado === true || conviteExist.usado === true) {
-            return false
+            throw new ConviteUsadoError
         }
-        return true
+        return decodedToken.empresaId
     }
 };

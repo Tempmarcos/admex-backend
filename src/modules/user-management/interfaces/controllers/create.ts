@@ -12,11 +12,11 @@ export async function create(request: Request, response: Response, next: NextFun
   const token = request.params.token
   try {
     const verifyConviteUseCase = new VerifyConviteUseCase(new PrismaConviteRepository, new JWTService)
-    const conviteValido = await verifyConviteUseCase.execute(token)
-    if (!conviteValido) throw new InvalidConviteError
-    const createUserUseCase = new CreateUserUseCase(new PrismaUserRepository)
+    const empresaIdConvite = await verifyConviteUseCase.execute(token)
+    if (!empresaIdConvite) throw new InvalidConviteError
+    const createUserUseCase = new CreateUserUseCase(new PrismaUserRepository, new PrismaConviteRepository)
     const data = CreateUserConviteZod.parse(newUser)
-    await createUserUseCase.execute(data, token)
+    await createUserUseCase.execute(data, token, empresaIdConvite)
     return response.status(201).send({ message: "Usuário cadastrado com sucesso!" })
   } catch (err) {
     next(err)

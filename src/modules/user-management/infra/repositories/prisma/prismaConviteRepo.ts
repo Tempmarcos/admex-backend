@@ -16,10 +16,10 @@ export class PrismaConviteRepository implements ConviteRepository {
             }
         })
     }
-    async utilizarConvite(id: string, used_by: string): Promise<Convite | null> {
+    async utilizarConvite(token: string, used_by: string): Promise<Convite | null> {
         return prisma.convite.update({
             where: {
-                id
+                token
             },
             data: {
                 usado: true,
