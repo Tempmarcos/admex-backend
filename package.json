@@ -5,7 +5,9 @@
   "scripts": {
     "test": "vitest",
     "build": "tsup src",
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch src/server.ts",
+    "docker:build": "docker build -t admex_backend docker",
+    "docker:run": "docker run -it -v $(pwd)/.:/app admex_backend bash"
   },
   "keywords": [],
   "author": "",
