@@ -12,7 +12,7 @@ export class DadosGerais {
         return this.dadosGeraisProps.nome;
     }
 
-    get dataDeFundacao(): string{
+    get dataDeFundacao(): Date{
         return this.dadosGeraisProps.dataDeFundacao
     }
 

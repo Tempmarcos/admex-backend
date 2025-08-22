@@ -10,9 +10,8 @@ enum regimeTributario  {
 const dadosFiscaisBRSchema = z.object({
     registro: z.string().length(14),
     classificacao: z.string(),
-    inscricaoEstadual: z.string().optional(),
-    certificadoDigital: z.string(),
-    regimeTributario: z.nativeEnum(regimeTributario)
+    naturezaJuridica: z.string(),
+    regimeTributario: z.string()
 })
 
 

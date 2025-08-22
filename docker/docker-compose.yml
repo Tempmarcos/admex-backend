@@ -2,6 +2,8 @@ services:
   backend:
     build:
       context: .
+    ports:
+      - 3333:3333
     volumes:
       - ..:/app
     working_dir: /app

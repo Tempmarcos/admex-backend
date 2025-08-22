@@ -1,6 +1,7 @@
 import { confirmarUpdateEmail } from "../../../interfaces/controllers/confirmarUpdateEmail";
 import { create } from "../../../interfaces/controllers/create";
 import { deleteUser } from "../../../interfaces/controllers/deleteUser";
+import { enviarCodigoEmail } from "../../../interfaces/controllers/enviarCodigoEmail";
 import { getUser } from "../../../interfaces/controllers/getUser";
 import { list } from "../../../interfaces/controllers/list";
 import { testarEmail } from "../../../interfaces/controllers/testarEmail";
@@ -29,7 +30,7 @@ usersRoutes.get("/confirmar-email-update/:token", confirmarUpdateEmail)
 
 usersRoutes.post("/testar-email", testarEmail)
 
-// usersRoutes.post("/confirmar-emaiil", confirmarEmail)
+usersRoutes.post("/enviar-codigo-email", enviarCodigoEmail)
 
 usersRoutes.patch("/senha/:id", updateSenha)
 

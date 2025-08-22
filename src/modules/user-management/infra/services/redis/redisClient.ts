@@ -1,6 +1,6 @@
 import { createClient } from 'redis';
 
-const redisClient = createClient();
+const redisClient = createClient({url: 'redis://redis:6379'});
 redisClient.connect().then(() => console.log('Redis conectado')).catch((err) =>
     console.log('Erro ao conectar com o Redis: ', err.message));
 

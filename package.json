@@ -9,8 +9,8 @@
     "docker:build": "docker build -t admex_backend docker",
     "docker:run": "docker run -it -v $(pwd)/.:/app admex_backend bash",
     "compose:up": "docker compose --env-file ./.env -f docker/docker-compose.yml up -d --build",
-    "compose:down": "docker compose -f docker/docker-compose.yml -v down",
-    "compose:exec": "docker compose -f docker/docker-compose.yml exec -it backend bash"
+    "compose:down": "docker compose -f docker/docker-compose.yml down",
+    "compose:exec": "docker compose --env-file ./.env -f docker/docker-compose.yml exec -it backend bash"
   },
   "keywords": [],
   "author": "",

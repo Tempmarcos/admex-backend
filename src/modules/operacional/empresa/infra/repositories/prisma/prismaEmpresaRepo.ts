@@ -13,6 +13,7 @@ const prisma = new PrismaClient();
 
 export class PrismaEmpresaRepository implements EmpresaRepository {
     async verifyRegistro(registro: string): Promise<boolean> {
+        registro = registro.toString()
         const resposta = await prisma.empresa.findFirst({ where: {DadosFiscais: { is: {registro} } } });
         if (resposta != null){
             // console.log(resposta)

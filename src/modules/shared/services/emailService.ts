@@ -67,24 +67,25 @@ export async function sendEmailUpdateConfirmation(email: string, link: string, n
         `
     });
   } catch (emailError) {
-    console.error('Falha ao enviar e-mail de troca de senha:', emailError);
+    console.error('Falha ao enviar e-mail de troca de email:', emailError);
   }
 }
 
-export async function sendEmailConfirmation(email: string, codigo: string, nome: string) {
+export async function sendEmailConfirmation(email: string, codigo: string, nome?: string) {
+  // console.log(email, codigo, nome)
   try {
     await transporter.sendMail({
       from: `Sistema de Monitoramento <${env.EMAIL_USER}>`,
       to: email,
-      subject: `[CONFIRMAR TROCA DE E-MAIL]`,
+      subject: `[CONFIRMAR E-MAIL]`,
       html: `
-          <h1>Confirmar a troca de e-mail.</h1>
+          <h1>Confirmar o e-mail.</h1>
           <p>Olá ${nome}, este é seu código para confirmar e-mail:</p>
           <h1>${codigo}</h1>
         `
     });
   } catch (emailError) {
-    console.error('Falha ao enviar e-mail de troca de senha:', emailError);
+    console.error('Falha ao enviar e-mail de confirmação de email:', emailError);
   }
 }
 

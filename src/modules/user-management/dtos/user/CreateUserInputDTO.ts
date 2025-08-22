@@ -8,7 +8,7 @@ export const CreateUserInputZod = z.object({
     admin: z.boolean().default(false),
     email: z.string().email(),
     senha: z.string().min(6, "Senha muito curta").max(500),
-    permissoes: z.string().array(),
+    permissoes: z.string().array().default([]),
     perfil: CreatePerfilInputZod
 })
 
