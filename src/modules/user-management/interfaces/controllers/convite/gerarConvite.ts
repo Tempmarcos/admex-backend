@@ -6,7 +6,7 @@ import { PrismaConviteRepository } from '../../../infra/repositories/prisma/pris
 
 export async function gerarConvite(request: Request, response: Response, next: NextFunction) {
     const empresaId = response.locals.user.empresaId
-    const created_by = response.locals.created_by.nome
+    const created_by = response.locals.user.nome
     try {
         const gerarConviteUseCase = new GerarConviteUseCase(new JWTService, new PrismaConviteRepository);
         const token = await gerarConviteUseCase.execute(empresaId, created_by)
