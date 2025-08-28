@@ -60,7 +60,9 @@ export class PrismaConviteRepository implements ConviteRepository {
                 usado: true,
                 cancelado: true,
                 created_at: true,
-                created_by: true
+                created_by: true,
+                used_by: true,
+                expires_at: true,
             }
         });
     }

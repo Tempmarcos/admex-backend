@@ -10,7 +10,7 @@ enum permissions  {
 
     //EMPRESA
     VerDados = 'verDados', //Permissão para ver os dados da empresa
-
+    EditarDados = 'editarDados',
 
     //ITENS
     VerItens = 'verItens',               //Permissão para ver os itens da empresa
@@ -19,10 +19,18 @@ enum permissions  {
     DeletarItens = 'deletarItens'  ,      //Permissão para deletar os itens da empresa
 
     //ENTIDADES
-    VerEntidades = 'verEntidades',             //Permissão para ver os itens da empresa
-    AdicionarEntidades = 'adicionarEntidades', //Permissão para adicionar itens na empresa
-    EditarEntidades = 'editarEntidades',       //Permissão para editar os itens da empresa
-    DeletarEntidades = 'deletarEntidades'      //Permissão para deletar os itens da empresa
+    VerEntidades = 'verEntidades',             //Permissão para ver as entidades da empresa
+    AdicionarEntidades = 'adicionarEntidades', //Permissão para adicionar entidades na empresa
+    EditarEntidades = 'editarEntidades',       //Permissão para editar as entidades da empresa
+    DeletarEntidades = 'deletarEntidades' ,     //Permissão para deletar as entidades da empresa
+
+    //TAREFAS
+    CriarTarefas = 'criarTarefas',
+
+    //PROPOSTAS
+    VerPropostas = 'verPropostas',
+    DeletarPropostas = 'deletarPropostas',
+    CriarPropostas = 'criarPropostas'
 }
 
 const permissionEnum = z.nativeEnum(permissions)
@@ -34,9 +42,9 @@ export class Permissoes {
         userPermissions.length = 0; 
         userPermissions.push(
             'verUsuarios', 'criarUsuarios', 'deletarUsuarios', 'editarUsuarios', 
-            'verInfoUsuario', 'verDados', 'verItens', 'adicionarItens', 'editarItens',
+            'verInfoUsuario', 'verDados', 'editarDados', 'verItens', 'adicionarItens', 'editarItens',
             'deletarItens', 'verEntidades', 'adicionarEntidades', 'editarEntidades',
-            'deletarEntidades');
+            'deletarEntidades', 'criarTarefas', 'verPropostas', 'deletarPropostas', 'criarPropostas');
     }
 
     static comparePermissions(permissions : string[], userPermissions : string[]){

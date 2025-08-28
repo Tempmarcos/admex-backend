@@ -1,3 +1,4 @@
+import { authMiddleware } from "../../../../../user-management/middlewares/authMiddleware/authMiddleware";
 import { create } from "../../../interfaces/controllers/create";
 import { deleteProposta } from "../../../interfaces/controllers/deleteProposta";
 import { getProposta } from "../../../interfaces/controllers/getProposta";
@@ -10,19 +11,19 @@ const express = require('express');
 
 const propostaRoutes = express.Router();
 
-propostaRoutes.post("/", create)
+propostaRoutes.post("/", authMiddleware, create)
 
-propostaRoutes.get("/", list)
+propostaRoutes.get("/", authMiddleware, list)
 
-propostaRoutes.get("/:id", getProposta)
+propostaRoutes.get("/:id", authMiddleware, getProposta)
 
-propostaRoutes.patch("/:id", update)
+propostaRoutes.patch("/:id", authMiddleware, update)
 
-propostaRoutes.delete("/:id", deleteProposta)
+propostaRoutes.delete("/:id", authMiddleware, deleteProposta)
 
-propostaRoutes.patch("/versao/:id", updateVersao)
+propostaRoutes.patch("/versao/:id", authMiddleware, updateVersao)
 
-propostaRoutes.post("/versao/", createVersao)
+propostaRoutes.post("/versao/", authMiddleware, createVersao)
 
 // propostaRoutes.delete("/versao/:id", deleteVersao)
 

@@ -22,9 +22,9 @@ usersRoutes.get("/", authMiddleware, permissionMiddleware(['verUsuarios'], 'ALL'
 
 usersRoutes.get("/:id", authMiddleware, permissionMiddleware(['verInfoUsuario'], 'ALL',), getUser)
 
-usersRoutes.patch("/:id", update)
+usersRoutes.patch("/:id", authMiddleware, update)
 
-usersRoutes.patch("/email/:id", updateEmail)
+usersRoutes.patch("/email/:id", authMiddleware, updateEmail)
 
 usersRoutes.get("/confirmar-email-update/:token", confirmarUpdateEmail)
 
@@ -36,6 +36,6 @@ usersRoutes.patch("/senha/:id", updateSenha)
 
 usersRoutes.patch("/perfil/:id", updatePerfil)
 
-usersRoutes.delete("/:id", deleteUser)
+usersRoutes.delete("/:id", authMiddleware, permissionMiddleware(['deletarUsuarios'], 'ALL'), deleteUser)
 
 export { usersRoutes }

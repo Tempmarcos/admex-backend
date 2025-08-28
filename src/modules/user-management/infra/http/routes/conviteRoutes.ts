@@ -16,7 +16,7 @@ conviteRoutes.get("/verificar-convite", verificarConvite)
 
 conviteRoutes.get("/", authMiddleware, permissionMiddleware(['criarUsuarios']), list)
 
-conviteRoutes.patch("/", authMiddleware, permissionMiddleware(['criarUsuarios']), cancelarConvite)
+conviteRoutes.patch("/cancelar-convite", authMiddleware, permissionMiddleware(['criarUsuarios']), cancelarConvite)
 
 export { conviteRoutes }
 

@@ -1,3 +1,4 @@
+import { authMiddleware } from "../../../../../user-management/middlewares/authMiddleware/authMiddleware";
 import { create } from "../../../interfaces/controllers/create";
 import { deleteTarefa } from "../../../interfaces/controllers/deleteTarefa";
 import { getTarefa } from "../../../interfaces/controllers/getTarefa";
@@ -8,14 +9,14 @@ const express = require('express');
 
 const tarefaRoutes = express.Router();
 
-tarefaRoutes.post("/", create)
+tarefaRoutes.post("/", authMiddleware, create)
 
-tarefaRoutes.get("/", list)
+tarefaRoutes.get("/", authMiddleware, list)
 
-tarefaRoutes.get("/:id", getTarefa)
+tarefaRoutes.get("/:id", authMiddleware, getTarefa)
 
-tarefaRoutes.patch("/:id", update)
+tarefaRoutes.patch("/:id", authMiddleware, update)
 
-tarefaRoutes.delete("/:id", deleteTarefa)
+tarefaRoutes.delete("/:id", authMiddleware, deleteTarefa)
 
 export { tarefaRoutes }
