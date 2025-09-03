@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 import { CreateUserInputDTO } from "../../../dtos/user/CreateUserInputDTO";
 import { ListUserDTO } from "../../../dtos/user/ListUserDTO";
-import { UpdateUserInputDTO } from "../../../dtos/user/UpdateUserInputDTO";
+import { UpdateUserInputDTO } from "../../../dtos/user/UpdatePermissionDTO";
 import { GetUserDTO } from "../../../dtos/user/GetUserDTO";
 import { UpdatePerfilInputDTO } from "../../../dtos/perfil/UpdatePerfilInputDTO";
 

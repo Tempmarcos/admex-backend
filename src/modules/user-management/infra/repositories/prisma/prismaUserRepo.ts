@@ -1,7 +1,7 @@
 import { PrismaClient, User } from "@prisma/client";
 import { CreateUserInputDTO } from "../../../dtos/user/CreateUserInputDTO";
 import { UserRepository } from "../interfaceDB/UserRepository";
-import { UpdateUserInputDTO } from "../../../dtos/user/UpdateUserInputDTO";
+import { UpdateUserInputDTO } from "../../../dtos/user/UpdatePermissionDTO";
 import { ListUserDTO } from "../../../dtos/user/ListUserDTO";
 import { UserNotExistsError } from "../../../../shared/errors/user/userNotExistsError";
 import { GetUserDTO } from "../../../dtos/user/GetUserDTO";
