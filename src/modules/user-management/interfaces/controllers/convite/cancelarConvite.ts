@@ -4,7 +4,7 @@ import { CancelarConviteUseCase } from '../../../application/use-cases/convite/c
 
 
 export async function cancelarConvite(request: Request, response: Response, next: NextFunction) {
-    const id = request.body;
+    const id = request.body.id;
     try {
         const cancelarConviteUseCase = new CancelarConviteUseCase(new PrismaConviteRepository)
         await cancelarConviteUseCase.execute(id)

@@ -12,7 +12,7 @@ const conviteRoutes = express.Router();
 
 conviteRoutes.get("/gerar-convite", authMiddleware, permissionMiddleware(['criarUsuarios']), gerarConvite)
 
-conviteRoutes.get("/verificar-convite", verificarConvite)
+conviteRoutes.post("/verificar-convite", verificarConvite)
 
 conviteRoutes.get("/", authMiddleware, permissionMiddleware(['criarUsuarios']), list)
 

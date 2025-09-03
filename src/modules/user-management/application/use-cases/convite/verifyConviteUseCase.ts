@@ -10,16 +10,16 @@ export class VerifyConviteUseCase {
     async execute(conviteToken: string): Promise<string> {
         const decodedToken = await this.authInterface.verify(conviteToken)
         if (!decodedToken) {
-            throw new InvalidConviteError;
+            throw new InvalidConviteError();
         }
         const token = decodedToken.token;
         const empresaId = decodedToken.empresaId
         const conviteExist = await this.conviteRepository.findByToken(token, empresaId)
         if (!conviteExist) {
-            throw new ConviteNotExistsError
+            throw new ConviteNotExistsError()
         }
         if (conviteExist.cancelado === true || conviteExist.usado === true) {
-            throw new ConviteUsadoError
+            throw new ConviteUsadoError()
         }
         return decodedToken.empresaId
     }

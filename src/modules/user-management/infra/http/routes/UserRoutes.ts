@@ -10,13 +10,15 @@ import { updateEmail } from "../../../interfaces/controllers/updateEmail";
 import { updatePerfil } from "../../../interfaces/controllers/updatePerfil";
 import { updateSenha } from "../../../interfaces/controllers/updateSenha";
 import { authMiddleware } from "../../../middlewares/authMiddleware/authMiddleware";
+import { canDeleteUserMiddleware } from "../../../middlewares/canDeleteUserMiddleware";
 import { permissionMiddleware } from "../../../middlewares/permissionMiddleware/permissionMiddleware";
+import { PrismaUserRepository } from "../../repositories/prisma/prismaUserRepo";
 
 const express = require('express');
 
 const usersRoutes = express.Router();
 
-usersRoutes.post("/", create) //esse create vai ser pro convite com token
+usersRoutes.post("/:token", create) //esse create vai ser pro convite com token
 
 usersRoutes.get("/", authMiddleware, permissionMiddleware(['verUsuarios'], 'ALL'), list)
 
@@ -36,6 +38,6 @@ usersRoutes.patch("/senha/:id", updateSenha)
 
 usersRoutes.patch("/perfil/:id", updatePerfil)
 
-usersRoutes.delete("/:id", authMiddleware, permissionMiddleware(['deletarUsuarios'], 'ALL'), deleteUser)
+usersRoutes.delete("/:id", authMiddleware, canDeleteUserMiddleware(new PrismaUserRepository), deleteUser)
 
 export { usersRoutes }

@@ -15,10 +15,10 @@ export async function create(request: Request, response: Response, next: NextFun
   const token = request.params.token
   try {
     const codigoVerificado = CodigoVerificacaoRedis.verificar(newUser.email, codigo);
-    if (!codigoVerificado) throw new InvalidCodeError
+    if (!codigoVerificado) throw new InvalidCodeError()
     const verifyConviteUseCase = new VerifyConviteUseCase(new PrismaConviteRepository, new JWTService)
     const empresaIdConvite = await verifyConviteUseCase.execute(token)
-    if (!empresaIdConvite) throw new InvalidConviteError
+    if (!empresaIdConvite) throw new InvalidConviteError()
     const createUserUseCase = new CreateUserUseCase(new PrismaUserRepository, new PrismaConviteRepository)
     const data = CreateUserConviteZod.parse(newUser)
     await createUserUseCase.execute(data, token, empresaIdConvite)

@@ -11,7 +11,9 @@ appExpress.use('/test', (request : Request, response: Response) => {
     response.send({message : 'funcionou'})
 })
 
+appExpress.use(cors({
+    methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
+}))
 appExpress.use(express.json())
-appExpress.use(cors())
 appExpress.use(router)
 appExpress.use(errorHandler)

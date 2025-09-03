@@ -10,6 +10,11 @@ import { UpdatePerfilInputDTO } from "../../../dtos/perfil/UpdatePerfilInputDTO"
 const prisma = new PrismaClient();
 
 export class PrismaUserRepository implements UserRepository {
+    async countAdmins(): Promise<number> {
+        return prisma.user.count({
+        where: { admin: true }
+        })
+    }
     async verifyEmail(email: string): Promise<boolean> {
         const resposta = await prisma.user.findUnique({ where: { email } });
         if (resposta != null) {
