@@ -6,7 +6,7 @@ import { GetEmpresaUseCase } from '../../application/use-cases/getEmpresaUseCase
 
 
 export async function getEmpresa(request: Request, response: Response, next: NextFunction){
-    const id = request.params.id;
+    const id = response.locals.user.empresaId;
     try {
         const getEmpresaUseCase = new GetEmpresaUseCase(new PrismaEmpresaRepository)
         const empresa= await getEmpresaUseCase.execute(id)

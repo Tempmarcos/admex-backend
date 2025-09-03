@@ -18,13 +18,13 @@ empresaRoutes.post("/", create)
 
 // empresaRoutes.get("/", list) //Desativar em produção
 
-empresaRoutes.get("/:id", authMiddleware, permissionMiddleware(['verDados'], 'ALL'), getEmpresa)
+empresaRoutes.get("/", authMiddleware, permissionMiddleware(['verDados'], 'ALL'), getEmpresa)
 
-empresaRoutes.patch("/dados-gerais/:id", authMiddleware, permissionMiddleware(['editarDados']), updateDadosGerais)
+empresaRoutes.patch("/dados-gerais/", authMiddleware, permissionMiddleware(['editarDados']), updateDadosGerais)
 
-empresaRoutes.patch("/dados-fiscais/:id", authMiddleware, permissionMiddleware(['editarDados']), updateDadosFiscais)
+empresaRoutes.patch("/dados-fiscais/", authMiddleware, permissionMiddleware(['editarDados']), updateDadosFiscais)
 
-empresaRoutes.patch("/dados-financeiros/:id", authMiddleware, permissionMiddleware(['editarDados']), updateDadosFinanceiros)
+empresaRoutes.patch("/dados-financeiros/", authMiddleware, permissionMiddleware(['editarDados']), updateDadosFinanceiros)
 
 empresaRoutes.post("/testar-registro", testarRegistro)
 

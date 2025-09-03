@@ -3,10 +3,12 @@ import { DadosFiscaisBrDTO } from "../../../dtos/DadosFiscais/DadosFiscaisBrDTO"
 import { DadosFiscais } from "./dadosFiscais";
 
 export class DadosFiscaisBR extends DadosFiscais {
-    constructor(
-        props: DadosFiscaisBrDTO
-    ){
+    constructor(props: DadosFiscaisBrDTO){
         super(props.registro, props.classificacao);
+        this.camposEspecificos = {
+            naturezaJuridica: props.camposEspecificos.naturezaJuridica,
+            regimeTributario: props.camposEspecificos.regimeTributario,
+        };
     }
 
      validarRegistro(registro: string): any {

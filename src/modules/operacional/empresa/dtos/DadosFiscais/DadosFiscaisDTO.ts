@@ -4,7 +4,7 @@ import { z } from "zod";
 export const dadosFiscaisSchema = z.object({
     registro: z.string(),
     classificacao: z.string(),
-    camposEspecificos: z.any()
+    camposEspecificos: z.record(z.any()).optional()
 })
 
 
