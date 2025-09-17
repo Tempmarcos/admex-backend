@@ -2,8 +2,6 @@ import { z } from "zod";
 
 
 const getEmpresaSchema = z.object({
-    id: z.string(),
-    ativa: z.boolean(),
     dataCadastro: z.date(),
     usuarios: z.object({
         id: z.string(),

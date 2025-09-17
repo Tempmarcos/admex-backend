@@ -9,9 +9,9 @@ export function checarTarefasDiarias() {
   agenda.hour = 3
   agenda.minute = 0
 
-  const tarefasAtrasadas = new TarefasAtrasadas(new PrismaTarefaRepository)
+  const tarefasAtrasadas = new TarefasAtrasadas(new PrismaTarefaRepository())
 
-  const tarefaAgendada = schedule.scheduleJob(agenda, tarefasAtrasadas.execute)
+  const tarefaAgendada = schedule.scheduleJob(agenda,() => tarefasAtrasadas.execute())
 
   console.log('Tarefas serão checadas todos os dias às 3h')
 

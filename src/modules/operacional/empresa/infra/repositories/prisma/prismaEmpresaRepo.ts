@@ -23,27 +23,29 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
         }
     }
     async updateDadosGerais(data: CreateDadosGeraisDTO, id: string): Promise<Empresa | null> {
-         const {nome, dataDeFundacao, logo, endereco} = data;
+         const {nome, nomeFantasia, dataDeFundacao, logo, endereco} = data;
+         const { pais, ...dadosSemPais } = endereco;
          try {
-             const user = prisma.empresa.update({
+            // console.log(data)
+             const empresa = await prisma.empresa.update({
                 where: {
                      id,
                  },
                  data: {
                      DadosGerais:{
                         update:{
-                            nome, dataDeFundacao, logo,
+                            nomeFantasia: nomeFantasia, nome: nome, dataDeFundacao: dataDeFundacao, logo: logo,
                             endereco:{
                                 update:{
-                                    pais: endereco.pais,
-                                    dados: endereco
+                                    pais: pais,
+                                    dados: dadosSemPais
                                 }
                             }
                         }
                      }
                  },
              })
-             return user
+             return empresa
          } catch (err){
              console.log(err)
              return null
@@ -61,11 +63,7 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
                     DadosFiscais:{
                        update:{
                            registro, classificacao,
-                           camposEspecificos:{
-                            update:{
-                                camposEspecificos
-                            }
-                           }
+                           camposEspecificos
                        }
                     }
                 },
@@ -102,6 +100,17 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
     async findById(id: string): Promise<Empresa | null> {
             return prisma.empresa.findUnique({ where: { id } });
         }
+
+    async getDadosGerais(id: string): Promise<Empresa | null> {
+        return prisma.empresa.findUnique({
+            where: { id },
+            include: {
+            DadosGerais: {
+                include: { endereco: true },
+            },
+            },
+        });
+    }
 
     async findByRegistro(registro: string): Promise<Empresa | null> {
         return prisma.empresa.findFirst({ where: {DadosFiscais: { is: {registro} } } });
@@ -175,8 +184,6 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
                     id,
                 },
               select: {
-                 id: true,
-                 ativa: true,
                  dataCadastro: true,
                  usuarios:{
                     select:{
@@ -215,6 +222,7 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
       
              if (!empresa) throw new EmpresaNotExistsError
       
+            //  console.log(empresa)
              return empresa
       
            } catch (error) {

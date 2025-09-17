@@ -7,8 +7,9 @@ import { dadosGeraisSchema } from '../../dtos/createDadosGeraisDTO';
 
 export async function updateDadosGerais(request: Request, response: Response, next: NextFunction) {
     const dados = request.body;
-    const id = request.params.id;
+    const id = response.locals.user.empresaId;
     try {
+      dados.endereco.codigoPostal = dados.endereco.codigoPostal.toString();
       const updateDadosGeraisUseCase = new UpdateDadosGeraisUseCase(new PrismaEmpresaRepository)
       const data = dadosGeraisSchema.parse(dados)
 

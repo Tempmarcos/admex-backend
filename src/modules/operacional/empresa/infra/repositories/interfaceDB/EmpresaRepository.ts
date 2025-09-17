@@ -9,6 +9,7 @@ import { DadosFiscaisDTO } from "../../../dtos/DadosFiscais/DadosFiscaisDTO"
 
 export interface EmpresaRepository {
     findById(id: string): Promise<Empresa | null>
+    getDadosGerais(id: string): Promise<any | null>
     create(data: CreateEmpresaDTO): Promise<Empresa | null>
     findByRegistro(registro: string): Promise<Empresa | null>
     verifyRegistro(registro: string): Promise<boolean>

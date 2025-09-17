@@ -7,15 +7,10 @@ export class UpdateDadosGeraisUseCase {
     constructor(private empresaRepository: EmpresaRepository){}
 
     async execute(props: CreateDadosGeraisDTO, id: string){
-        // console.log(props.endereco)
-
         const enderecoFormatado = EnderecoFactory.criar(props.endereco)
-        // console.log(enderecoFormatado)
-        enderecoFormatado.validar()
+        enderecoFormatado.validar(enderecoFormatado)
         props.endereco = enderecoFormatado
-
         const dadosGeraisData = await DadosGerais.create(props)
-
         this.empresaRepository.updateDadosGerais(dadosGeraisData, id)
     }
 }

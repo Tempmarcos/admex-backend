@@ -9,7 +9,7 @@ export class DadosGerais {
     }
 
     get nomeFantasia(): string{
-        return this.dadosGeraisProps.nome;
+        return this.dadosGeraisProps.nomeFantasia;
     }
 
     get dataDeFundacao(): Date{
@@ -29,7 +29,7 @@ export class DadosGerais {
         }
 
     public static async create (props: CreateDadosGeraisDTO) : Promise<DadosGerais> {
-            const { nome, dataDeFundacao, logo, endereco} = props
+            const { nome, nomeFantasia, dataDeFundacao, logo, endereco} = props
             return new DadosGerais(props);
         }
 }
