@@ -61,7 +61,7 @@ export class ProdutoRepository implements ItemRepository {
                       select: {
                          id: true,
                          nome: true,
-                         empresaId: true,
+                         descricao: true,
                          preco: true,
                          estoque: true,
                          unidadeMedida: true,

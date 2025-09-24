@@ -3,10 +3,12 @@ import { ItemFactory } from "../../domain/ItemFactory";
 import { UpdateItemUseCase } from "../../application/use-cases/updateItemUseCase";
 
 export async function update(request: Request, response: Response, next: NextFunction){
-    const { item, tipo, id } = request.body
+    const item = request.body
+    const tipo = request.params.tipo;
+    const id = request.params.id;
 
     try {
-      const createItemUseCase = new UpdateItemUseCase(
+      const updateItemUseCase = new UpdateItemUseCase(
         ItemFactory.criarRepositorio(tipo)
       );
   
@@ -14,9 +16,9 @@ export async function update(request: Request, response: Response, next: NextFun
 
       DTO.parse(item)
 
-      await createItemUseCase.execute(item, id);
+      await updateItemUseCase.execute(item, id);
   
-      return response.status(201).json({ message: `${tipo} criado com sucesso!` });
+      return response.status(201).json({ message: `${tipo} editado com sucesso!` });
     } catch (err) {
       next(err);
     }

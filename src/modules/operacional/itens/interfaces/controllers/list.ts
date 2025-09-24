@@ -4,7 +4,8 @@ import { ListItemUseCase } from "../../application/use-cases/listItemUseCase";
 
 
 export async function list(request: Request, response: Response, next: NextFunction){
-    const { tipo, empresaId } = request.body
+    const tipo = request.params.tipo
+    const empresaId = response.locals.user.empresaId;
 
     try {
       const listItemUseCase = new ListItemUseCase(

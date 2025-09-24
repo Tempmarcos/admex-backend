@@ -4,9 +4,12 @@ import { ItemFactory } from "../../domain/ItemFactory";
 
 
 export async function create(request: Request, response: Response, next: NextFunction){
-    const { item, tipo, empresaId } = request.body
+    const item = request.body
+    const tipo = request.params.tipo
+    const empresaId = response.locals.user.empresaId;
 
     try {
+      // console.log(item)
       const createItemUseCase = new CreateItemUseCase(
         ItemFactory.criarRepositorio(tipo)
       );

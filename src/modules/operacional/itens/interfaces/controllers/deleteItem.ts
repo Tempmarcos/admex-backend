@@ -3,8 +3,8 @@ import { DeleteItemUseCase } from "../../application/use-cases/deleteItemUseCase
 import { ItemFactory } from "../../domain/ItemFactory";
 
 export async function deleteItem(request: Request, response: Response, next: NextFunction){
+    const tipo = request.params.tipo;
     const id = request.params.id;
-    const {tipo} = request.body
 
     try {
       const deleteItemUseCase = new DeleteItemUseCase(
