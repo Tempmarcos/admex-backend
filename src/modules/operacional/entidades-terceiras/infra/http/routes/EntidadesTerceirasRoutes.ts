@@ -1,25 +1,24 @@
+import { authMiddleware } from "../../../../../user-management/middlewares/authMiddleware/authMiddleware";
+import { permissionMiddleware } from "../../../../../user-management/middlewares/permissionMiddleware/permissionMiddleware";
 import { create } from "../../../interfaces/controllers/create";
 import { deleteEntity } from "../../../interfaces/controllers/deleteEntity";
 import { getEntity } from "../../../interfaces/controllers/getEntity";
 import { list } from "../../../interfaces/controllers/list";
+import { update } from "../../../interfaces/controllers/update";
 
 
 const express = require('express');
 
 const entidadesTerceirasRoutes = express.Router();
 
-entidadesTerceirasRoutes.post("/", create) 
+entidadesTerceirasRoutes.post("/:tipo", authMiddleware, permissionMiddleware(['adicionarEntidades'], 'ALL'), create) 
 
-entidadesTerceirasRoutes.get("/", list) 
+entidadesTerceirasRoutes.get("/:tipo", authMiddleware, permissionMiddleware(['verEntidades'], 'ALL'), list) 
 
-entidadesTerceirasRoutes.get("/:id", getEntity)
+entidadesTerceirasRoutes.get("/:tipo/:id", authMiddleware, permissionMiddleware(['verEntidades'], 'ALL'), getEntity)
 
-// entidadesTerceirasRoutes.patch("/dados-gerais/:id", updateDadosGerais)
+entidadesTerceirasRoutes.patch("/:tipo/:id", authMiddleware, permissionMiddleware(['editarEntidades'], 'ALL'), update)
 
-// entidadesTerceirasRoutes.patch("/dados-fiscais/:id", updateDadosFiscais)
-
-// entidadesTerceirasRoutes.patch("/dados-financeiros/:id", updateDadosFinanceiros)
-
-entidadesTerceirasRoutes.delete("/:id", deleteEntity)
+entidadesTerceirasRoutes.delete("/:tipo/:id", authMiddleware, permissionMiddleware(['deletarEntidades'], 'ALL'), deleteEntity)
 
 export { entidadesTerceirasRoutes }

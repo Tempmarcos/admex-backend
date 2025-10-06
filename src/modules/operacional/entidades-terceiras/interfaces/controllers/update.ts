@@ -3,7 +3,9 @@ import { EntidadeTerceiraFactory } from '../../domain/entities/entidadeTerceiraF
 import { UpdateEntidadeUseCase } from '../../application/use-cases/updateEntityUseCase';
 
 export async function update(request: Request, response: Response, next: NextFunction){
-    const { entidade, tipo, id } = request.body
+    const tipo = request.params.tipo;
+    const id = request.params.id;
+    const entidade = request.body;
 
     try {
       const updateEntidadeTerceiraUseCase = new UpdateEntidadeUseCase(
@@ -13,6 +15,7 @@ export async function update(request: Request, response: Response, next: NextFun
       const DTO = EntidadeTerceiraFactory.criarDTO(tipo)
       
       DTO.parse(entidade)
+      // console.log(entidade)
   
       await updateEntidadeTerceiraUseCase.execute(entidade, id);
   

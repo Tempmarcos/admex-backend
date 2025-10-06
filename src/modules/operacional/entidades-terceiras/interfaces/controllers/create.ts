@@ -3,7 +3,9 @@ import { CreateEntidadeUseCase } from '../../application/use-cases/createEntityU
 import { EntidadeTerceiraFactory } from '../../domain/entities/entidadeTerceiraFactory';
 
 export async function create(request: Request, response: Response, next: NextFunction){
-    const { entidade, tipo, empresaId } = request.body
+    const entidade = request.body
+    const tipo = request.params.tipo
+    const empresaId = response.locals.user.empresaId;
 
     try {
       const createEntidadeTerceiraUseCase = new CreateEntidadeUseCase(

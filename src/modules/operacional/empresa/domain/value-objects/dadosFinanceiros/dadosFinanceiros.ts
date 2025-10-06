@@ -3,8 +3,18 @@ import { CreateDadosFinanceirosDTO } from "../../../dtos/createDadosFinanceirosD
 export class DadosFinanceiros {
     private dadosFinanceirosProps: CreateDadosFinanceirosDTO;
     
-    get contaBancaria(): string{
-        return this.dadosFinanceirosProps.contaBancaria;
+    get banco(): string | undefined{
+        return this.dadosFinanceirosProps.banco;
+    }
+
+    get conta(): string | undefined{
+        return this.dadosFinanceirosProps.conta;
+    }
+    get agencia(): string | undefined{
+        return this.dadosFinanceirosProps.agencia;
+    }
+    get pix(): string | undefined{
+        return this.dadosFinanceirosProps.pix;
     }
 
     private constructor(props: CreateDadosFinanceirosDTO){
@@ -12,7 +22,7 @@ export class DadosFinanceiros {
         }
 
     public static async create (props: CreateDadosFinanceirosDTO) : Promise<DadosFinanceiros> {
-            const {contaBancaria} = props
+            const {banco, agencia, conta, pix} = props
             return new DadosFinanceiros(props);
         }
 }

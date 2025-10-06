@@ -3,7 +3,8 @@ import { EntidadeTerceiraFactory } from "../../domain/entities/entidadeTerceiraF
 import { ListEntidadeUseCase } from "../../application/use-cases/listEntityUseCase";
 
 export async function list(request: Request, response: Response, next: NextFunction){
-    const { tipo, empresaId } = request.body
+    const tipo = request.params.tipo;
+    const empresaId = response.locals.user.empresaId;
 
     try {
       const listEntidadeTerceiraUseCase = new ListEntidadeUseCase(

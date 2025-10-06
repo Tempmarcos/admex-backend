@@ -76,7 +76,7 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
     }
 
      async updateDadosFinanceiros(data: CreateDadosFinanceirosDTO, id: string): Promise<Empresa | null> {
-        const {contaBancaria} = data;
+        const {banco, agencia, pix, conta} = data;
         try {
             const user = prisma.empresa.update({
                where: {
@@ -85,7 +85,7 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
                 data: {
                     DadosFinanceiros:{
                        update:{
-                           contaBancaria
+                           conta, banco, agencia, pix
                        }
                     }
                 },
@@ -149,7 +149,10 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
                     DadosFinanceiros: {
                         create:
                         {
-                            contaBancaria: DadosFinanceiros.contaBancaria
+                            conta: DadosFinanceiros.conta,
+                            banco: DadosFinanceiros.banco,
+                            agencia: DadosFinanceiros.agencia,
+                            pix: DadosFinanceiros.pix
                         }
                     },
                     usuarios:{
@@ -214,7 +217,10 @@ export class PrismaEmpresaRepository implements EmpresaRepository {
                  },
                  DadosFinanceiros:{
                     select:{
-                        contaBancaria: true
+                        conta: true,
+                        banco: true,
+                        agencia: true,
+                        pix: true
                     }
                  }
                },

@@ -11,6 +11,6 @@ export class GetEntidadeUseCase {
             throw new EntityNotExistsError();
         }
         
-        await this.repository.get(id)
+        return await this.repository.get(id)
      }
 }

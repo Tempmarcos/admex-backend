@@ -3,8 +3,8 @@ import { DeleteEntidadeUseCase } from "../../application/use-cases/deleteEntidad
 import { EntidadeTerceiraFactory } from "../../domain/entities/entidadeTerceiraFactory";
 
 export async function deleteEntity(request: Request, response: Response, next: NextFunction){
+    const tipo = request.params.tipo;
     const id = request.params.id;
-    const { tipo} = request.body
 
     try {
       const deleteEntidadeTerceiraUseCase = new DeleteEntidadeUseCase(

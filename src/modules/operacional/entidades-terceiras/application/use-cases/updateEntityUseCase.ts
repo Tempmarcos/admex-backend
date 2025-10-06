@@ -9,23 +9,24 @@ export class UpdateEntidadeUseCase {
   constructor(private repository: EntidadeTerceiraRepository) {}
 
   async execute(entidade: entidadeTerceiraDTO, id: string): Promise<void> {
-    const entidadeExists = await this.repository.findById(id)
-            
-    if(!entidadeExists) {
-        throw new EntityNotExistsError;
+    try{
+      const entidadeExists = await this.repository.findById(id)
+              
+      if(!entidadeExists) {
+          throw new EntityNotExistsError;
+      }
+      // if(entidadeExists.registro != entidade.registro){
+      //     const registroExists = await this.repository.findByRegistro(entidade.registro)
+      //     if(registroExists) throw new RegistroAlreadyExistsError;
+      // }
+
+      const enderecoFormatado = EnderecoFactory.criar(entidade.endereco)
+      enderecoFormatado.validar(enderecoFormatado)
+      entidade.endereco = enderecoFormatado //Criar endereço com base no país
+
+      await this.repository.update(entidade, id);
+    }catch(error){
+      throw new Error('Erro ao editar entidade')
     }
-    
-    if(entidadeExists.registro != entidade.registro){
-        const registroExists = await this.repository.findByRegistro(entidade.registro)
-        if(registroExists) throw new RegistroAlreadyExistsError;
-    }
-
-
-    const enderecoFormatado = EnderecoFactory.criar(entidade.endereco)
-    enderecoFormatado.validar()
-    entidade.endereco = enderecoFormatado //Criar endereço com base no país
-    
-
-    await this.repository.update(entidade, id);
   }
 }

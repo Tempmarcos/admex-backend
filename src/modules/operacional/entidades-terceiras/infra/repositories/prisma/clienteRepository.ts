@@ -31,7 +31,6 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
                       select: {
                          id: true,
                          nome: true,
-                         empresaId: true,
                          contato:{
                             select:{
                                 nome: true,
@@ -46,19 +45,12 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
                                 dados: true
                             }
                          },
-                         propostas:{
-                            select:{
-                                id: true,
-                                status: true,
-                                titulo: true
-                            }
-                         },
                          registro: true,
                        },
                      })
               
                      if (!cliente) throw new ClienteNotExistsError
-              
+
                      return cliente
               
                    } catch (error) {
@@ -67,13 +59,14 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
     }
     async update(data: entidadeTerceiraDTO, id: string): Promise<any | null> {
         try{
-            const{nome, contato, endereco} = data;
+            const{nome, contato, endereco, registro} = data;
+            const { pais, ...dadosSemPais } = endereco;
             const cliente = await prisma.cliente.update({
                 where: {
                     id,
                 },
                 data:{
-                    nome, contato:{
+                    nome, registro, contato:{
                         update:{
                             nome: contato.nome,
                             cargo: contato.cargo,
@@ -83,8 +76,8 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
                     },
                     endereco: {
                         update:{
-                            pais: endereco.pais,
-                            dados: endereco
+                            pais: pais,
+                            dados: dadosSemPais
                         }
                     }
                 }
@@ -98,6 +91,7 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
     async create(data: entidadeTerceiraDTO, empresaId: string): Promise<any | null> {
         try{
             const{nome, contato, registro, endereco} = data;
+            const { pais, ...dadosSemPais } = endereco;
             const cliente = await prisma.cliente.create({
                 data:{
                     nome, contato:{
@@ -111,8 +105,8 @@ export class ClienteRepository implements EntidadeTerceiraRepository {
                     registro,
                     endereco: {
                         create:{
-                            pais: endereco.pais,
-                            dados: endereco
+                            pais: pais,
+                            dados: dadosSemPais
                         }
                     },
                     empresaId: empresaId

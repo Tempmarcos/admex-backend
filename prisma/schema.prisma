@@ -95,7 +95,10 @@ model DadosFiscais {
 
 model DadosFinanceiros {
   id            String      @id @default(uuid())
-  contaBancaria String
+  banco       String?
+  agencia     String?
+  conta       String?
+  pix         String?
   empresaId     String?     @unique
   empresa       Empresa?    @relation(fields: [empresaId], references: [id], onDelete: Cascade)
   fornecedorId  String?     @unique
@@ -103,18 +106,22 @@ model DadosFinanceiros {
 }
 
 model Cliente {
-  id        String     @id @default(uuid())
-  nome      String
-  empresaId String
-  registro  String
-  contato   Contato?
-  endereco  Endereco?
-  empresa   Empresa    @relation(fields: [empresaId], references: [id], onDelete: Cascade)
-  propostas Proposta[]
+  id         String     @id @default(uuid())
+  created_at DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  nome       String
+  empresaId  String
+  registro   String
+  contato    Contato?
+  endereco   Endereco?
+  empresa    Empresa    @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  propostas  Proposta[]
 }
 
 model Fornecedor {
   id               String            @id @default(uuid())
+  created_at       DateTime @default(now())
+  updatedAt        DateTime @updatedAt
   nome             String
   empresaId        String
   registro         String
@@ -122,10 +129,14 @@ model Fornecedor {
   endereco         Endereco?
   dadosFinanceiros DadosFinanceiros?
   empresa          Empresa           @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  produtos         Produto[]
+  servicos         Servico[]
 }
 
 model Produto {
   id            String  @id @default(uuid())
+  created_at    DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   tipo          String
   nome          String
   descricao     String
@@ -134,19 +145,23 @@ model Produto {
   unidadeMedida String?
   empresaId     String
   empresa       Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  Fornecedor    Fornecedor[]
 }
 
 model Servico {
-  id        String  @id @default(uuid())
-  tipo      String
-  nome      String
-  descricao String
-  preco     Float
-  duracao   Int?
-  empresaId String
-  empresa   Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  id           String  @id @default(uuid())
+  created_at   DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  tipo         String
+  nome         String
+  descricao    String
+  preco        Float
+  duracao      Int?
+  empresaId    String
+  empresa      Empresa @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  Fornecedor   Fornecedor[]
 }
-
+//@updatedAt
 model Tarefa {
   id                String    @id @default(uuid())
   nome              String

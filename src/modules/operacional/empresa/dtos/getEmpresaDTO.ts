@@ -23,7 +23,10 @@ const getEmpresaSchema = z.object({
         camposEspecificos: z.any()
     }).nullish(),
     DadosFinanceiros: z.object({
-        contaBancaria: z.string()
+        conta: z.string().nullish(),
+        banco: z.string().nullish(),
+        agencia: z.string().nullish(),
+        pix: z.string().nullish()
     }).nullish()
 })
 

@@ -3,8 +3,8 @@ import { EntidadeTerceiraFactory } from "../../domain/entities/entidadeTerceiraF
 import { GetEntidadeUseCase } from "../../application/use-cases/getEntityUseCase";
 
 export async function getEntity(request: Request, response: Response, next: NextFunction){
+    const tipo = request.params.tipo;
     const id = request.params.id;
-    const { tipo} = request.body
 
     try {
       const getEntidadeTerceiraUseCase = new GetEntidadeUseCase(
@@ -12,7 +12,7 @@ export async function getEntity(request: Request, response: Response, next: Next
       );
   
       const entidade = await getEntidadeTerceiraUseCase.execute(id);
-  
+
       return response.status(200).send(entidade)
     } catch (err) {
       next(err);
