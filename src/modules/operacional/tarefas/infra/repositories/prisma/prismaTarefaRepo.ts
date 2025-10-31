@@ -7,6 +7,9 @@ import { TarefaNotExistsError } from "../../../../../shared/errors/tarefa/Tarefa
 const prisma = new PrismaClient();
 
 export class PrismaTarefaRepository implements TarefaRepository {
+    cancelarTarefa(id: string): Promise<any | null> {
+        throw new Error("Method not implemented.");
+    }
     async atualizarTarefasAtrasadas(): Promise<any | null> {
         const agora = new Date();
         try {
@@ -61,16 +64,16 @@ export class PrismaTarefaRepository implements TarefaRepository {
     findById(id: string): Promise<any | null> {
         return prisma.tarefa.findUnique({ where: { id } })
     }
-    async create(data: TarefaCreateDTO, empresaId: string): Promise<any | null> {
+    async create(data: TarefaCreateDTO, criadorId: string, empresaId: string): Promise<any | null> {
         try{
-            const{nome, tipo, status, responsavelId, criadorId, dataAgendada, dataExecutada} = data;
+            const{nome, descricao, tipo, responsavelId, dataAgendada} = data;
+            const status = 'pendente'
             const tarefa = await prisma.tarefa.create({
                 data: {
-                    nome, tipo, status, 
+                    nome, descricao, status, tipo, 
                     userResponsavelId: responsavelId,
                     userCriadorId: criadorId,
                     dataAgendada,
-                    dataExecutada,
                     empresaId: empresaId
                 }
             })
@@ -80,12 +83,24 @@ export class PrismaTarefaRepository implements TarefaRepository {
             return null
         }
     }
-    async list(empresaId: string): Promise<any | null> {
+    async list(empresaId: string, id: string): Promise<any | null> {
         return await prisma.tarefa.findMany({
-            where: { empresaId },
+            where: { 
+                empresaId,
+                OR: [
+                    { userResponsavelId: id },
+                    { userCriadorId: id }
+                ]
+             },
             select: {
-                id: true, nome: true, status: true,
+                id: true, nome: true, status: true, dataAgendada: true,
                 responsavel: {
+                    select: {
+                        id: true,
+                        nome: true
+                    }
+                },
+                criador: {
                     select: {
                         id: true,
                         nome: true
@@ -106,9 +121,9 @@ export class PrismaTarefaRepository implements TarefaRepository {
                 select: {
                     id: true,
                     nome: true,
-                    empresaId: true,
                     tipo: true,
                     status: true,
+                    descricao: true,
                     dataAgendada: true,
                     dataExecutada: true,
                     responsavel: {

@@ -11,6 +11,6 @@ export class GetTarefaUseCase {
             throw new TarefaNotExistsError();
         }
         
-        await this.repository.get(id)
+        return await this.repository.get(id)
      }
 }

@@ -19,8 +19,18 @@ export const tarefaUpdateSchema = z.object({
     tipo: z.nativeEnum(tipo),
     responsavelId: z.string(),
     status: z.nativeEnum(status),
-    dataAgendada: z.date().optional(),
-    dataExecutada: z.date().optional(), 
+    dataAgendada:z.preprocess((val) => {
+    if (typeof val === "string") {
+      return new Date(val); // transforma string em Date
+    }
+    return val;
+  }, z.date().optional().nullish()),
+    dataExecutada: z.preprocess((val) => {
+    if (typeof val === "string") {
+      return new Date(val); // transforma string em Date
+    }
+    return val;
+  }, z.date().optional().nullish()), 
 })
 
 export type TarefaUpdateDTO = z.infer<typeof tarefaUpdateSchema>

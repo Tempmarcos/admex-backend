@@ -3,7 +3,7 @@ import { TarefaRepository } from "../../infra/repositories/interfaceDB/tarefaRep
 export class ListTarefaUseCase {
     constructor(private repository: TarefaRepository) {}
 
-     async execute(empresaId: string): Promise<void> {
-        return this.repository.list(empresaId)
+     async execute(empresaId: string, id: string): Promise<void> {
+        return this.repository.list(empresaId, id)
      }
 }

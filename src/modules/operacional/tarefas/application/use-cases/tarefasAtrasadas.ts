@@ -9,6 +9,7 @@ export class TarefasAtrasadas {
   async execute(): Promise<void> {
     await this.repository.atualizarTarefasAtrasadas();
     const data = await this.repository.checarTarefasAtrasadas();
+    console.log(data)
 
     data.atrasadas.forEach(async (tarefa: { responsavel: { email: string; nome: string; }; nome: string; }) => {
       await sendTarefaAtrasada(tarefa.responsavel.email, tarefa.responsavel.nome, tarefa.nome)

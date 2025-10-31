@@ -1,4 +1,5 @@
 import { authMiddleware } from "../../../../../user-management/middlewares/authMiddleware/authMiddleware";
+import { permissionMiddleware } from "../../../../../user-management/middlewares/permissionMiddleware/permissionMiddleware";
 import { create } from "../../../interfaces/controllers/create";
 import { deleteProposta } from "../../../interfaces/controllers/deleteProposta";
 import { getProposta } from "../../../interfaces/controllers/getProposta";
@@ -11,19 +12,19 @@ const express = require('express');
 
 const propostaRoutes = express.Router();
 
-propostaRoutes.post("/", authMiddleware, create)
+propostaRoutes.post("/", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), create)
 
-propostaRoutes.get("/", authMiddleware, list)
+propostaRoutes.get("/", authMiddleware, permissionMiddleware(['verPropostas'], 'ALL'), list)
 
-propostaRoutes.get("/:id", authMiddleware, getProposta)
+propostaRoutes.get("/:id", authMiddleware, permissionMiddleware(['verPropostas'], 'ALL'), getProposta)
 
-propostaRoutes.patch("/:id", authMiddleware, update)
+propostaRoutes.patch("/:id", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), update)
 
-propostaRoutes.delete("/:id", authMiddleware, deleteProposta)
+propostaRoutes.delete("/:id", authMiddleware, permissionMiddleware(['deletarPropostas'], 'ALL'), deleteProposta)
 
-propostaRoutes.patch("/versao/:id", authMiddleware, updateVersao)
+propostaRoutes.patch("/versao/:id", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), updateVersao)
 
-propostaRoutes.post("/versao/", authMiddleware, createVersao)
+propostaRoutes.post("/versao/", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), createVersao)
 
 // propostaRoutes.delete("/versao/:id", deleteVersao)
 

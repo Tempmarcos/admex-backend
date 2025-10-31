@@ -4,8 +4,8 @@ import { TarefaRepository } from "../../infra/repositories/interfaceDB/tarefaRep
 export class CreateTarefaUseCase {
   constructor(private repository: TarefaRepository) {}
 
-  async execute(tarefa: TarefaCreateDTO, empresaId: string): Promise<void> {
+  async execute(tarefa: TarefaCreateDTO, criadorId: string, empresaId: string): Promise<void> {
     tarefaCreateSchema.parse(tarefa)
-    await this.repository.create(tarefa, empresaId);
+    await this.repository.create(tarefa, criadorId, empresaId);
   }
 }

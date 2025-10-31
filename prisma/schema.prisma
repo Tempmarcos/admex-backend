@@ -165,6 +165,7 @@ model Servico {
 model Tarefa {
   id                String    @id @default(uuid())
   nome              String
+  descricao         String?
   userResponsavelId String
   userCriadorId     String
   responsavel       User      @relation("responsavel", fields: [userResponsavelId], references: [id], onDelete: Cascade)
@@ -184,7 +185,7 @@ model Proposta {
   descricao String?
   clienteId String
   cliente   Cliente          @relation(fields: [clienteId], references: [id], onDelete: Cascade)
-  status    String
+  status    String           
   versoes   VersaoProposta[]
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt

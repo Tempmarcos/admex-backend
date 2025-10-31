@@ -1,11 +1,11 @@
 import { PrismaClient, User } from "@prisma/client";
 import { CreateUserInputDTO } from "../../../dtos/user/CreateUserInputDTO";
 import { UserRepository } from "../interfaceDB/UserRepository";
-import { UpdateUserInputDTO } from "../../../dtos/user/UpdatePermissionDTO";
 import { ListUserDTO } from "../../../dtos/user/ListUserDTO";
 import { UserNotExistsError } from "../../../../shared/errors/user/userNotExistsError";
 import { GetUserDTO } from "../../../dtos/user/GetUserDTO";
 import { UpdatePerfilInputDTO } from "../../../dtos/perfil/UpdatePerfilInputDTO";
+import { UpdatePermissionsInputDTO } from "../../../dtos/user/UpdatePermissionDTO";
 
 const prisma = new PrismaClient();
 
@@ -25,7 +25,7 @@ export class PrismaUserRepository implements UserRepository {
         }
     }
     async updatePerfil(data: UpdatePerfilInputDTO, id: string): Promise<User | null> {
-        const { foto, nomeDeUsuario, tema, fonte } = data;
+        const { foto, nomeDeUsuario, tema } = data;
         try {
             const user = prisma.user.update({
                 where: {
@@ -77,15 +77,15 @@ export class PrismaUserRepository implements UserRepository {
             return null
         }
     }
-    async update(data: UpdateUserInputDTO, id: string): Promise<User | null> {
-        const { nome, permissoes } = data;
+    async update(data: UpdatePermissionsInputDTO, id: string): Promise<User | null> {
+        const { admin, permissoes } = data;
         try {
             const user = prisma.user.update({
                 where: {
                     id,
                 },
                 data: {
-                    nome, permissoes,
+                    admin, permissoes,
                 },
             })
 

@@ -17,11 +17,14 @@ enum tipo {
 export const tarefaCreateSchema = z.object({
     nome: z.string(),
     tipo: z.nativeEnum(tipo),
+    descricao: z.string().optional().nullish(),
     responsavelId: z.string(),
-    criadorId: z.string(),
-    status: z.nativeEnum(status),
-    dataAgendada: z.date().optional(),
-    dataExecutada: z.date().optional(), 
+    dataAgendada:z.preprocess((val) => {
+    if (typeof val === "string") {
+      return new Date(val); // transforma string em Date
+    }
+    return val;
+  }, z.date().optional().nullish()),
 })
 
 export type TarefaCreateDTO = z.infer<typeof tarefaCreateSchema>

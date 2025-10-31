@@ -4,10 +4,12 @@ import { PrismaTarefaRepository } from '../../infra/repositories/prisma/prismaTa
 
 
 export async function list(request: Request, response: Response, next: NextFunction){
-    const empresaId = request.params.empresaId;
+    const empresaId = response.locals.user.empresaId;
+    const id = response.locals.user.id;
+
     try {
         const listTarefaUseCase = new ListTarefaUseCase(new PrismaTarefaRepository)
-        const tarefas = await listTarefaUseCase.execute(empresaId)
+        const tarefas = await listTarefaUseCase.execute(empresaId, id)
 
         return response.status(200).send(tarefas)
       } catch (error) {
