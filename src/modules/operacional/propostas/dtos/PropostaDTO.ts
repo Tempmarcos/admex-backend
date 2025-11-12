@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { versaoSchema } from "./VersaoPropostaDTO";
+import { revisaoSchema } from "./RevisaoDTO";
+
 
 enum status {
     Criada = 'criada',
@@ -10,12 +11,11 @@ enum status {
 }
 
 export const propostaSchema = z.object({
-    titulo: z.string(),
     codigo: z.string(),
     descricao: z.string().optional(),
     clienteId: z.string(),
     status: z.nativeEnum(status),
-    versao: versaoSchema
+    revisao: revisaoSchema.optional()
 })
 
 export type PropostaDTO = z.infer<typeof propostaSchema>

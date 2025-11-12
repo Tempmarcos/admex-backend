@@ -9,8 +9,6 @@ enum status {
 }
 
 export const propostaUpdateSchema = z.object({
-    titulo: z.string(),
-    codigo: z.string(),
     descricao: z.string().optional(),
     status: z.nativeEnum(status),
 })

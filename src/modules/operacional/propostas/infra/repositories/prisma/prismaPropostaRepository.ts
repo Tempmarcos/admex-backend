@@ -3,47 +3,59 @@ import { PropostaRepository } from "../interfaceDB/propostaRepository";
 import { PropostaDTO } from "../../../dtos/PropostaDTO";
 import { PropostaUpdateDTO } from "../../../dtos/PropostaUpdateDTO";
 import { PropostaNotExistsError } from "../../../../../shared/errors/proposta/propostaNotExistsError";
-import { VersaoPropostaUpdateDTO } from "../../../dtos/VersaoPropostaUpdateDTO";
-import { CreateVersaoPropostaDTO } from "../../../dtos/CreateVersaoPropostaDTO";
+import { CreateRevisaoDTO } from "../../../dtos/CreateRevisaoDTO";
+import { RevisaoUpdateDTO } from "../../../dtos/RevisaoUpdateDTO";
 
 
 
 const prisma = new PrismaClient();
 
 export class PrismaPropostaRepository implements PropostaRepository {
+    async checarUltimoCodigo(empresaId: string): Promise<string | null> {
+        const anoAtual = new Date().getFullYear().toString().slice(-2); // "25"
+
+        // Buscar o maior número de código do ano atual para essa empresa
+        const ultimaProposta = await prisma.proposta.findFirst({
+            where: {
+            empresaId,
+            codigo: {
+                endsWith: `-${anoAtual}`,
+            },
+            },
+            orderBy: {
+            codigo: 'desc',
+            },
+        });
+
+        let novoNumero = 1;
+
+        if (ultimaProposta?.codigo) {
+            // Extrai a parte numérica antes do "-"
+            const [numero] = ultimaProposta.codigo.split("-");
+            const numInt = parseInt(numero, 10);
+            if (!isNaN(numInt)) {
+            novoNumero = numInt + 1;
+            }
+        }
+
+        // Garante formato com 3 dígitos
+        const numeroFormatado = String(novoNumero).padStart(3, "0");
+
+        const novoCodigo = `${numeroFormatado}-${anoAtual}`;
+
+        return novoCodigo;
+    }
     findById(id: string): Promise<any | null> {
         return prisma.proposta.findUnique({ where: { id } })
     }
     async create(data: PropostaDTO, empresaId: string): Promise<any | null> {
         try{
-            const{titulo, clienteId, status, versao, codigo, descricao} = data;
+            const{clienteId, status, codigo, descricao} = data;
             const proposta = await prisma.proposta.create({
                 data: {
-                    titulo,
                     status,
                     descricao,
                     codigo,
-                    versoes: {
-                        create: {
-                            dataProposta: versao.dataProposta,
-                            numeroVersao: versao.numeroVersao,
-                            valorTotal: versao.valorTotal,
-                            produtos: {
-                                create: versao.produto.map(prod => ({
-                                    nome: prod.nome,
-                                    preco: prod.preco,
-                                    quantidade: prod.quantidade,
-                                    unidadeDeMedida: prod.unidadeDeMedida
-                                  }))  
-                            },
-                            servicos: {
-                                create: versao.servico.map(serv => ({
-                                    nome: serv.nome,
-                                    preco: serv.preco,
-                                  }))
-                            }
-                        }
-                    },
                     clienteId: clienteId,
                     empresaId: empresaId
                 }
@@ -59,7 +71,13 @@ export class PrismaPropostaRepository implements PropostaRepository {
             where: { empresaId },
             select: {
                 id: true,
-                titulo: true,
+                codigo: true,
+                status: true,
+                cliente: {
+                    select: {
+                        nome: true
+                    }
+                }
             } 
         });
     }
@@ -74,8 +92,6 @@ export class PrismaPropostaRepository implements PropostaRepository {
                 },
                 select: {
                     id: true,
-                    empresaId: true,
-                    titulo: true,
                     codigo: true,
                     descricao: true,
                     cliente: {
@@ -86,29 +102,21 @@ export class PrismaPropostaRepository implements PropostaRepository {
                     status: true,
                     updatedAt: true,
                     createdAt: true,
-                    versoes: {
+                    revisoes: {
                         select: {
                             id: true,
                             dataProposta: true,
                             valorTotal: true,
-                            numeroVersao: true,
+                            numeroRevisao: true,
                             createdAt: true,
                             aprovado: true,
                             executado: true,
-                            servicos: {
-                                select: {
-                                    id: true,
-                                    nome: true,
-                                    preco: true
-                                }
-                            },
-                            produtos: {
+                            itens: {
                                 select: {
                                     id: true,
                                     nome: true,
                                     preco: true,
                                     quantidade: true,
-                                    unidadeDeMedida: true
                                 }
                             }
                         }
@@ -126,16 +134,14 @@ export class PrismaPropostaRepository implements PropostaRepository {
     }
     async update(data: PropostaUpdateDTO, id: string): Promise<any | null> {
         try{
-            const{titulo, status, codigo, descricao} = data;
+            const{ status, descricao } = data;
             const proposta = await prisma.proposta.update({
                 where: {
                     id
                 },
                 data: {
-                    titulo,
                     status,
                     descricao,
-                    codigo,
                 }
             })
             return proposta
@@ -145,79 +151,65 @@ export class PrismaPropostaRepository implements PropostaRepository {
         }
     }
 
-    async createVersao(data: CreateVersaoPropostaDTO, propostaId: string): Promise<any | null> {
-        const ultimaVersao = await prisma.versaoProposta.findFirst({
+    async createRevisao(data: CreateRevisaoDTO, propostaId: string): Promise<any | null> {
+        const ultimaRevisao = await prisma.revisao.findFirst({
             where: { propostaId },
-            orderBy: { numeroVersao: 'desc' },
-            select: { numeroVersao: true }
+            orderBy: { numeroRevisao: 'desc' },
+            select: { numeroRevisao: true }
           });
         
-        const novoNumeroVersao = (ultimaVersao?.numeroVersao || 0) + 1;
+        const novoNumeroRevisao = (ultimaRevisao?.numeroRevisao || 0) + 1;
 
         try {
-            const { dataProposta, valorTotal, produto, servico } = data;
-            const versao = await prisma.versaoProposta.create({
+            const { dataProposta, valorTotal, itens } = data;
+            const revisao = await prisma.revisao.create({
                 data: {
                     dataProposta,
-                    numeroVersao: novoNumeroVersao,
+                    numeroRevisao: novoNumeroRevisao,
                     valorTotal,
-                    produtos: {
-                        create: produto.map(prod => ({
+                    itens: {
+                        create: itens.map(prod => ({
                             nome: prod.nome,
                             preco: prod.preco,
                             quantidade: prod.quantidade,
-                            unidadeDeMedida: prod.unidadeDeMedida
                         }))  
-                    },
-                    servicos: {
-                        create: servico.map(serv => ({
-                            nome: serv.nome,
-                            preco: serv.preco,
-                        }))
                     },
                     propostaId: propostaId
                 }
             })
-            return versao
+            return revisao
         } catch(error) {
             console.log(error)
             return null
         }
     }
 
-    async updateVersao(data: VersaoPropostaUpdateDTO, versaoId: string): Promise<any | null> {
+    async updateRevisao(data: RevisaoUpdateDTO, revisaoId: string): Promise<any | null> {
         try {
-            const { dataProposta, valorTotal, produto, servico } = data;
-            const versao = await prisma.versaoProposta.update({
+            const { dataProposta, valorTotal, itens } = data;
+            const revisao = await prisma.revisao.update({
                 where:{
-                    id: versaoId
+                    id: revisaoId
                 },
                 data: {
                     dataProposta,
                     valorTotal,
-                    produtos: {
-                        create: produto.map(prod => ({
+                    itens: {
+                        create: itens.map(prod => ({
                             nome: prod.nome,
                             preco: prod.preco,
                             quantidade: prod.quantidade,
-                            unidadeDeMedida: prod.unidadeDeMedida
                         }))  
                     },
-                    servicos: {
-                        create: servico.map(serv => ({
-                            nome: serv.nome,
-                            preco: serv.preco,
-                        }))
-                    }
                 }
             })
-            return versao
+            return revisao
         } catch(error) {
             console.log(error)
             return null
         }
     }
-    async deleteVersao(versaoId: string): Promise<any | null> {
-        return prisma.proposta.delete({ where: { id: versaoId } });
+    async deleteRevisao(revisaoId: string): Promise<any | null> {
+        return prisma.proposta.delete({ where: { id: revisaoId } });
     }
 }

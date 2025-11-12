@@ -11,7 +11,7 @@ export async function update(request: Request, response: Response, next: NextFun
       const data = propostaUpdateSchema.parse(proposta)
 
       await updatePropostaUseCase.execute(data, id)
-      return response.status(201).send({ message: "Usuário alterado com sucesso!" })
+      return response.status(201).send({ message: "Proposta alterada com sucesso!" })
     } catch (err) {
       next(err)
     }

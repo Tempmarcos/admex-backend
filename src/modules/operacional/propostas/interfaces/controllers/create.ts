@@ -4,7 +4,8 @@ import { PrismaPropostaRepository } from "../../infra/repositories/prisma/prisma
 import { createPropostaSchema } from "../../dtos/CreatePropostaDTO";
 
 export async function create(request: Request, response: Response, next: NextFunction){
-    const { proposta, empresaId } = request.body
+    const proposta = request.body;
+    const empresaId = response.locals.user.empresaId;
 
     try {
       const createPropostaUseCase = new CreatePropostaUseCase(new PrismaPropostaRepository);

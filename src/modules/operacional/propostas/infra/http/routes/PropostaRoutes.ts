@@ -5,8 +5,8 @@ import { deleteProposta } from "../../../interfaces/controllers/deleteProposta";
 import { getProposta } from "../../../interfaces/controllers/getProposta";
 import { list } from "../../../interfaces/controllers/list";
 import { update } from "../../../interfaces/controllers/update";
-import { createVersao } from "../../../interfaces/controllers/versao/createVersao";
-import { updateVersao } from "../../../interfaces/controllers/versao/updateVersao";
+import { createRevisao } from "../../../interfaces/controllers/revisao/createRevisao";
+import { updateRevisao } from "../../../interfaces/controllers/revisao/updateRevisao";
 
 const express = require('express');
 
@@ -22,11 +22,11 @@ propostaRoutes.patch("/:id", authMiddleware, permissionMiddleware(['criarPropost
 
 propostaRoutes.delete("/:id", authMiddleware, permissionMiddleware(['deletarPropostas'], 'ALL'), deleteProposta)
 
-propostaRoutes.patch("/versao/:id", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), updateVersao)
+propostaRoutes.patch("/revisao/:id", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), updateRevisao)
 
-propostaRoutes.post("/versao/", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), createVersao)
+propostaRoutes.post("/revisao/", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), createRevisao)
 
-// propostaRoutes.delete("/versao/:id", deleteVersao)
+// propostaRoutes.delete("/revisao/:id", deleteRevisao)
 
 
 export { propostaRoutes }

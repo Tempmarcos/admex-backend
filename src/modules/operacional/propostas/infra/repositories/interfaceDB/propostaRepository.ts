@@ -1,16 +1,18 @@
-import { CreateVersaoPropostaDTO } from "../../../dtos/CreateVersaoPropostaDTO"
+import { CreateRevisaoDTO } from "../../../dtos/CreateRevisaoDTO"
 import { PropostaDTO } from "../../../dtos/PropostaDTO"
 import { PropostaUpdateDTO } from "../../../dtos/PropostaUpdateDTO"
-import { VersaoPropostaUpdateDTO } from "../../../dtos/VersaoPropostaUpdateDTO"
+import { RevisaoUpdateDTO } from "../../../dtos/RevisaoUpdateDTO"
+
 
 export interface PropostaRepository {
         findById(id: string): Promise<any | null>
+        checarUltimoCodigo(empresaId: string): Promise <string | null>
         create(data: PropostaDTO, empresaId: string): Promise<any | null>
         list(empresaId: string): Promise<any | null>
         delete(id: string): Promise<any | null>
         get(id: string): Promise<any | null>
         update(data: PropostaUpdateDTO, id: string): Promise<any | null>
-        createVersao(data: CreateVersaoPropostaDTO, propostaId: string): Promise<any | null>
-        updateVersao(data: VersaoPropostaUpdateDTO, versaoId: string): Promise<any | null>
-        deleteVersao(versaoId: string): Promise<any | null>
+        createRevisao(data: CreateRevisaoDTO, propostaId: string): Promise<any | null>
+        updateRevisao(data: RevisaoUpdateDTO, revisaoId: string): Promise<any | null>
+        deleteRevisao(revisaoId: string): Promise<any | null>
 }

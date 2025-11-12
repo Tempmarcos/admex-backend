@@ -3,6 +3,6 @@ import { CreatePerfilInputDTO, CreatePerfilInputZod } from "../perfil/CreatePerf
 import { User } from "@prisma/client";
 
 
-export type GetUserDTO = Omit<User, "senha"> & {
+export type GetUserDTO = Omit<User, "senha" | "empresaId"> & {
     perfil: any
 }

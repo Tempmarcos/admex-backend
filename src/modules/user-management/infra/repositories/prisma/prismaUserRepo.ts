@@ -153,7 +153,6 @@ export class PrismaUserRepository implements UserRepository {
                 },
                 select: {
                     id: true,
-                    empresaId: true,
                     nome: true,
                     admin: true,
                     email: true,

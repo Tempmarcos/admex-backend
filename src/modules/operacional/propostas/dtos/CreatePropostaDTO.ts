@@ -1,7 +1,6 @@
 import { z } from "zod";
-import { versaoSchema } from "./VersaoPropostaDTO";
 
-enum status {
+export enum status {
     Criada = 'criada',
     Enviada = 'enviada',
     Aprovada = 'aprovada',
@@ -10,12 +9,12 @@ enum status {
 }
 
 export const createPropostaSchema = z.object({
-    titulo: z.string(),
-    codigo: z.string(),
     descricao: z.string().optional(),
     clienteId: z.string(),
-    status: z.nativeEnum(status),
-    versao: versaoSchema.omit({ numeroVersao: true })
+    status: z.preprocess(
+  (val) => (val === '' ? undefined : val),
+  z.nativeEnum(status).optional().nullable()
+)
 })
 
 export type CreatePropostaDTO = z.infer<typeof createPropostaSchema>
