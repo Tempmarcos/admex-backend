@@ -22,9 +22,9 @@ propostaRoutes.patch("/:id", authMiddleware, permissionMiddleware(['criarPropost
 
 propostaRoutes.delete("/:id", authMiddleware, permissionMiddleware(['deletarPropostas'], 'ALL'), deleteProposta)
 
-propostaRoutes.patch("/revisao/:id", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), updateRevisao)
+propostaRoutes.post("/revisao/:id", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), createRevisao)
 
-propostaRoutes.post("/revisao/", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), createRevisao)
+//propostaRoutes.patch("/revisao/:id", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), updateRevisao)
 
 // propostaRoutes.delete("/revisao/:id", deleteRevisao)
 

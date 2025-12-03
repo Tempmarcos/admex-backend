@@ -5,9 +5,11 @@ import { CreateRevisaoUseCase } from "../../../application/use-cases/revisao/cre
 
 
 export async function createRevisao(request: Request, response: Response, next: NextFunction){
-    const { revisao, propostaId } = request.body
+    const revisao = request.body;
+    const propostaId = request.params.id;
 
     try {
+      console.log(revisao)
       const createTarefaUseCase = new CreateRevisaoUseCase(new PrismaPropostaRepository);
   
       const data = revisaoCreateSchema.parse(revisao)

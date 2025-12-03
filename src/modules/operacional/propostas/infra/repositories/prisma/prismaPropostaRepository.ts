@@ -50,14 +50,33 @@ export class PrismaPropostaRepository implements PropostaRepository {
     }
     async create(data: PropostaDTO, empresaId: string): Promise<any | null> {
         try{
-            const{clienteId, status, codigo, descricao} = data;
+            const{clienteId, status, codigo, descricao, tituloProjeto, endereco, revisao} = data;
             const proposta = await prisma.proposta.create({
                 data: {
                     status,
                     descricao,
+                    tituloProjeto,
+                    endereco,
                     codigo,
                     clienteId: clienteId,
-                    empresaId: empresaId
+                    empresaId: empresaId,
+                    revisoes: revisao ? {
+                        create: [
+                            {
+                                dataProposta: revisao.dataProposta,
+                                numeroRevisao: 1, // ou calcule aqui mesmo
+                                valorTotal: revisao.valorTotal,
+                                itens: {
+                                    create: revisao.itens.map(i => ({
+                                    nome: i.nome,
+                                    preco: i.preco,
+                                    quantidade: i.quantidade,
+                                    unidadeDeMedida: i.unidadeDeMedida
+                                    }))
+                                }
+                            }
+                        ]
+                    } : undefined,
                 }
             })
             return proposta
@@ -94,6 +113,8 @@ export class PrismaPropostaRepository implements PropostaRepository {
                     id: true,
                     codigo: true,
                     descricao: true,
+                    tituloProjeto: true,
+                    endereco: true,
                     cliente: {
                         select: {
                             nome: true
@@ -117,6 +138,7 @@ export class PrismaPropostaRepository implements PropostaRepository {
                                     nome: true,
                                     preco: true,
                                     quantidade: true,
+                                    unidadeDeMedida: true
                                 }
                             }
                         }
@@ -134,7 +156,7 @@ export class PrismaPropostaRepository implements PropostaRepository {
     }
     async update(data: PropostaUpdateDTO, id: string): Promise<any | null> {
         try{
-            const{ status, descricao } = data;
+            const{ status, descricao, tituloProjeto, endereco } = data;
             const proposta = await prisma.proposta.update({
                 where: {
                     id
@@ -142,6 +164,8 @@ export class PrismaPropostaRepository implements PropostaRepository {
                 data: {
                     status,
                     descricao,
+                    tituloProjeto,
+                    endereco
                 }
             })
             return proposta
@@ -172,6 +196,7 @@ export class PrismaPropostaRepository implements PropostaRepository {
                             nome: prod.nome,
                             preco: prod.preco,
                             quantidade: prod.quantidade,
+                            unidadeDeMedida: prod.unidadeDeMedida
                         }))  
                     },
                     propostaId: propostaId

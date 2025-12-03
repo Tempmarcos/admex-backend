@@ -11,6 +11,8 @@ enum status {
 export const propostaUpdateSchema = z.object({
     descricao: z.string().optional(),
     status: z.nativeEnum(status),
+    tituloProjeto: z.string().optional(),
+    endereco: z.string().optional()
 })
 
 export type PropostaUpdateDTO = z.infer<typeof propostaUpdateSchema>

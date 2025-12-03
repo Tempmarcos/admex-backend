@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url= env("DATABASE_URL")
 }
 
 model User {
@@ -199,7 +199,7 @@ model Revisao {
   proposta     Proposta          @relation(fields: [propostaId], references: [id], onDelete: Cascade)
   propostaId   String
   dataProposta DateTime          @default(now())
-  valorTotal   String
+  valorTotal   Float
   numeroRevisao Int
   itens        ItemProposta[]
   createdAt    DateTime          @default(now())
@@ -212,7 +212,7 @@ model Revisao {
 model ItemProposta {
   id               String          @id @default(uuid())
   nome             String
-  preco            String
+  preco            Float
   quantidade       Int
   unidadeDeMedida  String          @default("Unid")
   Revisao          Revisao? @relation(fields: [RevisaoId], references: [id], onDelete: Cascade)

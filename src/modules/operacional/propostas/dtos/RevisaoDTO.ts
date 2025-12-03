@@ -9,6 +9,7 @@ export const revisaoSchema = z.object({
         nome: z.string(),
         preco: z.string(),
         quantidade: z.number(),
+        unidadeDeMedida: z.string()
     }).array()
 })
 
