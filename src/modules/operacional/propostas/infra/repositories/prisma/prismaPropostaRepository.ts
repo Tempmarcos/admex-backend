@@ -5,6 +5,7 @@ import { PropostaUpdateDTO } from "../../../dtos/PropostaUpdateDTO";
 import { PropostaNotExistsError } from "../../../../../shared/errors/proposta/propostaNotExistsError";
 import { CreateRevisaoDTO } from "../../../dtos/CreateRevisaoDTO";
 import { RevisaoUpdateDTO } from "../../../dtos/RevisaoUpdateDTO";
+import { GetPropostaDTO } from "../../../dtos/GetPropostaDTO";
 
 
 

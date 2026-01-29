@@ -7,6 +7,7 @@ import { list } from "../../../interfaces/controllers/list";
 import { update } from "../../../interfaces/controllers/update";
 import { createRevisao } from "../../../interfaces/controllers/revisao/createRevisao";
 import { updateRevisao } from "../../../interfaces/controllers/revisao/updateRevisao";
+import { createPDF } from "../../../interfaces/controllers/createPDF";
 
 const express = require('express');
 
@@ -23,6 +24,8 @@ propostaRoutes.patch("/:id", authMiddleware, permissionMiddleware(['criarPropost
 propostaRoutes.delete("/:id", authMiddleware, permissionMiddleware(['deletarPropostas'], 'ALL'), deleteProposta)
 
 propostaRoutes.post("/revisao/:id", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), createRevisao)
+
+propostaRoutes.post("/pdf", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), createPDF)
 
 //propostaRoutes.patch("/revisao/:id", authMiddleware, permissionMiddleware(['criarPropostas'], 'ALL'), updateRevisao)
 
